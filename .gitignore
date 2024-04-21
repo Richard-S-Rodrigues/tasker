@@ -1,0 +1,22 @@
+# .NET
+*.obj
+*.exe
+*.dll
+*.pdb
+*.user
+*.vscode
+*.vs
+**/bin/
+**/obj/
+
+# Visual Studio Code
+.vscode/
+
+# User-specific files
+*.suo
+*.user
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
