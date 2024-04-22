@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Tasking.Domain.BoardAggregate;
-using Tasking.Domain.BoardAggregate.ValueObjects;
+using Tasker.Domain.BoardAggregate;
+using Tasker.Domain.BoardAggregate.ValueObjects;
 
-namespace Tasking.Infrastructure.Database.Configurations;
+namespace Tasker.Infrastructure.Database.Configurations;
 
 internal class BoardConfiguration : IEntityTypeConfiguration<Board>
 {

@@ -1,9 +1,9 @@
-using Tasking.Domain.BoardAggregate.ValueObjects;
-using Tasking.Domain.MemberAggregate.ValueObjects;
-using Tasking.Domain.Shared;
-using Tasking.Domain.TaskAggregate.ValueObjects;
+using Tasker.Domain.BoardAggregate.ValueObjects;
+using Tasker.Domain.MemberAggregate.ValueObjects;
+using Tasker.Domain.Shared;
+using Tasker.Domain.TaskAggregate.ValueObjects;
 
-namespace Tasking.Domain.BoardAggregate;
+namespace Tasker.Domain.BoardAggregate;
 
 public sealed class Board : AggregateRoot<BoardId>
 {

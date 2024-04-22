@@ -1,6 +1,6 @@
-using Tasking.Domain.Shared;
+using Tasker.Domain.Shared;
 
-namespace Tasking.Domain.TaskAggregate.ValueObjects;
+namespace Tasker.Domain.TaskAggregate.ValueObjects;
 
 public sealed class TimeDetails : ValueObject
 {

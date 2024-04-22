@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using Tasking.Infrastructure;
-using Tasking.Infrastructure.Context;
+using Tasker.Infrastructure;
+using Tasker.Infrastructure.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,4 +1,4 @@
-namespace Tasking.Domain.TaskAggregate.Enums;
+namespace Tasker.Domain.TaskAggregate.Enums;
 
 public enum Priority 
 {

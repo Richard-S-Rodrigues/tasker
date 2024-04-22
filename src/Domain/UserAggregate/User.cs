@@ -1,7 +1,7 @@
-using Tasking.Domain.Shared;
-using Tasking.Domain.UserAggregate.ValueObjects;
+using Tasker.Domain.Shared;
+using Tasker.Domain.UserAggregate.ValueObjects;
 
-namespace Tasking.Domain.UserAggregate;
+namespace Tasker.Domain.UserAggregate;
 
 public sealed class User : AggregateRoot<UserId>
 {

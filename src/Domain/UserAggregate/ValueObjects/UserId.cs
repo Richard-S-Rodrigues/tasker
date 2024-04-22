@@ -1,6 +1,6 @@
-using Tasking.Domain.Shared;
+using Tasker.Domain.Shared;
 
-namespace Tasking.Domain.UserAggregate.ValueObjects;
+namespace Tasker.Domain.UserAggregate.ValueObjects;
 
 public sealed class UserId : ValueObject
 {

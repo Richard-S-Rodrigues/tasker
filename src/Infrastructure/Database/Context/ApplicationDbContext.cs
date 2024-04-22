@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace Tasking.Infrastructure.Context;
+namespace Tasker.Infrastructure.Context;
 
 public class ApplicationDbContext : DbContext
 {

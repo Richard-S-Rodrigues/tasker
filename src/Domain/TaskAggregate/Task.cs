@@ -1,10 +1,10 @@
-using Tasking.Domain.AttachmentFileAgggregate.ValueObjects;
-using Tasking.Domain.BoardAggregate.ValueObjects;
-using Tasking.Domain.Shared;
-using Tasking.Domain.TaskAggregate.Enums;
-using Tasking.Domain.TaskAggregate.ValueObjects;
+using Tasker.Domain.AttachmentFileAgggregate.ValueObjects;
+using Tasker.Domain.BoardAggregate.ValueObjects;
+using Tasker.Domain.Shared;
+using Tasker.Domain.TaskAggregate.Enums;
+using Tasker.Domain.TaskAggregate.ValueObjects;
 
-namespace Tasking.Domain.TaskAggregate;
+namespace Tasker.Domain.TaskAggregate;
 
 public sealed class Task : AggregateRoot<TaskId>
 {

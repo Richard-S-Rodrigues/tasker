@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Tasking.Infrastructure.Context;
+using Tasker.Infrastructure.Context;
 
-namespace Tasking.Infrastructure;
+namespace Tasker.Infrastructure;
 
 public static class DependencyInjection
 {

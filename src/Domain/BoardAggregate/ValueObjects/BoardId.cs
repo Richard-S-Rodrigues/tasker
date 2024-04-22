@@ -1,6 +1,6 @@
-using Tasking.Domain.Shared;
+using Tasker.Domain.Shared;
 
-namespace Tasking.Domain.BoardAggregate.ValueObjects;
+namespace Tasker.Domain.BoardAggregate.ValueObjects;
 
 public sealed class BoardId : ValueObject
 {

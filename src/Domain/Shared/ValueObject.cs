@@ -1,4 +1,4 @@
-namespace Tasking.Domain.Shared;
+namespace Tasker.Domain.Shared;
 
 public abstract class ValueObject : IEquatable<ValueObject>
 {

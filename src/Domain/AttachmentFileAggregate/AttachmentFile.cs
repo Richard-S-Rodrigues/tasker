@@ -1,8 +1,8 @@
-using Tasking.Domain.AttachmentFileAgggregate.ValueObjects;
-using Tasking.Domain.Shared;
-using Tasking.Domain.TaskAggregate.ValueObjects;
+using Tasker.Domain.AttachmentFileAgggregate.ValueObjects;
+using Tasker.Domain.Shared;
+using Tasker.Domain.TaskAggregate.ValueObjects;
 
-namespace Tasking.Domain.AttachmentFileAgggregate;
+namespace Tasker.Domain.AttachmentFileAgggregate;
 
 public sealed class AttachmentFile : AggregateRoot<AttachmentFileId>
 {

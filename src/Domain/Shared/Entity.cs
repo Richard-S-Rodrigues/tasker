@@ -1,4 +1,4 @@
-namespace Tasking.Domain.Shared;
+namespace Tasker.Domain.Shared;
 
 public abstract class Entity<TId> : IEquatable<Entity<TId>> 
   where TId : notnull

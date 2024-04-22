@@ -1,7 +1,7 @@
-using Tasking.Domain.Shared;
-using Tasking.Domain.UserAggregate.ValueObjects;
+using Tasker.Domain.Shared;
+using Tasker.Domain.UserAggregate.ValueObjects;
 
-namespace Tasking.Domain.TaskAggregate.ValueObjects;
+namespace Tasker.Domain.TaskAggregate.ValueObjects;
 
 public sealed class Responsible : ValueObject
 {
