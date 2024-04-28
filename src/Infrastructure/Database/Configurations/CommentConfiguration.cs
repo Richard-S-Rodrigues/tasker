@@ -1,23 +1,34 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Tasker.Domain.AttachmentFileAgggregate;
-using Tasker.Domain.AttachmentFileAgggregate.ValueObjects;
+using Tasker.Domain.CommentAggregate;
+using Tasker.Domain.CommentAggregate.ValueObjects;
 using Tasker.Domain.TaskAggregate.ValueObjects;
+using Tasker.Domain.UserAggregate.ValueObjects;
 
 namespace Tasker.Infrastructure.Database.Configurations;
 
-internal class AttachmentFileConfiguration : IEntityTypeConfiguration<AttachmentFile>
+internal class CommentConfiguration : IEntityTypeConfiguration<Comment>
 {
-  public void Configure(EntityTypeBuilder<AttachmentFile> builder)
+  public void Configure(EntityTypeBuilder<Comment> builder)
   {
-    builder.ToTable("attachment_file");
+    builder.ToTable("comment");
 
     builder.HasKey(p => p.Id);
 
     builder.Property(p => p.Id).HasConversion(
-      attachmentFileId => attachmentFileId.Value,
-      value => new AttachmentFileId(value));
+      commentId => commentId.Value,
+      value => new CommentId(value));
     
+    builder.Property(c => c.Text)
+      .HasColumnName("text")
+      .IsRequired(true);
+
+    builder.Property(p => p.UserId)
+      .HasColumnName("user_id")
+      .HasColumnType("bigint")
+      .HasConversion(userId => userId.Value, value => new UserId(value))
+      .IsRequired(true);
+
     builder.Property(p => p.TaskId)
       .HasColumnName("task_id")
       .HasColumnType("bigint")

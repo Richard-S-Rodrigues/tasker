@@ -14,29 +14,40 @@ internal class UserConfiguration : IEntityTypeConfiguration<User>
     builder.HasKey(p => p.Id);
 
     builder.Property(p => p.Id).HasConversion(
-      boardId => boardId.Value,
+      userId => userId.Value,
       value => new UserId(value));
-    
-    builder
-      .Property(p => p.Name);
 
-    builder.Property(p => p.CreatedAt).HasColumnType("timestamp without time zone");
-    builder.Property(p => p.UpdatedAt).HasColumnType("timestamp without time zone");
-    builder.Property(p => p.DeletedAt).HasColumnType("timestamp without time zone");
+    builder
+      .Property(p => p.Name)
+      .HasColumnName("name")
+      .IsRequired(true);
+
+    builder.Property(p => p.CreatedAt)
+      .HasColumnName("created_at")
+      .HasColumnType("timestamp without time zone");
+    builder.Property(p => p.UpdatedAt)
+    .HasColumnName("updated_at")
+    .HasColumnType("timestamp without time zone");
+    builder.Property(p => p.DeletedAt)
+    .HasColumnName("deleted_at")
+    .HasColumnType("timestamp without time zone");
     builder
         .Property(p => p.CreatedBy)
+        .HasColumnName("created_by")
         .HasConversion<long?>(
             s => s != null ? Convert.ToInt64(s) : null,
             l => l != null ? Convert.ToString(l) : null
         );
     builder
         .Property(p => p.UpdatedBy)
+        .HasColumnName("updated_by")
         .HasConversion<long?>(
             s => s != null ? Convert.ToInt64(s) : null,
             l => l != null ? Convert.ToString(l) : null
         );
     builder
         .Property(p => p.DeletedBy)
+        .HasColumnName("deleted_by")
         .HasConversion<long?>(
             s => s != null ? Convert.ToInt64(s) : null,
             l => l != null ? Convert.ToString(l) : null

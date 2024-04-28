@@ -8,7 +8,7 @@ public sealed class BoardId : ValueObject
   {
     Value = value;
   }
-  public long Value { get; }
+  public long Value { get; private set; }
 
   public override IEnumerable<object> GetEqualityComponents()
   {

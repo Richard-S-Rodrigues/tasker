@@ -12,11 +12,13 @@ public sealed class AttachmentFile : AggregateRoot<AttachmentFileId>
     byte[] data
   ) : base(id)
   {
-    AttachmentFileId = id;
     TaskId = taskId;
     Data = data;
   }
-  public AttachmentFileId AttachmentFileId { get; private set; }
   public TaskId TaskId { get; private set; }
   public byte[] Data { get; private set; }
+
+  #pragma warning disable
+  public AttachmentFile() {}
+  #pragma warning restore
 }

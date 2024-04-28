@@ -15,13 +15,17 @@ public sealed class Responsible : ValueObject
     Time = time;
   }
   public UserId UserId { get; private set; }
-  public TimeOnly EstimatedTime { get; private set; }
-  public TimeOnly Time { get; private set; }
+  public TimeOnly? EstimatedTime { get; private set; }
+  public TimeOnly? Time { get; private set; }
 
   public override IEnumerable<object> GetEqualityComponents()
   {
     yield return UserId;
-    yield return EstimatedTime;
-    yield return Time;
+    yield return EstimatedTime!;
+    yield return Time!;
   }
+
+  #pragma warning disable
+  public Responsible() {}
+  #pragma warning restore
 }

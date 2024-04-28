@@ -13,13 +13,15 @@ public sealed class Member : AggregateRoot<MemberId>
     UserId userId,
     bool isAdmin) : base(id)
   {
-    MemberId = id;
     BoardId = boardId;
     UserId = userId;
     IsAdmin = isAdmin;
   }
-  public MemberId MemberId { get; private set; }
   public BoardId BoardId { get; private set; }
   public UserId UserId { get; private set; }
   public bool IsAdmin { get; private set; }
+
+  #pragma warning disable
+  public Member() {}
+  #pragma warning restore
 }

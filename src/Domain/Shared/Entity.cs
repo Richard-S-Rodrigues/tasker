@@ -53,4 +53,11 @@ public abstract class Entity<TId> : IEquatable<Entity<TId>>
   {
     return Id.GetHashCode();
   }
+
+  
+  #pragma warning disable
+  protected Entity()
+  {
+  }
+  #pragma warning restore
 }

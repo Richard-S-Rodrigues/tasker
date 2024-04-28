@@ -17,51 +17,37 @@ internal class BoardConfiguration : IEntityTypeConfiguration<Board>
       boardId => boardId.Value,
       value => new BoardId(value));
     
-    builder.Property(p => p.Name);
+    builder
+      .Property(p => p.Name)
+      .HasColumnName("name")
+      .IsRequired(true);
 
-    builder.OwnsMany(
-      a => a.TaskIds,
-      b => 
-      {
-        b.WithOwner().HasForeignKey("TaskId");
-        b.Property<long>("id").ValueGeneratedOnAdd();
-        b.HasKey("id");
-        b.Property(taskId => taskId.Value)
-          .HasColumnName("task_id")
-          .ValueGeneratedNever();
-      }
-    );
-    
-    builder.OwnsMany(
-      a => a.MemberIds,
-      b => 
-      {
-        b.WithOwner().HasForeignKey("MemberId");
-        b.Property<long>("id").ValueGeneratedOnAdd();
-        b.HasKey("id");
-        b.Property(memberId => memberId.Value)
-          .HasColumnName("member_id")
-          .ValueGeneratedNever();
-      }
-    );
-
-    builder.Property(p => p.CreatedAt).HasColumnType("timestamp without time zone");
-    builder.Property(p => p.UpdatedAt).HasColumnType("timestamp without time zone");
-    builder.Property(p => p.DeletedAt).HasColumnType("timestamp without time zone");
+    builder.Property(p => p.CreatedAt)
+      .HasColumnName("created_at")
+      .HasColumnType("timestamp without time zone");
+    builder.Property(p => p.UpdatedAt)
+    .HasColumnName("updated_at")
+    .HasColumnType("timestamp without time zone");
+    builder.Property(p => p.DeletedAt)
+    .HasColumnName("deleted_at")
+    .HasColumnType("timestamp without time zone");
     builder
         .Property(p => p.CreatedBy)
+        .HasColumnName("created_by")
         .HasConversion<long?>(
             s => s != null ? Convert.ToInt64(s) : null,
             l => l != null ? Convert.ToString(l) : null
         );
     builder
         .Property(p => p.UpdatedBy)
+        .HasColumnName("updated_by")
         .HasConversion<long?>(
             s => s != null ? Convert.ToInt64(s) : null,
             l => l != null ? Convert.ToString(l) : null
         );
     builder
         .Property(p => p.DeletedBy)
+        .HasColumnName("deleted_by")
         .HasConversion<long?>(
             s => s != null ? Convert.ToInt64(s) : null,
             l => l != null ? Convert.ToString(l) : null

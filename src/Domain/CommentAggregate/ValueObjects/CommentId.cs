@@ -1,10 +1,10 @@
 using Tasker.Domain.Shared;
 
-namespace Tasker.Domain.MemberAggregate.ValueObjects;
+namespace Tasker.Domain.CommentAggregate.ValueObjects;
 
-public sealed class MemberId : ValueObject
+public sealed class CommentId : ValueObject
 {
-  public MemberId(long value)
+  public CommentId(long value)
   {
     Value = value;
   }
