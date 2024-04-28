@@ -14,6 +14,11 @@ public sealed class Board : AggregateRoot<BoardId>
 
   public string Name { get; private set; }
 
+  public static Board Create(string name)
+  {
+    return new Board(new BoardId(null), name);
+  }
+
   #pragma warning disable
   public Board() {}
   #pragma warning restore

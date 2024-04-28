@@ -8,4 +8,13 @@
    <ItemGroup>
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
+   <ItemGroup>
+     <PackageReference Include="Htmx" Version="1.8.0" />
+     <PackageReference Include="Htmx.TagHelpers" Version="1.8.0" />
+     <PackageReference Include="MediatR" Version="12.2.0" />
+   </ItemGroup>
+
+   <ItemGroup>
+    <ProjectReference Include="..\Application\Application.csproj" />
+  </ItemGroup>
 </Project>

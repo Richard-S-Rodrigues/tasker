@@ -5,6 +5,18 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <form
+        method="post"
+        asp-page="Index"
+        asp-page-handler="CreateBoard"
+    >
+        <button 
+            type="submit"
+        >
+            Criar espaço
+        </button>
+    </form>
+    
+
+    <div id="board-list"></div>
 </div>

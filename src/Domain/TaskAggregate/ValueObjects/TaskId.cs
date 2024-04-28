@@ -4,14 +4,14 @@ namespace Tasker.Domain.TaskAggregate.ValueObjects;
 
 public sealed class TaskId : ValueObject
 {
-  public TaskId(long value)
+  public TaskId(long? value)
   {
     Value = value;
   }
-  public long Value { get; private set; }
+  public long? Value { get; private set; }
 
   public override IEnumerable<object> GetEqualityComponents()
   {
-    yield return Value;      
+    yield return Value!;      
   }
 } 
