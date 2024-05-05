@@ -1,4 +1,3 @@
-using ErrorOr;
 using MediatR;
 using Tasker.Domain.BoardAggregate;
 using Tasker.Domain.BoardAggregate.Commands;
@@ -6,7 +5,7 @@ using Tasker.Domain.BoardAggregate.Repositories;
 
 namespace Tasker.Application.Boards.Commands;
 
-public class CreateBoardCommandHandler : IRequestHandler<CreateBoardCommand, ErrorOr<Board>>
+public class CreateBoardCommandHandler : IRequestHandler<CreateBoardCommand>
 {
   private readonly IBoardRepository _boardRepository;
 
@@ -15,12 +14,10 @@ public class CreateBoardCommandHandler : IRequestHandler<CreateBoardCommand, Err
     _boardRepository = boardRepository;
   }
 
-  public async Task<ErrorOr<Board>> Handle(CreateBoardCommand request, CancellationToken cancellationToken)
+  public async Task Handle(CreateBoardCommand request, CancellationToken cancellationToken)
   {
     var board = Board.Create(request.Name);
 
     await _boardRepository.Add(board);
-
-    return board;
   }
 }
