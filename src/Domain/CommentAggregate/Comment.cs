@@ -7,7 +7,7 @@ namespace Tasker.Domain.CommentAggregate;
 
 public sealed class Comment : AggregateRoot<CommentId>
 {
-  public Comment(
+  private Comment(
     CommentId id,
     string text, 
     UserId userId,
@@ -20,6 +20,11 @@ public sealed class Comment : AggregateRoot<CommentId>
   public string Text { get; private set; }
   public UserId UserId { get; private set; }
   public TaskId TaskId { get; private set; }
+
+  public static Comment Create(string text, UserId userId, TaskId taskId)
+  {
+    return new Comment(new CommentId(Guid.NewGuid()), text, userId, taskId);
+  }
   
   #pragma warning disable
   public Comment() {}

@@ -15,19 +15,19 @@ public class BoardRepository : IBoardRepository
 
   public async Task Add(Board entity)
   {
-    _applicationDbContext.Add(entity);
+    _applicationDbContext.Boards.Add(entity);
     await _applicationDbContext.SaveChangesAsync();
   }
 
   public async Task Delete(Board entity)
   {
-    _applicationDbContext.Remove(entity);
+    _applicationDbContext.Boards.Remove(entity);
     await _applicationDbContext.SaveChangesAsync();
   }
 
   public async Task<Board> Update(Board entity)
   {
-    _applicationDbContext.Update(entity);
+    _applicationDbContext.Boards.Update(entity);
     await _applicationDbContext.SaveChangesAsync();
     return entity;
   }

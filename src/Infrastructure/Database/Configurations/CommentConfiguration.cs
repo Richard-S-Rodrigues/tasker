@@ -15,9 +15,12 @@ internal class CommentConfiguration : IEntityTypeConfiguration<Comment>
 
     builder.HasKey(p => p.Id);
 
-    builder.Property(p => p.Id).HasConversion(
-      commentId => commentId.Value,
-      value => new CommentId(value));
+    builder.Property(p => p.Id)
+      .HasColumnName("id")
+      .HasConversion(
+        commentId => commentId.Value,
+        value => new CommentId(value)
+      );
     
     builder.Property(c => c.Text)
       .HasColumnName("text")
@@ -25,13 +28,11 @@ internal class CommentConfiguration : IEntityTypeConfiguration<Comment>
 
     builder.Property(p => p.UserId)
       .HasColumnName("user_id")
-      .HasColumnType("bigint")
       .HasConversion(userId => userId.Value, value => new UserId(value))
       .IsRequired(true);
 
     builder.Property(p => p.TaskId)
       .HasColumnName("task_id")
-      .HasColumnType("bigint")
       .HasConversion(taskId => taskId.Value, value => new TaskId(value))
       .IsRequired(true);
     

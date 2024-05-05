@@ -1,17 +1,17 @@
 using Tasker.Domain.Shared;
 
-namespace Tasker.Domain.AttachmentFileAgggregate.ValueObjects;
+namespace Tasker.Domain.AttachmentFileAggregate.ValueObjects;
 
 public sealed class AttachmentFileId : ValueObject
 {
-  public AttachmentFileId(long? value)
+  public AttachmentFileId(Guid value)
   {
     Value = value;
   }
-  public long? Value { get; private set; }
+  public Guid Value { get; private set; }
 
   public override IEnumerable<object> GetEqualityComponents()
   {
-    yield return Value!;
+    yield return Value;
   }
 }

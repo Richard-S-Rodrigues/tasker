@@ -1,30 +1,25 @@
 namespace Tasker.Domain.Shared;
 
-public abstract class Entity<TId> : IEquatable<Entity<TId>> 
-  where TId : notnull
+public abstract class Entity<TId> : IEquatable<Entity<TId>>
+ where TId : notnull
 {
+
   protected Entity(TId id)
   {
     Id = id;
   }
-
-  public TId Id { get; protected set; }
-  [Newtonsoft.Json.JsonIgnore]
-  public DateTime CreatedAt { get; set; }
   
-  [Newtonsoft.Json.JsonIgnore]
+  public TId Id { get; protected set; }
+  public DateTime CreatedAt { get; set; } = DateTime.Now;
+  
   public string? CreatedBy { get; set; }
   
-  [Newtonsoft.Json.JsonIgnore]
   public DateTime? UpdatedAt { get; set; }
   
-  [Newtonsoft.Json.JsonIgnore]
   public string? UpdatedBy { get; set; }
   
-  [Newtonsoft.Json.JsonIgnore]
   public DateTime? DeletedAt { get; set; }
 
-  [Newtonsoft.Json.JsonIgnore]
   public string? DeletedBy { get; set; }
 
   public bool IsDeleted() => DeletedAt.HasValue;

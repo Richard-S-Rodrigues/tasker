@@ -7,7 +7,7 @@ namespace Tasker.Domain.MemberAggregate;
 
 public sealed class Member : AggregateRoot<MemberId>
 {
-  public Member(
+  private Member(
     MemberId id,
     BoardId boardId,
     UserId userId,
@@ -20,6 +20,11 @@ public sealed class Member : AggregateRoot<MemberId>
   public BoardId BoardId { get; private set; }
   public UserId UserId { get; private set; }
   public bool IsAdmin { get; private set; }
+
+  public static Member Create(BoardId boardId, UserId userId, bool isAdmin)
+  {
+    return new Member(new MemberId(Guid.NewGuid()), boardId, userId, isAdmin);
+  }
 
   #pragma warning disable
   public Member() {}

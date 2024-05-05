@@ -4,14 +4,14 @@ namespace Tasker.Domain.BoardAggregate.ValueObjects;
 
 public sealed class BoardId : ValueObject
 {
-  public BoardId(long? value)
+  public BoardId(Guid value)
   {
     Value = value;
   }
-  public long? Value { get; private set; }
+  public Guid Value { get; private set; }
 
   public override IEnumerable<object> GetEqualityComponents()
   {
-    yield return Value!;      
+    yield return Value;      
   }
 } 

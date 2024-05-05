@@ -22,10 +22,11 @@ namespace Infrastructure.Database.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Tasker.Domain.AttachmentFileAgggregate.AttachmentFile", b =>
+            modelBuilder.Entity("Tasker.Domain.AttachmentFileAggregate.AttachmentFile", b =>
                 {
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp without time zone")
@@ -47,8 +48,8 @@ namespace Infrastructure.Database.Migrations
                         .HasColumnType("bigint")
                         .HasColumnName("deleted_by");
 
-                    b.Property<long>("TaskId")
-                        .HasColumnType("bigint")
+                    b.Property<Guid>("TaskId")
+                        .HasColumnType("uuid")
                         .HasColumnName("task_id");
 
                     b.Property<DateTime?>("UpdatedAt")
@@ -66,8 +67,9 @@ namespace Infrastructure.Database.Migrations
 
             modelBuilder.Entity("Tasker.Domain.BoardAggregate.Board", b =>
                 {
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp without time zone")
@@ -105,8 +107,9 @@ namespace Infrastructure.Database.Migrations
 
             modelBuilder.Entity("Tasker.Domain.CommentAggregate.Comment", b =>
                 {
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp without time zone")
@@ -124,8 +127,8 @@ namespace Infrastructure.Database.Migrations
                         .HasColumnType("bigint")
                         .HasColumnName("deleted_by");
 
-                    b.Property<long>("TaskId")
-                        .HasColumnType("bigint")
+                    b.Property<Guid>("TaskId")
+                        .HasColumnType("uuid")
                         .HasColumnName("task_id");
 
                     b.Property<string>("Text")
@@ -141,8 +144,8 @@ namespace Infrastructure.Database.Migrations
                         .HasColumnType("bigint")
                         .HasColumnName("updated_by");
 
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint")
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
                         .HasColumnName("user_id");
 
                     b.HasKey("Id");
@@ -152,11 +155,12 @@ namespace Infrastructure.Database.Migrations
 
             modelBuilder.Entity("Tasker.Domain.MemberAggregate.Member", b =>
                 {
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
-                    b.Property<long>("BoardId")
-                        .HasColumnType("bigint")
+                    b.Property<Guid>("BoardId")
+                        .HasColumnType("uuid")
                         .HasColumnName("board_id");
 
                     b.Property<DateTime>("CreatedAt")
@@ -189,8 +193,8 @@ namespace Infrastructure.Database.Migrations
                         .HasColumnType("bigint")
                         .HasColumnName("updated_by");
 
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint")
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
                         .HasColumnName("user_id");
 
                     b.HasKey("Id");
@@ -200,11 +204,12 @@ namespace Infrastructure.Database.Migrations
 
             modelBuilder.Entity("Tasker.Domain.TaskAggregate.Task", b =>
                 {
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
-                    b.Property<long>("BoardId")
-                        .HasColumnType("bigint")
+                    b.Property<Guid>("BoardId")
+                        .HasColumnType("uuid")
                         .HasColumnName("board_id");
 
                     b.Property<DateTime>("CreatedAt")
@@ -227,10 +232,6 @@ namespace Infrastructure.Database.Migrations
                         .HasColumnType("text")
                         .HasColumnName("description");
 
-                    b.Property<long?>("ParentId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("parent_id");
-
                     b.Property<int>("Priority")
                         .HasColumnType("integer")
                         .HasColumnName("priority");
@@ -238,12 +239,6 @@ namespace Infrastructure.Database.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("integer")
                         .HasColumnName("status");
-
-                    b.Property<long[]>("SubTaskIds")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint[]")
-                        .HasDefaultValue(new long[0])
-                        .HasColumnName("sub_task_ids");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -265,8 +260,9 @@ namespace Infrastructure.Database.Migrations
 
             modelBuilder.Entity("Tasker.Domain.UserAggregate.User", b =>
                 {
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp without time zone")
@@ -306,8 +302,8 @@ namespace Infrastructure.Database.Migrations
                 {
                     b.OwnsOne("Tasker.Domain.TaskAggregate.ValueObjects.TimeDetails", "TimeDetails", b1 =>
                         {
-                            b1.Property<long>("TaskId")
-                                .HasColumnType("bigint");
+                            b1.Property<Guid>("TaskId")
+                                .HasColumnType("uuid");
 
                             b1.Property<DateTime?>("EndDate")
                                 .HasColumnType("timestamp without time zone")
@@ -333,20 +329,18 @@ namespace Infrastructure.Database.Migrations
                                 .HasForeignKey("TaskId");
                         });
 
-                    b.OwnsMany("Tasker.Domain.AttachmentFileAgggregate.ValueObjects.AttachmentFileId", "AttachmentFileIds", b1 =>
+                    b.OwnsMany("Tasker.Domain.AttachmentFileAggregate.ValueObjects.AttachmentFileId", "AttachmentFileIds", b1 =>
                         {
-                            b1.Property<long>("id")
+                            b1.Property<Guid>("id")
                                 .ValueGeneratedOnAdd()
-                                .HasColumnType("bigint");
+                                .HasColumnType("uuid");
 
-                            NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b1.Property<long>("id"));
-
-                            b1.Property<long>("Value")
-                                .HasColumnType("bigint")
+                            b1.Property<Guid>("Value")
+                                .HasColumnType("uuid")
                                 .HasColumnName("attachment_file_id");
 
-                            b1.Property<long>("task_id")
-                                .HasColumnType("bigint");
+                            b1.Property<Guid>("task_id")
+                                .HasColumnType("uuid");
 
                             b1.HasKey("id");
 
@@ -360,18 +354,16 @@ namespace Infrastructure.Database.Migrations
 
                     b.OwnsMany("Tasker.Domain.CommentAggregate.ValueObjects.CommentId", "CommentIds", b1 =>
                         {
-                            b1.Property<long>("id")
+                            b1.Property<Guid>("id")
                                 .ValueGeneratedOnAdd()
-                                .HasColumnType("bigint");
+                                .HasColumnType("uuid");
 
-                            NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b1.Property<long>("id"));
-
-                            b1.Property<long>("Value")
-                                .HasColumnType("bigint")
+                            b1.Property<Guid>("Value")
+                                .HasColumnType("uuid")
                                 .HasColumnName("comment_id");
 
-                            b1.Property<long>("task_id")
-                                .HasColumnType("bigint");
+                            b1.Property<Guid>("task_id")
+                                .HasColumnType("uuid");
 
                             b1.HasKey("id");
 
@@ -385,8 +377,8 @@ namespace Infrastructure.Database.Migrations
 
                     b.OwnsMany("Tasker.Domain.TaskAggregate.ValueObjects.Responsible", "Responsibles", b1 =>
                         {
-                            b1.Property<long>("UserId")
-                                .HasColumnType("bigint")
+                            b1.Property<Guid>("UserId")
+                                .HasColumnType("uuid")
                                 .HasColumnName("user_id");
 
                             b1.Property<TimeSpan?>("EstimatedTime")
@@ -397,8 +389,8 @@ namespace Infrastructure.Database.Migrations
                                 .HasColumnType("time")
                                 .HasColumnName("time");
 
-                            b1.Property<long>("task_id")
-                                .HasColumnType("bigint");
+                            b1.Property<Guid>("task_id")
+                                .HasColumnType("uuid");
 
                             b1.HasKey("UserId");
 

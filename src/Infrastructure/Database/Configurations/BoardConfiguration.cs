@@ -12,11 +12,14 @@ internal class BoardConfiguration : IEntityTypeConfiguration<Board>
     builder.ToTable("board");
 
     builder.HasKey(p => p.Id);
+     
+     builder.Property(p => p.Id)
+      .HasColumnName("id")
+      .HasConversion(
+          id => id.Value,
+          value => new BoardId(value)
+      );
 
-    builder.Property(p => p.Id).HasConversion(
-      boardId => boardId.Value,
-      value => new BoardId(value));
-    
     builder
       .Property(p => p.Name)
       .HasColumnName("name")

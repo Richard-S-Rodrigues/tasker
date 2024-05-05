@@ -13,9 +13,12 @@ internal class UserConfiguration : IEntityTypeConfiguration<User>
 
     builder.HasKey(p => p.Id);
 
-    builder.Property(p => p.Id).HasConversion(
-      userId => userId.Value,
-      value => new UserId(value));
+    builder.Property(p => p.Id)
+      .HasColumnName("id")
+      .HasConversion(
+        userId => userId.Value,
+        value => new UserId(value)
+      );
 
     builder
       .Property(p => p.Name)

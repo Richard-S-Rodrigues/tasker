@@ -1,12 +1,12 @@
-using Tasker.Domain.AttachmentFileAgggregate.ValueObjects;
+using Tasker.Domain.AttachmentFileAggregate.ValueObjects;
 using Tasker.Domain.Shared;
 using Tasker.Domain.TaskAggregate.ValueObjects;
 
-namespace Tasker.Domain.AttachmentFileAgggregate;
+namespace Tasker.Domain.AttachmentFileAggregate;
 
 public sealed class AttachmentFile : AggregateRoot<AttachmentFileId>
 {
-  public AttachmentFile(
+  private AttachmentFile(
     AttachmentFileId id,
     TaskId taskId,
     byte[] data
@@ -17,6 +17,11 @@ public sealed class AttachmentFile : AggregateRoot<AttachmentFileId>
   }
   public TaskId TaskId { get; private set; }
   public byte[] Data { get; private set; }
+
+  public static AttachmentFile Create(TaskId taskId, byte[] data)
+  {
+    return new AttachmentFile(new AttachmentFileId(Guid.NewGuid()), taskId, data);
+  }
 
   #pragma warning disable
   public AttachmentFile() {}

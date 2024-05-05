@@ -14,9 +14,12 @@ internal class TaskConfiguration : IEntityTypeConfiguration<Domain.TaskAggregate
 
     builder.HasKey(p => p.Id);
 
-    builder.Property(p => p.Id).HasConversion(
-      taskId => taskId.Value,
-      value => new TaskId(value));
+    builder.Property(p => p.Id)
+      .HasColumnName("id")
+      .HasConversion(
+        taskId => taskId.Value,
+        value => new TaskId(value)
+      );
 
     builder.Property(p => p.Title)
       .HasColumnName("title")
@@ -25,13 +28,6 @@ internal class TaskConfiguration : IEntityTypeConfiguration<Domain.TaskAggregate
     builder.Property(p => p.Description)
       .HasColumnName("description")
       .IsRequired(false);
-
-    builder
-      .Property(p => p.ParentId)
-      .HasColumnName("parent_id")
-      .HasConversion(parentId => parentId.Value, value => new TaskParentId(value))
-      .IsRequired(false)
-      .HasDefaultValue(null);
     
     builder.Property(p => p.Status)
       .HasColumnName("status")
@@ -44,19 +40,8 @@ internal class TaskConfiguration : IEntityTypeConfiguration<Domain.TaskAggregate
 
     builder.Property(p => p.BoardId)
       .HasColumnName("board_id")
-      .HasColumnType("bigint")
       .HasConversion(boardId => boardId.Value, value => new BoardId(value))
       .IsRequired(true);
-
-    builder.Property(p => p.SubTaskIds)
-      .HasColumnName("sub_task_ids")
-      .HasColumnType("bigint[]")
-      .HasPostgresArrayConversion(
-        subTaskId => subTaskId.Value, 
-        value => new TaskId(value)
-      )
-      .IsRequired(false)
-      .HasDefaultValue(Array.Empty<TaskId>());
 
     ConfigureTimeDetails(builder);
     ConfigureResponsiblesTable(builder);
@@ -182,7 +167,7 @@ internal class TaskConfiguration : IEntityTypeConfiguration<Domain.TaskAggregate
     {
       b.ToTable("task_attachment_file_ids");
         b.WithOwner().HasForeignKey("task_id");
-        b.Property<long>("id").ValueGeneratedOnAdd();
+        b.Property<Guid>("id").ValueGeneratedOnAdd();
         b.HasKey("id");
         b.Property(attachmentFileId => attachmentFileId.Value)
           .HasColumnName("attachment_file_id")
@@ -200,7 +185,7 @@ internal class TaskConfiguration : IEntityTypeConfiguration<Domain.TaskAggregate
     {
       b.ToTable("task_comment_ids");
         b.WithOwner().HasForeignKey("task_id");
-        b.Property<long>("id").ValueGeneratedOnAdd();
+        b.Property<Guid>("id").ValueGeneratedOnAdd();
         b.HasKey("id");
         b.Property(commentId => commentId.Value)
           .HasColumnName("comment_id")

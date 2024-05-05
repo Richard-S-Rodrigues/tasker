@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Tasker.Domain.AttachmentFileAgggregate;
-using Tasker.Domain.AttachmentFileAgggregate.ValueObjects;
+using Tasker.Domain.AttachmentFileAggregate;
+using Tasker.Domain.AttachmentFileAggregate.ValueObjects;
 using Tasker.Domain.TaskAggregate.ValueObjects;
 
 namespace Tasker.Infrastructure.Database.Configurations;
@@ -14,13 +14,15 @@ internal class AttachmentFileConfiguration : IEntityTypeConfiguration<Attachment
 
     builder.HasKey(p => p.Id);
 
-    builder.Property(p => p.Id).HasConversion(
-      attachmentFileId => attachmentFileId.Value,
-      value => new AttachmentFileId(value));
+    builder.Property(p => p.Id)
+      .HasColumnName("id")
+      .HasConversion(
+        id => id.Value,
+        value => new AttachmentFileId(value)
+      );
     
     builder.Property(p => p.TaskId)
       .HasColumnName("task_id")
-      .HasColumnType("bigint")
       .HasConversion(taskId => taskId.Value, value => new TaskId(value))
       .IsRequired(true);
     

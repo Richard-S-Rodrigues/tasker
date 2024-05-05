@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Tasker.Domain.AttachmentFileAgggregate;
+using Tasker.Domain.AttachmentFileAggregate;
 using Tasker.Domain.BoardAggregate;
 using Tasker.Domain.CommentAggregate;
 using Tasker.Domain.MemberAggregate;

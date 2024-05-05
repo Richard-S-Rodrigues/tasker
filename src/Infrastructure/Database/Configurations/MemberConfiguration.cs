@@ -15,9 +15,12 @@ internal class MemberConfiguration : IEntityTypeConfiguration<Member>
 
     builder.HasKey(p => p.Id);
 
-    builder.Property(p => p.Id).HasConversion(
-      memberId => memberId.Value,
-      value => new MemberId(value));
+    builder.Property(p => p.Id)
+      .HasColumnName("id")
+      .HasConversion(
+        memberId => memberId.Value,
+        value => new MemberId(value)
+      );
     
     builder
       .Property(p => p.IsAdmin)
@@ -27,13 +30,11 @@ internal class MemberConfiguration : IEntityTypeConfiguration<Member>
 
     builder.Property(p => p.UserId)
       .HasColumnName("user_id")
-      .HasColumnType("bigint")
       .HasConversion(userId => userId.Value, value => new UserId(value))
       .IsRequired(true);
 
     builder.Property(p => p.BoardId)
       .HasColumnName("board_id")
-      .HasColumnType("bigint")
       .HasConversion(boardId => boardId.Value, value => new BoardId(value))
       .IsRequired(true);
 
