@@ -1,5 +1,6 @@
 using Tasker.Domain.UserAggregate;
 using Tasker.Domain.UserAggregate.Repositories;
+using Tasker.Domain.UserAggregate.ValueObjects;
 using Tasker.Infrastructure.Context;
 
 namespace Tasker.Infrastructure.Database.Repositories;
@@ -15,19 +16,25 @@ public class UserRepository : IUserRepository
 
   public async Task Add(User entity)
   {
-    _applicationDbContext.Add(entity);
+    _applicationDbContext.Users.Add(entity);
     await _applicationDbContext.SaveChangesAsync();
   }
 
-  public async Task Delete(User entity)
+  public async Task Delete(UserId id)
   {
-    _applicationDbContext.Remove(entity);
+    var user = await _applicationDbContext.Users.FindAsync(id);
+
+    if (user is not null)
+    {
+      _applicationDbContext.Users.Remove(user);
+    }
+    
     await _applicationDbContext.SaveChangesAsync();
   }
 
   public async Task<User> Update(User entity)
   {
-    _applicationDbContext.Update(entity);
+    _applicationDbContext.Users.Update(entity);
     await _applicationDbContext.SaveChangesAsync();
     return entity;
   }

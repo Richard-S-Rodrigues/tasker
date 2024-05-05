@@ -1,5 +1,6 @@
 using Tasker.Domain.BoardAggregate;
 using Tasker.Domain.BoardAggregate.Repositories;
+using Tasker.Domain.BoardAggregate.ValueObjects;
 using Tasker.Infrastructure.Context;
 
 namespace Tasker.Infrastructure.Database.Repositories;
@@ -19,9 +20,13 @@ public class BoardRepository : IBoardRepository
     await _applicationDbContext.SaveChangesAsync();
   }
 
-  public async Task Delete(Board entity)
+  public async Task Delete(BoardId id)
   {
-    _applicationDbContext.Boards.Remove(entity);
+    var board = await _applicationDbContext.Boards.FindAsync(id);
+    if (board is not null)
+    {
+      _applicationDbContext.Boards.Remove(board);
+    }
     await _applicationDbContext.SaveChangesAsync();
   }
 

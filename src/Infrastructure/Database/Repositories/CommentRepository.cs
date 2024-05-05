@@ -1,5 +1,6 @@
 using Tasker.Domain.CommentAggregate;
 using Tasker.Domain.CommentAggregate.Repositories;
+using Tasker.Domain.CommentAggregate.ValueObjects;
 using Tasker.Infrastructure.Context;
 
 namespace Tasker.Infrastructure.Database.Repositories;
@@ -15,19 +16,25 @@ public class CommentRepository : ICommentRepository
 
   public async Task Add(Comment entity)
   {
-    _applicationDbContext.Add(entity);
+    _applicationDbContext.Comments.Add(entity);
     await _applicationDbContext.SaveChangesAsync();
   }
 
-  public async Task Delete(Comment entity)
+  public async Task Delete(CommentId id)
   {
-    _applicationDbContext.Remove(entity);
+    var comment = await _applicationDbContext.Comments.FindAsync(id);
+    
+    if (comment is not null)
+    {
+      _applicationDbContext.Comments.Remove(comment);
+    }
+    
     await _applicationDbContext.SaveChangesAsync();
   }
 
   public async Task<Comment> Update(Comment entity)
   {
-    _applicationDbContext.Update(entity);
+    _applicationDbContext.Comments.Update(entity);
     await _applicationDbContext.SaveChangesAsync();
     return entity;
   }
