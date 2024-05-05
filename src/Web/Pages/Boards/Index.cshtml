@@ -1,0 +1,37 @@
+﻿@page
+@model Tasker.Web.Pages.Boards.Index
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div>
+    <div class="is-flex">
+        <div class="mr-2">
+            <input 
+                class="input"
+                type="text"
+                name="searchQuery"
+                hx-get="@Url.Page("Index", "SearchBoards")"
+                hx-trigger="keyup changed delay:500ms"
+                hx-target="#target-result"
+                placeholder="Pesquise..." 
+            /> 
+        </div>
+        <div>
+            <button 
+                class="button is-primary" 
+                hx-get="@Url.Page("Index", "SaveBoardModal")"
+                hx-target="#target-modal"
+                hx-trigger="click"
+                hx-push-url="false"
+            >
+                Criar novo espaço
+            </button>
+        </div>
+    </div>    
+    
+    <div id="target-result" class="mt-4">
+        <partial name="_Result" />
+    </div>
+    <div id="target-modal"></div>    
+</div>

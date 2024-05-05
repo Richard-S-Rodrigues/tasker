@@ -5,7 +5,7 @@ namespace Tasker.Domain.BoardAggregate;
 
 public sealed class Board : AggregateRoot<BoardId>
 {
-  private Board(
+  public Board(
     BoardId id, 
     string name) : base(id)
   {
