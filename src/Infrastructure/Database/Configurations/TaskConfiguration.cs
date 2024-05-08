@@ -91,8 +91,7 @@ internal class TaskConfiguration : IEntityTypeConfiguration<Domain.TaskAggregate
       b.Property(p => p.EndDate)
         .HasColumnName("end_date")
         .HasColumnType("timestamp without time zone")
-        .IsRequired(false)
-        .HasDefaultValue(null);
+        .IsRequired(true);
 
       b.Property(p => p.Time)
         .HasColumnName("time")
