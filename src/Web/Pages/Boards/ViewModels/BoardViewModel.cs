@@ -1,4 +1,3 @@
-using Tasker.Domain.BoardAggregate;
 using Tasker.Domain.BoardAggregate.Queries;
 using Tasker.Domain.BoardAggregate.ValueObjects;
 
@@ -18,7 +17,7 @@ public class BoardViewModel
     };
   }
 
-  public static Board ToEntity(BoardViewModel boardViewModel)
+  public static Tasker.Domain.BoardAggregate.Board ToEntity(BoardViewModel boardViewModel)
   {
     return new(new BoardId(boardViewModel.Id!.Value), boardViewModel.Name);
   }

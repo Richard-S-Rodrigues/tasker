@@ -21,7 +21,6 @@ public class Index : PageModel
 
     public ErrorViewModel Error { get; private set; } = new();
 
-    [BindProperty(SupportsGet = true)]
     public List<BoardViewModel> BoardList { get; private set; } = new();
 
     public async Task OnGetAsync()
@@ -45,6 +44,11 @@ public class Index : PageModel
         }
 
         return Partial("_Result", this);
+    }
+
+    public IActionResult OnGetBoardPage(Guid id)
+    {
+        return RedirectToPage("/boards/Index", new { id });
     }
 
     public async Task<IActionResult> OnGetSaveBoardModal(Guid? id)
