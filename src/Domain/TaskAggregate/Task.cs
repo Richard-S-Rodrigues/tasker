@@ -9,11 +9,11 @@ namespace Tasker.Domain.TaskAggregate;
 
 public sealed class Task : AggregateRoot<TaskId>
 {
-  private Task(
+  public Task(
     TaskId id,
     BoardId boardId,
     string title,
-    string description,
+    string? description,
     TimeDetails timeDetails,
     Status status,
     Priority priority,
@@ -34,7 +34,7 @@ public sealed class Task : AggregateRoot<TaskId>
   }
   public BoardId BoardId { get; private set; }
   public string Title { get; private set; }
-  public string Description { get; private set; }
+  public string? Description { get; private set; }
   public TimeDetails TimeDetails { get; private set; }
   public Status Status { get; private set; }
   public Priority Priority { get; private set; }
@@ -45,7 +45,7 @@ public sealed class Task : AggregateRoot<TaskId>
   public static Task Create(
     BoardId boardId,
     string title,
-    string description,
+    string? description,
     TimeDetails timeDetails,
     Status status,
     Priority priority,

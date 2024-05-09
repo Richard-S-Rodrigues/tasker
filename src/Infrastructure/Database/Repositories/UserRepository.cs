@@ -32,6 +32,11 @@ public class UserRepository : IUserRepository
     await _applicationDbContext.SaveChangesAsync();
   }
 
+  public async Task<User?> Get(UserId id)
+  {
+    return await _applicationDbContext.Users.FindAsync(id);
+  }
+
   public async Task<User> Update(User entity)
   {
     _applicationDbContext.Users.Update(entity);

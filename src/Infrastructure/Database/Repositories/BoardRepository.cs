@@ -30,6 +30,11 @@ public class BoardRepository : IBoardRepository
     await _applicationDbContext.SaveChangesAsync();
   }
 
+  public async Task<Board?> Get(BoardId id)
+  {
+    return await _applicationDbContext.Boards.FindAsync(id);
+  }
+
   public async Task<Board> Update(Board entity)
   {
     _applicationDbContext.Boards.Update(entity);

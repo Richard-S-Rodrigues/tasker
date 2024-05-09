@@ -37,4 +37,9 @@ public class AttachmentFileRepository : IAttachmentFileRepository
     await _applicationDbContext.SaveChangesAsync();
     return entity;
   }
+
+  public async Task<AttachmentFile?> Get(AttachmentFileId id)
+  {
+    return await _applicationDbContext.AttachmentFiles.FindAsync(id);
+  }
 }

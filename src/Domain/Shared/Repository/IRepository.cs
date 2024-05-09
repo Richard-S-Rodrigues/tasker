@@ -5,4 +5,5 @@ public interface IRepository<TEntity, TId>
   Task Add(TEntity entity);
   Task<TEntity> Update(TEntity entity);
   Task Delete(TId id);
+  Task<TEntity?> Get(TId id);
 }

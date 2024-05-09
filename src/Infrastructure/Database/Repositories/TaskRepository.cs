@@ -37,4 +37,9 @@ public class TaskRepository : ITaskRepository
     await _applicationDbContext.SaveChangesAsync();
     return entity;
   }
+
+  public async Task<Domain.TaskAggregate.Task?> Get(TaskId id)
+  {
+    return await _applicationDbContext.Tasks.FindAsync(id);
+  }
 }

@@ -38,4 +38,9 @@ public class MemberRepository : IMemberRepository
     await _applicationDbContext.SaveChangesAsync();
     return entity;
   }
+
+  public async Task<Member?> Get(MemberId id)
+  {
+    return await _applicationDbContext.Members.FindAsync(id);
+  }
 }

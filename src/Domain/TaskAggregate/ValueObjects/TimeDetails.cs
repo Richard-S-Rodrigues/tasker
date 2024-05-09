@@ -7,8 +7,8 @@ public sealed class TimeDetails : ValueObject
   public TimeDetails(
     DateTime startDate, 
     DateTime endDate,
-    TimeOnly time, 
-    TimeOnly estimatedTime)
+    TimeOnly? time, 
+    TimeOnly? estimatedTime)
   {
     StartDate = startDate;
     EndDate = endDate;
