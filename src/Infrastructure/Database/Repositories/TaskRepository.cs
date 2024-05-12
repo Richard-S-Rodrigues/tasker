@@ -1,6 +1,8 @@
+using Tasker.Domain.BoardAggregate.ValueObjects;
 using Tasker.Domain.TaskAggregate.Repositories;
 using Tasker.Domain.TaskAggregate.ValueObjects;
 using Tasker.Infrastructure.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace Tasker.Infrastructure.Database.Repositories;
 
@@ -41,5 +43,10 @@ public class TaskRepository : ITaskRepository
   public async Task<Domain.TaskAggregate.Task?> Get(TaskId id)
   {
     return await _applicationDbContext.Tasks.FindAsync(id);
+  }
+
+  public async Task<List<Domain.TaskAggregate.Task>> GetAllByBoardId(BoardId boardId)
+  {
+    return await _applicationDbContext.Tasks.Where(t => t.BoardId == boardId && t.DeletedAt == null).ToListAsync();
   }
 }

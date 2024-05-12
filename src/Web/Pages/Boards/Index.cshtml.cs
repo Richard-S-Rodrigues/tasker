@@ -46,11 +46,6 @@ public class Index : PageModel
         return Partial("_Result", this);
     }
 
-    public IActionResult OnGetBoardPage(Guid id)
-    {
-        return RedirectToPage("/boards/Index", new { id });
-    }
-
     public async Task<IActionResult> OnGetSaveBoardModal(Guid? id)
     {
         var board = new BoardViewModel();

@@ -1,4 +1,4 @@
-using Tasker.Domain.BoardAggregate.Queries;
+using Tasker.Domain.BoardAggregate;
 using Tasker.Domain.BoardAggregate.Repositories;
 using Tasker.Domain.BoardAggregate.ValueObjects;
 
@@ -12,7 +12,7 @@ public class GetBoardByIdUseCase : IGetBoardByIdUseCase
     _repository = boardRepository;
   }
 
-  public async Task<BoardDTO> Execute(BoardId input)
+  public async Task<Board> Execute(BoardId input)
   {
     var board = await _repository.Get(input);
 
@@ -21,6 +21,6 @@ public class GetBoardByIdUseCase : IGetBoardByIdUseCase
       throw new Exception("Board not found");
     }
      
-    return BoardDTO.ToDTO(board);
+    return board;
   }
 }

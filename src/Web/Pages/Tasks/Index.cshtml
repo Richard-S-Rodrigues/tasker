@@ -1,0 +1,12 @@
+@page "/tasks"
+@model Tasker.Web.Pages.Tasks.Index
+@{
+  ViewData["Title"] = "Tarefas";
+}
+
+<div>
+  <div>
+    <h2>@Model.Board.Name</h2>
+  </div>
+  <partial name="_Result" />
+</div>

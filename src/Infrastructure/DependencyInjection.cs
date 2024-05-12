@@ -2,7 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Tasker.Application.Boards.Queries;
-using Tasker.Application.Tasks.Queries;
 using Tasker.Domain.AttachmentFileAggregate.Repositories;
 using Tasker.Domain.BoardAggregate.Repositories;
 using Tasker.Domain.CommentAggregate.Repositories;
@@ -36,7 +35,6 @@ public static class DependencyInjection
     services.AddScoped<ITaskRepository, TaskRepository>();
 
     services.AddScoped<IBoardQueries, BoardQueries>();
-    services.AddScoped<ITaskQueries, TaskQueries>();
   
     return services;
   }

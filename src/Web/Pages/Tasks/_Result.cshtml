@@ -1,0 +1,21 @@
+@model Tasker.Web.Pages.Tasks.Index;
+
+<div>
+  @if (!Model.TaskList.Any())
+  {
+    <div>Nenhuma tarefa encontrada.</div>
+  }
+  else 
+  {
+    <ul>
+      @foreach (var task in Model.TaskList)
+      {
+        <li 
+          class="my-2 p-2 border is-flex is-align-items-center is-justify-content-space-between"
+        >
+          <span>@task.Title</span>
+        </li>
+      }
+    </ul>
+  }
+</div>

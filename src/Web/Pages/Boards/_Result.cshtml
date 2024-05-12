@@ -15,18 +15,14 @@
         >
           <span>@board.Name</span>
           <div>
-            <button
+            <a
               class="button"
-              type="button"
-              hx-get="@Url.Page("Index", "BoardPage", new { id = board.Id })"
-              hx-trigger="click"
-              hx-push-url="true"
-              hx-swap="outerHTML"
+              href="/tasks?boardId=@board.Id!.Value"
             >
               <span class="icon is-small">
                 <i class="fas fa-eye"></i>
               </span>
-            </button>
+            </a>
             <button 
               class="button"
               type="button"

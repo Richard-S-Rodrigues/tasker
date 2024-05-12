@@ -1,19 +1,20 @@
 using MediatR;
 using Tasker.Domain.TaskAggregate.Queries;
+using Tasker.Domain.TaskAggregate.Repositories;
 
 namespace Tasker.Application.Tasks.Queries;
 
 public class GetAllTasksQueryHandler : IRequestHandler<GetAllTasksByBoardIdQuery, List<Domain.TaskAggregate.Task>>
 {
-  private readonly ITaskQueries _taskQueries;
+  private readonly ITaskRepository _taskRepository;
 
-  public GetAllTasksQueryHandler(ITaskQueries taskQueries)
+  public GetAllTasksQueryHandler(ITaskRepository taskRepository)
   {
-    _taskQueries = taskQueries;
+    _taskRepository = taskRepository;
   }
 
   public async Task<List<Domain.TaskAggregate.Task>> Handle(GetAllTasksByBoardIdQuery request, CancellationToken cancellationToken)
   {
-    return await _taskQueries.GetAllTasksByBoardId(request.boardId.Value);
+    return await _taskRepository.GetAllByBoardId(request.boardId);
   }
 }
