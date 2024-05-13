@@ -1,21 +1,188 @@
+@using Tasker.Domain.TaskAggregate.Enums
 @model Tasker.Web.Pages.Tasks.Index;
 
-<div>
+<div class="my-4">
   @if (!Model.TaskList.Any())
   {
     <div>Nenhuma tarefa encontrada.</div>
   }
   else 
   {
-    <ul>
-      @foreach (var task in Model.TaskList)
-      {
-        <li 
-          class="my-2 p-2 border is-flex is-align-items-center is-justify-content-space-between"
-        >
-          <span>@task.Title</span>
-        </li>
-      }
-    </ul>
+    <div>
+      <section class="my-4">
+        <div class="is-flex is-align-items-center">
+          <button 
+            class="button is-small" 
+            _="
+              on click 
+                toggle the *display of <i#in-refinement-tasks-hidden/>
+                toggle the *display of <i#in-refinement-tasks-shown/>
+                toggle the *display of the next <ul/>
+            "
+          >
+            <span class="icon">
+              <i class="fas fa-caret-right" id="in-refinement-tasks-hidden"></i>
+              <i class="fas fa-caret-down" id="in-refinement-tasks-shown" style="display: none;"></i>
+            </span>
+          </button>
+          <h3 class="is-size-5 ml-2">Em refinamento</h3>
+        </div>
+        <ul style="display: none;">
+          @foreach (var task in Model.TaskList.Where(t => t.Status == Status.InRefinement).ToList())
+          {
+            <li 
+              class="my-2 p-2 border is-flex is-align-items-center is-justify-content-space-between"
+            >
+              <span>@task.Title</span>
+            </li>
+          }
+        </ul>
+      </section>
+      <section class="my-4">
+        <div class="is-flex is-align-items-center">
+          <button 
+            class="button is-small" 
+            _="
+              on click 
+                toggle the *display of <i#ready-tasks-hidden/>
+                toggle the *display of <i#ready-tasks-shown/>
+                toggle the *display of the next <ul/>
+            "
+          >
+            <span class="icon">
+              <i class="fas fa-caret-right" id="ready-tasks-hidden"></i>
+              <i class="fas fa-caret-down" id="ready-tasks-shown" style="display: none;"></i>
+            </span>
+          </button>
+          <h3 class="is-size-5 ml-2">Pronto</h3>
+        </div>
+        <ul style="display: none;">
+          @foreach (var task in Model.TaskList.Where(t => t.Status == Status.Ready).ToList())
+          {
+            <li 
+              class="my-2 p-2 border is-flex is-align-items-center is-justify-content-space-between"
+            >
+              <span>@task.Title</span>
+            </li>
+          }
+        </ul>
+      </section>
+      <section class="my-4">
+        <div class="is-flex is-align-items-center">
+          <button 
+            class="button is-small" 
+            _="
+              on click 
+                toggle the *display of <i#on-progress-tasks-hidden/>
+                toggle the *display of <i#on-progress-tasks-shown/>
+                toggle the *display of next <ul/>
+            "
+          >
+            <span class="icon">
+              <i class="fas fa-caret-right" id="on-progress-tasks-hidden"></i>
+              <i class="fas fa-caret-down" id="on-progress-tasks-shown" style="display: none;"></i>
+            </span>
+          </button>
+          <h3 class="is-size-5 ml-2">Em progresso</h3>
+        </div>
+        <ul style="display: none;">
+          @foreach (var task in Model.TaskList.Where(t => t.Status == Status.OnProgress).ToList())
+          {
+            <li 
+              class="my-2 p-2 border is-flex is-align-items-center is-justify-content-space-between"
+            >
+              <span>@task.Title</span>
+            </li>
+          }
+        </ul>
+      </section>
+      <section class="my-4">
+        <div class="is-flex is-align-items-center">
+          <button 
+            class="button is-small" 
+            _="
+              on click 
+                toggle the *display of <i#interrupted-tasks-hidden/>
+                toggle the *display of <i#interrupted-tasks-shown/>
+                toggle the *display of next <ul/>
+            "
+          >
+            <span class="icon">
+              <i class="fas fa-caret-right" id="interrupted-tasks-hidden"></i>
+              <i class="fas fa-caret-down" id="interrupted-tasks-shown" style="display: none;"></i>
+            </span>
+          </button>
+          <h3 class="is-size-5 ml-2">Interrompido</h3>
+        </div>
+        <ul style="display: none;">
+          @foreach (var task in Model.TaskList.Where(t => t.Status == Status.Interrupted).ToList())
+          {
+            <li 
+              class="my-2 p-2 border is-flex is-align-items-center is-justify-content-space-between"
+            >
+              <span>@task.Title</span>
+            </li>
+          }
+        </ul>
+      </section>
+      <section class="my-4">
+        <div class="is-flex is-align-items-center">
+          <button 
+            class="button is-small" 
+            _="
+              on click 
+                toggle the *display of <i#canceled-tasks-hidden/>
+                toggle the *display of <i#canceled-tasks-shown/>
+                toggle the *display of next <ul/>
+            "
+          >
+            <span class="icon">
+              <i class="fas fa-caret-right" id="canceled-tasks-hidden"></i>
+              <i class="fas fa-caret-down" id="canceled-tasks-shown" style="display: none;"></i>
+            </span>
+          </button>
+          <h3 class="is-size-5 ml-2">Cancelado</h3>
+        </div>
+        <ul style="display: none;">
+          @foreach (var task in Model.TaskList.Where(t => t.Status == Status.Canceled).ToList())
+          {
+            <li 
+              class="my-2 p-2 border is-flex is-align-items-center is-justify-content-space-between"
+            >
+              <span>@task.Title</span>
+            </li>
+          }
+        </ul>
+      </section>
+      <section class="my-4">
+        <div class="is-flex is-align-items-center">
+          <button 
+            class="button is-small" 
+            _="
+              on click 
+                toggle the *display of <i#done-tasks-hidden/>
+                toggle the *display of <i#done-tasks-shown/>
+                toggle the *display of next <ul/>
+            "
+          >
+            <span class="icon">
+              <i class="fas fa-caret-right" id="done-tasks-hidden"></i>
+              <i class="fas fa-caret-down" id="done-tasks-shown" style="display: none;"></i>
+            </span>
+          </button>
+          <h3 class="is-size-5 ml-2">Concluído</h3>
+        </div>
+        <ul style="display: none;">
+          @foreach (var task in Model.TaskList.Where(t => t.Status == Status.Done).ToList())
+          {
+            <li 
+              class="my-2 p-2 border is-flex is-align-items-center is-justify-content-space-between"
+            >
+              <span>@task.Title</span>
+            </li>
+          }
+        </ul>
+      </section>
+    </div>
   }
 </div>

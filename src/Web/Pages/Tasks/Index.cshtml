@@ -4,9 +4,10 @@
   ViewData["Title"] = "Tarefas";
 }
 
-<div>
-  <div>
-    <h2>@Model.Board.Name</h2>
+<div class="mt-4">
+  <div class="is-flex is-justify-content-space-between is-align-items-center">
+    <h2 class="is-size-1">@Model.Board.Name</h2>
+    <button class="button is-primary">Criar nova tarefa</button>
   </div>
   <partial name="_Result" />
 </div>

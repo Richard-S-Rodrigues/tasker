@@ -25,7 +25,7 @@ public class Index : PageModel
   public BoardViewModel Board { get; private set; }
   
   public List<TaskViewModel> TaskList { get; private set; } = new();
-
+  
   public async Task<IActionResult> OnGetAsync(Guid? boardId)
   {
     if (boardId == null)
