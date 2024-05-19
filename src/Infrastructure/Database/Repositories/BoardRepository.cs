@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Tasker.Domain.BoardAggregate;
 using Tasker.Domain.BoardAggregate.Repositories;
 using Tasker.Domain.BoardAggregate.ValueObjects;
@@ -33,6 +34,11 @@ public class BoardRepository : IBoardRepository
   public async Task<Board?> Get(BoardId id)
   {
     return await _applicationDbContext.Boards.FindAsync(id);
+  }
+
+  public async Task<List<Board>> GetAll()
+  {
+    return await _applicationDbContext.Boards.Where(b => b.DeletedAt == null).ToListAsync();
   }
 
   public async Task<Board> Update(Board entity)

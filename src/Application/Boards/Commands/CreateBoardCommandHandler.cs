@@ -16,7 +16,7 @@ public class CreateBoardCommandHandler : IRequestHandler<CreateBoardCommand>
 
   public async Task Handle(CreateBoardCommand request, CancellationToken cancellationToken)
   {
-    var board = Board.Create(request.Name);
+    var board = Board.Create(request.Name, new List<Member>());
 
     await _boardRepository.Add(board);
   }

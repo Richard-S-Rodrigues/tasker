@@ -1,11 +1,10 @@
 using Tasker.Domain.BoardAggregate.ValueObjects;
-using Tasker.Domain.MemberAggregate.ValueObjects;
 using Tasker.Domain.Shared;
 using Tasker.Domain.UserAggregate.ValueObjects;
 
-namespace Tasker.Domain.MemberAggregate;
+namespace Tasker.Domain.BoardAggregate;
 
-public sealed class Member : AggregateRoot<MemberId>
+public sealed class Member : Entity<MemberId>
 {
   private Member(
     MemberId id,

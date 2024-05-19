@@ -1,4 +1,5 @@
 using Tasker.Domain.BoardAggregate.ValueObjects;
+using Tasker.Domain.TaskAggregate;
 using Tasker.Domain.TaskAggregate.Enums;
 using Tasker.Domain.TaskAggregate.ValueObjects;
 

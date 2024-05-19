@@ -1,6 +1,6 @@
 using Tasker.Domain.Shared;
 
-namespace Tasker.Domain.MemberAggregate.ValueObjects;
+namespace Tasker.Domain.BoardAggregate.ValueObjects;
 
 public sealed class MemberId : ValueObject
 {

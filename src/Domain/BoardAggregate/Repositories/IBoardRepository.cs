@@ -5,5 +5,5 @@ namespace Tasker.Domain.BoardAggregate.Repositories;
 
 public interface IBoardRepository : IRepository<Board, BoardId>
 {
-
+  Task<List<Board>> GetAll();
 }

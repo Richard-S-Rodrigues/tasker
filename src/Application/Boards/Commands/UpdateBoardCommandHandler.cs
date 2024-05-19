@@ -16,7 +16,7 @@ public class UpdateBoardCommandHandler : IRequestHandler<UpdateBoardCommand>
 
   public async Task Handle(UpdateBoardCommand request, CancellationToken cancellationToken)
   {
-    var board = new Board(request.Id, request.Name);
+    var board = new Board(request.Id, request.Name, request.Members);
 
     await _boardRepository.Update(board);
   }

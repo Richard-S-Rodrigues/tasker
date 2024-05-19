@@ -7,6 +7,7 @@ using Htmx;
 using Tasker.Web.Pages.Shared.ViewModels;
 using Tasker.Web.Pages.Boards.ViewModels;
 using Tasker.Domain.BoardAggregate.ValueObjects;
+using Tasker.Domain.BoardAggregate;
 
 namespace Tasker.Web.Pages.Boards;
 
@@ -74,7 +75,7 @@ public class Index : PageModel
         {
             if (id.HasValue)
             {
-                var updateCommand = new UpdateBoardCommand(new BoardId(id.Value), name);
+                var updateCommand = new UpdateBoardCommand(new BoardId(id.Value), name, new List<Member>());
                 await _sender.Send(updateCommand);
             }
             else 

@@ -7,16 +7,24 @@ public sealed class Board : AggregateRoot<BoardId>
 {
   public Board(
     BoardId id, 
-    string name) : base(id)
+    string name,
+    List<Member> members) : base(id)
   {
     Name = name;
+    Members = members;
   }
 
   public string Name { get; private set; }
+  public List<Member> Members { get; private set; }
 
-  public static Board Create(string name)
+  public static Board Create(string name, List<Member> members)
   {
-    return new Board(new BoardId(Guid.NewGuid()), name);
+    return new Board(new BoardId(Guid.NewGuid()), name, members);
+  }
+
+  public void AddMember(Member member)
+  {
+    Members.Add(member);
   }
 
   #pragma warning disable
