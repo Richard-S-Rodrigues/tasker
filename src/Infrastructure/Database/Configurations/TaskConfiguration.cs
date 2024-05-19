@@ -45,7 +45,7 @@ internal class TaskConfiguration : IEntityTypeConfiguration<Domain.TaskAggregate
 
     ConfigureTimeDetails(builder);
     ConfigureResponsiblesTable(builder);
-    ConfigureAttachmentFileIdsTable(builder);
+    ConfigureAttachmentFilesTable(builder);
     ConfigureCommentIdsTable(builder);
 
     builder.Property(p => p.CreatedAt)
@@ -160,21 +160,56 @@ internal class TaskConfiguration : IEntityTypeConfiguration<Domain.TaskAggregate
       .SetPropertyAccessMode(PropertyAccessMode.Field);
   }
 
-  private static void ConfigureAttachmentFileIdsTable(EntityTypeBuilder<Domain.TaskAggregate.Task> builder)
+  private static void ConfigureAttachmentFilesTable(EntityTypeBuilder<Domain.TaskAggregate.Task> builder)
   {
-    builder.OwnsMany(m => m.AttachmentFileIds, b =>
+    builder.OwnsMany(m => m.AttachmentFiles, b =>
     {
-      b.ToTable("task_attachment_file_ids");
-        b.WithOwner().HasForeignKey("task_id");
-        b.Property<Guid>("id").ValueGeneratedOnAdd();
-        b.HasKey("id");
-        b.Property(attachmentFileId => attachmentFileId.Value)
-          .HasColumnName("attachment_file_id")
-          .ValueGeneratedNever();
+      b.ToTable("task_attachment_file");
+        
+      b.HasKey(p => p.Id);
+
+      b.Property(p => p.Id)
+        .HasColumnName("id")
+        .HasConversion(
+          id => id.Value,
+          value => new AttachmentFileId(value)
+        );
+      
+      b.Property(p => p.TaskId)
+        .HasColumnName("task_id")
+        .HasConversion(taskId => taskId.Value, value => new TaskId(value));
+      
+      b.Property(p => p.CreatedAt)
+        .HasColumnName("created_at")
+        .HasColumnType("timestamp without time zone");
+      b.Property(p => p.UpdatedAt)
+        .HasColumnName("updated_at")
+        .HasColumnType("timestamp without time zone");
+      b.Property(p => p.DeletedAt)
+        .HasColumnName("deleted_at")
+        .HasColumnType("timestamp without time zone");
+      b.Property(p => p.CreatedBy)
+        .HasColumnName("created_by")
+        .HasConversion<long?>(
+            s => s != null ? Convert.ToInt64(s) : null,
+            l => l != null ? Convert.ToString(l) : null
+        );
+      b.Property(p => p.UpdatedBy)
+        .HasColumnName("updated_by")
+        .HasConversion<long?>(
+            s => s != null ? Convert.ToInt64(s) : null,
+            l => l != null ? Convert.ToString(l) : null
+        );
+      b.Property(p => p.DeletedBy)
+        .HasColumnName("deleted_by")
+        .HasConversion<long?>(
+            s => s != null ? Convert.ToInt64(s) : null,
+            l => l != null ? Convert.ToString(l) : null
+        );
     });
 
     builder.Metadata
-      .FindNavigation(nameof(Domain.TaskAggregate.Task.AttachmentFileIds))!
+      .FindNavigation(nameof(Domain.TaskAggregate.Task.AttachmentFiles))!
       .SetPropertyAccessMode(PropertyAccessMode.Field);
   }
 

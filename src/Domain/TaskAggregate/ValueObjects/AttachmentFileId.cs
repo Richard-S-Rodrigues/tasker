@@ -1,6 +1,6 @@
 using Tasker.Domain.Shared;
 
-namespace Tasker.Domain.AttachmentFileAggregate.ValueObjects;
+namespace Tasker.Domain.TaskAggregate.ValueObjects;
 
 public sealed class AttachmentFileId : ValueObject
 {

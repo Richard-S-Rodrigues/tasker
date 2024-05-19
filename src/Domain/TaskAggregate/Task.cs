@@ -1,4 +1,3 @@
-using Tasker.Domain.AttachmentFileAggregate.ValueObjects;
 using Tasker.Domain.BoardAggregate.ValueObjects;
 using Tasker.Domain.CommentAggregate.ValueObjects;
 using Tasker.Domain.Shared;
@@ -18,7 +17,7 @@ public sealed class Task : AggregateRoot<TaskId>
     Status status,
     Priority priority,
     List<Responsible> responsibles,
-    List<AttachmentFileId> attachmentFileIds,
+    List<AttachmentFile> attachmentFiles,
     List<CommentId> commentIds
   ) : base(id)
   {
@@ -29,7 +28,7 @@ public sealed class Task : AggregateRoot<TaskId>
     Status = status;
     Priority = priority;
     Responsibles = responsibles;
-    AttachmentFileIds = attachmentFileIds;
+    AttachmentFiles = attachmentFiles;
     CommentIds = commentIds;
   }
   public BoardId BoardId { get; private set; }
@@ -39,7 +38,7 @@ public sealed class Task : AggregateRoot<TaskId>
   public Status Status { get; private set; }
   public Priority Priority { get; private set; }
   public List<Responsible> Responsibles { get; private set; }
-  public List<AttachmentFileId> AttachmentFileIds { get; private set; }
+  public List<AttachmentFile> AttachmentFiles { get; private set; }
   public List<CommentId> CommentIds { get; private set; }
 
   public static Task Create(
@@ -50,7 +49,7 @@ public sealed class Task : AggregateRoot<TaskId>
     Status status,
     Priority priority,
     List<Responsible> responsibles,
-    List<AttachmentFileId> attachmentFileIds,
+    List<AttachmentFile> attachmentFiles,
     List<CommentId> commentIds)
   {
     return new Task(
@@ -62,7 +61,7 @@ public sealed class Task : AggregateRoot<TaskId>
       status, 
       priority, 
       responsibles, 
-      attachmentFileIds, 
+      attachmentFiles, 
       commentIds); 
   }
 

@@ -1,10 +1,9 @@
-using Tasker.Domain.AttachmentFileAggregate.ValueObjects;
 using Tasker.Domain.Shared;
 using Tasker.Domain.TaskAggregate.ValueObjects;
 
-namespace Tasker.Domain.AttachmentFileAggregate;
+namespace Tasker.Domain.TaskAggregate;
 
-public sealed class AttachmentFile : AggregateRoot<AttachmentFileId>
+public sealed class AttachmentFile : Entity<AttachmentFileId>
 {
   private AttachmentFile(
     AttachmentFileId id,

@@ -1,7 +1,7 @@
 using FluentValidation;
 using MediatR;
-using Tasker.Domain.AttachmentFileAggregate.ValueObjects;
 using Tasker.Domain.CommentAggregate.ValueObjects;
+using Tasker.Domain.TaskAggregate;
 using Tasker.Domain.TaskAggregate.Commands;
 using Tasker.Domain.TaskAggregate.Enums;
 using Tasker.Domain.TaskAggregate.Repositories;
@@ -18,7 +18,7 @@ public class CreateTaskCommandHandler : IRequestHandler<CreateTaskCommand>
     _taskRepository = taskRepository;
   }
 
-  public async Task Handle(CreateTaskCommand request, CancellationToken cancellationToken)
+  public async System.Threading.Tasks.Task Handle(CreateTaskCommand request, CancellationToken cancellationToken)
   {
     var task = Domain.TaskAggregate.Task.Create(
       request.boardId,
@@ -28,7 +28,7 @@ public class CreateTaskCommandHandler : IRequestHandler<CreateTaskCommand>
       Status.InRefinement,
       request.priority,
       request.responsibles,
-      new List<AttachmentFileId>(),
+      new List<AttachmentFile>(),
       new List<CommentId>()
     );
 

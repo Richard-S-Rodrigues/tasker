@@ -2,7 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Tasker.Application.Boards.Queries;
-using Tasker.Domain.AttachmentFileAggregate.Repositories;
 using Tasker.Domain.BoardAggregate.Repositories;
 using Tasker.Domain.CommentAggregate.Repositories;
 using Tasker.Domain.MemberAggregate.Repositories;
@@ -28,7 +27,6 @@ public static class DependencyInjection
       x => x.MigrationsHistoryTable("_EfMigrations", "public")));
     
     services.AddScoped<IBoardRepository, BoardRepository>();
-    services.AddScoped<IAttachmentFileRepository, AttachmentFileRepository>();
     services.AddScoped<ICommentRepository, CommentRepository>();
     services.AddScoped<IMemberRepository, MemberRepository>();
     services.AddScoped<IUserRepository, UserRepository>();
