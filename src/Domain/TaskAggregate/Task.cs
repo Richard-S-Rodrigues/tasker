@@ -1,6 +1,8 @@
+using FluentValidation;
 using Tasker.Domain.BoardAggregate.ValueObjects;
 using Tasker.Domain.Shared;
 using Tasker.Domain.TaskAggregate.Enums;
+using Tasker.Domain.TaskAggregate.Validation;
 using Tasker.Domain.TaskAggregate.ValueObjects;
 
 namespace Tasker.Domain.TaskAggregate;
@@ -31,6 +33,9 @@ public sealed class Task : AggregateRoot<TaskId>
     AttachmentFiles = attachmentFiles;
     Comments = comments;
     TaskChecklists = taskChecklists;
+
+    var validator = new TaskValidator();
+    validator.ValidateAndThrow(this);
   }
   public BoardId BoardId { get; private set; }
   public string Title { get; private set; }
