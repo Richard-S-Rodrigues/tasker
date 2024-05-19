@@ -1,6 +1,6 @@
 using Tasker.Domain.Shared;
 
-namespace Tasker.Domain.TaskChecklistAggregate.ValueObjects;
+namespace Tasker.Domain.TaskAggregate.ValueObjects;
 
 public sealed class TaskChecklistId : ValueObject
 {

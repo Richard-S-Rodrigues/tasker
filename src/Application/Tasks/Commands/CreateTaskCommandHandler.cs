@@ -28,7 +28,8 @@ public class CreateTaskCommandHandler : IRequestHandler<CreateTaskCommand>
       request.priority,
       request.responsibles,
       new List<AttachmentFile>(),
-      new List<Comment>()
+      new List<Comment>(),
+      new List<TaskChecklist>()
     );
 
     var validator = new TaskValidator();

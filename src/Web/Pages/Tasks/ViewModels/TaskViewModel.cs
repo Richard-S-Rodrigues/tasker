@@ -17,6 +17,7 @@ public class TaskViewModel
   public List<Responsible> Responsibles { get; set; } = new();
   public List<AttachmentFile> AttachmentFiles { get; set; } = new();
   public List<Comment> Comments { get; set; } = new();
+  public List<TaskChecklist> TaskChecklists { get; set; } = new();
 
   public static TaskViewModel ToViewModel(Domain.TaskAggregate.Task task)
   {
@@ -30,7 +31,8 @@ public class TaskViewModel
       Priority = task.Priority,
       Responsibles = task.Responsibles,
       AttachmentFiles = task.AttachmentFiles,
-      Comments = task.Comments
+      Comments = task.Comments,
+      TaskChecklists = task.TaskChecklists
     };
   }
 
@@ -46,6 +48,7 @@ public class TaskViewModel
       taskViewModel.Priority,
       taskViewModel.Responsibles,
       taskViewModel.AttachmentFiles,
-      taskViewModel.Comments);
+      taskViewModel.Comments,
+      taskViewModel.TaskChecklists);
   }
 }

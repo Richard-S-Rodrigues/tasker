@@ -1,11 +1,10 @@
 using Tasker.Domain.Shared;
 using Tasker.Domain.TaskAggregate.ValueObjects;
-using Tasker.Domain.TaskChecklistAggregate.ValueObjects;
 using Tasker.Domain.UserAggregate.ValueObjects;
 
-namespace Tasker.Domain.TaskChecklistAggregate;
+namespace Tasker.Domain.TaskAggregate;
 
-public sealed class TaskChecklist : AggregateRoot<TaskChecklistId>
+public sealed class TaskChecklist : Entity<TaskChecklistId>
 {
   public TaskChecklist(
     TaskChecklistId id, 

@@ -47,6 +47,7 @@ internal class TaskConfiguration : IEntityTypeConfiguration<Domain.TaskAggregate
     ConfigureResponsiblesTable(builder);
     ConfigureAttachmentFilesTable(builder);
     ConfigureCommentsTable(builder);
+    ConfigureTaskChecklistsTable(builder);
 
     builder.Property(p => p.CreatedAt)
       .HasColumnName("created_at")
@@ -273,6 +274,74 @@ internal class TaskConfiguration : IEntityTypeConfiguration<Domain.TaskAggregate
 
     builder.Metadata
       .FindNavigation(nameof(Domain.TaskAggregate.Task.Comments))!
+      .SetPropertyAccessMode(PropertyAccessMode.Field);
+  }
+
+  private static void ConfigureTaskChecklistsTable(EntityTypeBuilder<Domain.TaskAggregate.Task> builder)
+  {
+    builder.OwnsMany(m => m.TaskChecklists, b =>
+    {
+      b.ToTable("task_checklist");
+
+      b.HasKey(p => p.Id);
+
+      b.Property(p => p.Id)
+        .HasColumnName("id")
+        .HasConversion(
+          TaskChecklistId => TaskChecklistId.Value,
+          value => new TaskChecklistId(value)
+        );
+
+      b.Property(p => p.Title)
+        .HasColumnName("title")
+        .IsRequired(true);
+
+      b.Property(p => p.IsDone)
+        .HasColumnName("is_done")
+        .HasColumnType("boolean")
+        .HasDefaultValue(false);
+
+      b.Property(p => p.UserId)
+        .HasColumnName("user_id")
+        .HasConversion(userId => userId.Value, value => new UserId(value))
+        .IsRequired(true);
+
+      b.Property(p => p.TaskId)
+        .HasColumnName("task_id")
+        .HasConversion(taskId => taskId.Value, value => new TaskId(value))
+        .IsRequired(true);
+
+      b.Property(p => p.CreatedAt)
+        .HasColumnName("created_at")
+        .HasColumnType("timestamp without time zone");
+      b.Property(p => p.UpdatedAt)
+        .HasColumnName("updated_at")
+        .HasColumnType("timestamp without time zone");
+      b.Property(p => p.DeletedAt)
+        .HasColumnName("deleted_at")
+        .HasColumnType("timestamp without time zone");
+      b.Property(p => p.CreatedBy)
+        .HasColumnName("created_by")
+        .HasConversion<long?>(
+            s => s != null ? Convert.ToInt64(s) : null,
+            l => l != null ? Convert.ToString(l) : null
+        );
+      b.Property(p => p.UpdatedBy)
+        .HasColumnName("updated_by")
+        .HasConversion<long?>(
+            s => s != null ? Convert.ToInt64(s) : null,
+            l => l != null ? Convert.ToString(l) : null
+        );
+      b.Property(p => p.DeletedBy)
+        .HasColumnName("deleted_by")
+        .HasConversion<long?>(
+            s => s != null ? Convert.ToInt64(s) : null,
+            l => l != null ? Convert.ToString(l) : null
+        );
+    });
+
+    builder.Metadata
+      .FindNavigation(nameof(Domain.TaskAggregate.Task.TaskChecklists))!
       .SetPropertyAccessMode(PropertyAccessMode.Field);
   }
 } 

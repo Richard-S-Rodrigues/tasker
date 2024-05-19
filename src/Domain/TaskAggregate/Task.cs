@@ -17,7 +17,8 @@ public sealed class Task : AggregateRoot<TaskId>
     Priority priority,
     List<Responsible> responsibles,
     List<AttachmentFile> attachmentFiles,
-    List<Comment> comments
+    List<Comment> comments,
+    List<TaskChecklist> taskChecklists
   ) : base(id)
   {
     BoardId = boardId;
@@ -29,6 +30,7 @@ public sealed class Task : AggregateRoot<TaskId>
     Responsibles = responsibles;
     AttachmentFiles = attachmentFiles;
     Comments = comments;
+    TaskChecklists = taskChecklists;
   }
   public BoardId BoardId { get; private set; }
   public string Title { get; private set; }
@@ -39,6 +41,7 @@ public sealed class Task : AggregateRoot<TaskId>
   public List<Responsible> Responsibles { get; private set; }
   public List<AttachmentFile> AttachmentFiles { get; private set; }
   public List<Comment> Comments { get; private set; }
+  public List<TaskChecklist> TaskChecklists { get; private set; }
 
   public static Task Create(
     BoardId boardId,
@@ -49,7 +52,8 @@ public sealed class Task : AggregateRoot<TaskId>
     Priority priority,
     List<Responsible> responsibles,
     List<AttachmentFile> attachmentFiles,
-    List<Comment> comments)
+    List<Comment> comments,
+    List<TaskChecklist> taskChecklists)
   {
     return new Task(
       new TaskId(Guid.NewGuid()), 
@@ -61,7 +65,8 @@ public sealed class Task : AggregateRoot<TaskId>
       priority, 
       responsibles, 
       attachmentFiles, 
-      comments); 
+      comments,
+      taskChecklists); 
   }
 
   #pragma warning disable
