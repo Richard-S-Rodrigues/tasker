@@ -1,6 +1,4 @@
-using Tasker.Domain.AttachmentFileAggregate.ValueObjects;
 using Tasker.Domain.BoardAggregate.ValueObjects;
-using Tasker.Domain.CommentAggregate.ValueObjects;
 using Tasker.Domain.TaskAggregate.Enums;
 using Tasker.Domain.TaskAggregate.ValueObjects;
 
@@ -16,8 +14,8 @@ public class TaskViewModel
   public Status Status { get; set; }
   public Priority Priority { get; set; }
   public List<Responsible> Responsibles { get; set; } = new();
-  public List<AttachmentFileId> AttachmentFileIds { get; set; } = new();
-  public List<CommentId> CommentIds { get; set; } = new();
+  public List<AttachmentFile> AttachmentFiles { get; set; } = new();
+  public List<Comment> Comments { get; set; } = new();
 
   public static TaskViewModel ToViewModel(Domain.TaskAggregate.Task task)
   {
@@ -30,8 +28,8 @@ public class TaskViewModel
       Status = task.Status,
       Priority = task.Priority,
       Responsibles = task.Responsibles,
-      AttachmentFileIds = task.AttachmentFileIds,
-      CommentIds = task.CommentIds
+      AttachmentFiles = task.AttachmentFiles,
+      Comments = task.Comments
     };
   }
 
@@ -46,7 +44,7 @@ public class TaskViewModel
       taskViewModel.Status,
       taskViewModel.Priority,
       taskViewModel.Responsibles,
-      taskViewModel.AttachmentFileIds,
-      taskViewModel.CommentIds);
+      taskViewModel.AttachmentFiles,
+      taskViewModel.Comments);
   }
 }

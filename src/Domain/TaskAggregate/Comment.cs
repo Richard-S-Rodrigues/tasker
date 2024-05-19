@@ -1,11 +1,10 @@
-using Tasker.Domain.CommentAggregate.ValueObjects;
 using Tasker.Domain.Shared;
 using Tasker.Domain.TaskAggregate.ValueObjects;
 using Tasker.Domain.UserAggregate.ValueObjects;
 
-namespace Tasker.Domain.CommentAggregate;
+namespace Tasker.Domain.TaskAggregate;
 
-public sealed class Comment : AggregateRoot<CommentId>
+public sealed class Comment : Entity<CommentId>
 {
   private Comment(
     CommentId id,

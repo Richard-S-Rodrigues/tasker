@@ -46,7 +46,7 @@ internal class TaskConfiguration : IEntityTypeConfiguration<Domain.TaskAggregate
     ConfigureTimeDetails(builder);
     ConfigureResponsiblesTable(builder);
     ConfigureAttachmentFilesTable(builder);
-    ConfigureCommentIdsTable(builder);
+    ConfigureCommentsTable(builder);
 
     builder.Property(p => p.CreatedAt)
       .HasColumnName("created_at")
@@ -213,21 +213,66 @@ internal class TaskConfiguration : IEntityTypeConfiguration<Domain.TaskAggregate
       .SetPropertyAccessMode(PropertyAccessMode.Field);
   }
 
-  private static void ConfigureCommentIdsTable(EntityTypeBuilder<Domain.TaskAggregate.Task> builder)
+  private static void ConfigureCommentsTable(EntityTypeBuilder<Domain.TaskAggregate.Task> builder)
   {
-    builder.OwnsMany(m => m.CommentIds, b =>
+    builder.OwnsMany(m => m.Comments, b =>
     {
-      b.ToTable("task_comment_ids");
-        b.WithOwner().HasForeignKey("task_id");
-        b.Property<Guid>("id").ValueGeneratedOnAdd();
-        b.HasKey("id");
-        b.Property(commentId => commentId.Value)
-          .HasColumnName("comment_id")
-          .ValueGeneratedNever();
+      b.ToTable("task_comment");
+
+      b.HasKey(p => p.Id);
+
+      b.Property(p => p.Id)
+        .HasColumnName("id")
+        .HasConversion(
+          commentId => commentId.Value,
+          value => new CommentId(value)
+        );
+    
+      b.Property(c => c.Text)
+        .HasColumnName("text")
+        .IsRequired(true);
+
+      b.Property(p => p.UserId)
+        .HasColumnName("user_id")
+        .HasConversion(userId => userId.Value, value => new UserId(value))
+        .IsRequired(true);
+
+      b.Property(p => p.TaskId)
+        .HasColumnName("task_id")
+        .HasConversion(taskId => taskId.Value, value => new TaskId(value))
+        .IsRequired(true);
+    
+      b.Property(p => p.CreatedAt)
+        .HasColumnName("created_at")
+        .HasColumnType("timestamp without time zone");
+      b.Property(p => p.UpdatedAt)
+        .HasColumnName("updated_at")
+        .HasColumnType("timestamp without time zone");
+      b.Property(p => p.DeletedAt)
+        .HasColumnName("deleted_at")
+        .HasColumnType("timestamp without time zone");
+      b.Property(p => p.CreatedBy)
+        .HasColumnName("created_by")
+        .HasConversion<long?>(
+            s => s != null ? Convert.ToInt64(s) : null,
+            l => l != null ? Convert.ToString(l) : null
+        );
+      b.Property(p => p.UpdatedBy)
+        .HasColumnName("updated_by")
+        .HasConversion<long?>(
+            s => s != null ? Convert.ToInt64(s) : null,
+            l => l != null ? Convert.ToString(l) : null
+        );
+      b.Property(p => p.DeletedBy)
+        .HasColumnName("deleted_by")
+        .HasConversion<long?>(
+            s => s != null ? Convert.ToInt64(s) : null,
+            l => l != null ? Convert.ToString(l) : null
+        );
     });
 
     builder.Metadata
-      .FindNavigation(nameof(Domain.TaskAggregate.Task.CommentIds))!
+      .FindNavigation(nameof(Domain.TaskAggregate.Task.Comments))!
       .SetPropertyAccessMode(PropertyAccessMode.Field);
   }
 } 

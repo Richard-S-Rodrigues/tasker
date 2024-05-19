@@ -1,6 +1,5 @@
 using FluentValidation;
 using MediatR;
-using Tasker.Domain.CommentAggregate.ValueObjects;
 using Tasker.Domain.TaskAggregate;
 using Tasker.Domain.TaskAggregate.Commands;
 using Tasker.Domain.TaskAggregate.Enums;
@@ -29,7 +28,7 @@ public class CreateTaskCommandHandler : IRequestHandler<CreateTaskCommand>
       request.priority,
       request.responsibles,
       new List<AttachmentFile>(),
-      new List<CommentId>()
+      new List<Comment>()
     );
 
     var validator = new TaskValidator();

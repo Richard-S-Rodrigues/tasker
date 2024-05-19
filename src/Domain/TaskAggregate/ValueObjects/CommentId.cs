@@ -1,6 +1,6 @@
 using Tasker.Domain.Shared;
 
-namespace Tasker.Domain.CommentAggregate.ValueObjects;
+namespace Tasker.Domain.TaskAggregate.ValueObjects;
 
 public sealed class CommentId : ValueObject
 {
