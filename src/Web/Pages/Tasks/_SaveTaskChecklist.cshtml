@@ -1,0 +1,47 @@
+@model Tasker.Web.Pages.Tasks.ViewModels.TaskChecklistViewModel;
+    
+<li>
+  <form
+    hx-post="@Url.Page("Index", "SaveChecklist")"
+    hx-target="#target-modal"
+    hx-push-url="false"
+    hx-trigger="submit"
+  >
+    <div>
+      <input 
+        type="text" 
+        class="input" 
+        placeholder="Adicione um título..."
+        required
+        value="@Model.Title" 
+      />
+    </div>
+    <div class="buttons">
+      <button 
+        class="button"
+        type="button"
+        hx-get="@Url.Page("Index", "SaveTaskModal")"
+        hx-target="#target-modal"
+        hx-push-url="false"
+        hx-trigger="click"
+      >
+        Cancelar
+      </button>
+      <button 
+        type="submit" 
+        class="button is-success"
+        disabled
+        _="on change from closest <form/> or load
+          if (<[required]:invalid/>).length > 0
+            add @@disabled 
+            then exit
+          end
+          remove @@disabled"
+      >
+        Salvar
+      </button>
+    </div>
+  </form>
+</li>
+
+

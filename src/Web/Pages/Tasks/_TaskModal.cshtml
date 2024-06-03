@@ -1,0 +1,150 @@
+@model Tasker.Web.Pages.Tasks.Index;
+
+<div
+  id="task-modal"
+  class="modal"
+  _="on load add .is-active to me" 
+>
+  <div class="modal-background"></div>
+  <div class="modal-card" style="width: 70%;">
+    <form
+      hx-post="@Url.Page("Index", "SaveTask")"
+      hx-target="#target-result"
+      hx-push-url="false"
+      hx-trigger="submit"
+      _="on htmx:afterRequest remove .is-active from <#task-modal/>"
+    >
+      <input asp-for="CurrentTask.BoardId" hidden />
+      <header class="modal-card-head">
+        <textarea 
+          class="title is-2 input is-borderless" 
+          asp-for="CurrentTask.Title"
+          placeholder="Título..."></textarea>
+      </header>
+      <section class="modal-card-body">
+        <div class="columns is-desktop mt-2 mb-4">
+          <div class="column">
+            <div class="my-2">
+              <span class="has-text-grey">Status:</span>
+              <span>
+                <div class="select is-small">
+                  <select 
+                    asp-items="@Model.TaskStatusOptions" 
+                    asp-for="CurrentTask.Status">
+                  </select>
+                </div>
+              </span>
+            </div>
+            <div class="my-2">
+              <span class="has-text-grey">Responsáveis:</span>
+              <span></span>
+            </div>
+            <div class="my-2">
+              <span class="has-text-grey">Prioridade:</span>
+              <span>
+                <div class="select is-small">
+                  <select 
+                    asp-items="@Model.TaskPriorityOptions" 
+                    asp-for="CurrentTask.Priority">
+                  </select>
+                </div>
+              </span>
+            </div>
+          </div>
+          <div class="column">
+            <div class="my-2">
+              <span class="has-text-grey">Datas:</span>
+              <span>
+                <label for="startDate">Início</label>
+                <input 
+                  type="date"
+                  asp-for="CurrentTask.StartDate"/>
+                -
+                <label for="endDate">Fim</label>
+                <input 
+                  type="date" 
+                  asp-for="CurrentTask.EndDate" />
+              </span>
+            </div>
+            <div class="my-2">
+              <span class="has-text-grey">Tempo estimado:</span>
+              <span>
+                <input 
+                  type="time"
+                  id="currentTask.estimatedTime"
+                  name="currentTask.estimatedTime" 
+                  value="@Model.CurrentTask.EstimatedTime" 
+                />
+              </span>
+            </div>
+            <div class="my-2">
+              <span class="has-text-grey">Tempo rastreado:</span>
+              <span>
+
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="mb-4">
+          <textarea
+            class="textarea" 
+            placeholder="Descrição..."
+            asp-for="CurrentTask.Description" 
+          ></textarea>
+        </div>
+        @if(Model.CurrentTask.Id != null)
+        {
+          <div class="my-4">
+            <div class="is-flex is-justify-content-space-between is-align-items-center">
+              <h3 class="title is-4">Checklists</h3>
+              <button
+                type="button" 
+                class="button is-secondary is-small"
+                hx-post="@Url.Page("Index", "AddChecklist")"
+                hx-target="#save-checklist-result"
+                hx-trigger="click"
+              >
+                +
+              </button>
+            </div>
+            <div id="save-checklist-result"></div>
+            <ul>
+              @foreach (var checklist in Model.CurrentTask.TaskChecklists)
+              {
+                <li>
+                  <div>
+                    <input type="checkbox" value="@checklist.IsDone" id="isDone" />
+                  </div>
+                  <div>
+                    <p>@checklist.Title</p>
+                  </div>
+                </li>
+              }
+            </ul>
+          </div>
+        }
+      </section>
+      <footer class="modal-card-foot">
+        <div class="buttons">
+          <button 
+            class="button"
+            type="button"
+            _="on click remove .is-active from <#task-modal/>"
+          >
+            Cancelar
+          </button>
+          <button 
+            type="submit" 
+            class="button is-success"
+          >
+            Salvar
+          </button>
+        </div>
+      </footer>
+    </form>
+  </div>
+  <button 
+    class="modal-close is-large" 
+    _="on click remove .is-active from <#task-modal/>">
+  </button>
+</div>
