@@ -1,0 +1,11 @@
+@page "/boards/board/delete/{id:Guid}"
+
+@using Tasker.Web.Pages.Boards.Components.DeleteBoard;
+@model Tasker.Web.Pages.Boards.Delete
+
+@{
+  ViewData["Title"] = "Excluir espaço";
+}
+
+@(await Component.InvokeAsync("DeleteBoard", Model.Id))
+

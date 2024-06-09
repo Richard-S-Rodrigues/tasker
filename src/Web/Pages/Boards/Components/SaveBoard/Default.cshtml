@@ -1,0 +1,57 @@
+@model Tasker.Web.Pages.Boards.ViewModels.BoardViewModel;
+
+<div class="flex justify-center">
+  <div
+    class="card w-full shadow-xl p-4 m-12"
+  >
+    <div class="w-full">
+      <div class="w-full items-center text-center mb-4">
+        <h2 class="text-2xl">Espaço</h2>
+      </div>
+      <form
+        hx-post="@Url.Page("Index", "SaveBoard", new { id = Model.Id })"
+        hx-target="body"
+        hx-push-url="true"
+        hx-trigger="submit"
+      >
+        <div class="flex flex-col gap-8">
+          <section>
+            <div class="flex flex-col gap-2">
+              <label asp-for="Name">Nome:</label>
+              <input
+                class="input input-bordered" 
+                required
+                asp-for="Name"  
+              />
+            </div>
+          </section>
+          
+          <footer class="card-actions justify-end gap-4 text-left">
+            <a 
+              class="btn"
+              hx-get 
+              hx-page="Index"
+              hx-target="body"
+              hx-push-url="true"
+            >
+              Cancelar
+            </a>
+            <button 
+              type="submit" 
+              class="btn btn-primary"
+              disabled
+              _="on change from closest <form/> or load
+                if (<[required]:invalid/>).length > 0
+                  add @@disabled 
+                  then exit
+                end
+                remove @@disabled"
+            >
+              Salvar
+            </button>
+          </footer>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+@model Tasker.Web.Pages.Boards.ViewModels.BoardViewModel;
+
+<div class="flex justify-center">
+  <div
+    class="card w-full shadow-xl p-4 m-12"
+  >
+    <div class="w-full">
+      <div class="w-full items-center text-center mb-4">
+        <h2 class="text-2xl">Excluir espaço</h2>
+      </div>
+      <form
+        hx-post="@Url.Page("Index", "DeleteBoard", new { id = Model.Id })"
+        hx-target="body"
+        hx-push-url="true"
+        hx-trigger="submit"
+      >
+        <div class="flex flex-col gap-8">
+          <section>
+            <p>Tem certeza que deseja <span style="color: red;">excluir</span> o espaço <b>@Model.Name</b>?</p>
+            <p>Ao confirmar, todas as tarefas associadas a este espaço também serão excluídas.</p>
+          </section>
+          
+          <footer class="card-actions justify-end gap-4 text-left">
+            <a 
+              class="btn"
+              hx-get 
+              hx-page="Index"
+              hx-target="body"
+              hx-push-url="true"
+            >
+              Cancelar
+            </a>
+            <button 
+              type="submit" 
+              class="btn btn-error"
+            >
+              Confirmar
+            </button>
+          </footer>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

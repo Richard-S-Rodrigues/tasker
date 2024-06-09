@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Tasker.Domain.BoardAggregate.Commands;
 using Tasker.Domain.BoardAggregate.Queries;
-using Htmx;
 using Tasker.Web.Pages.Shared.ViewModels;
 using Tasker.Web.Pages.Boards.ViewModels;
 using Tasker.Domain.BoardAggregate.ValueObjects;
@@ -47,28 +46,6 @@ public class Index : PageModel
         return Partial("_Result", this);
     }
 
-    public async Task<IActionResult> OnGetSaveBoardModal(Guid? id)
-    {
-        var board = new BoardViewModel();
-
-        if (id.HasValue)
-        {
-            await GetBoards();
-            board = BoardList.FirstOrDefault(b => b.Id == id.Value);
-        }
-        
-        return Partial("_SaveBoardModal", board);
-    }
-
-    public async Task<IActionResult> OnGetDeleteBoardModal(Guid id)
-    {
-        await GetBoards();
-        
-        var board = BoardList.FirstOrDefault(b => b.Id == id);
-        
-        return Partial("_DeleteBoardModal", board);
-    }
-
     public async Task<IActionResult> OnPostSaveBoard(Guid? id, string name)
     {
         try 
@@ -86,22 +63,17 @@ public class Index : PageModel
 
             await GetBoards();
 
-            if (HttpContext.Request.IsHtmx())
-            {
-                return Partial("_Result", this);
-            }
-    
-            return Page();
+            return RedirectToPage("Index");
         }
         catch(Exception e)
         {
             Error.HasError = true;
             Error.ErrorMessage = e.Message;
-            return Partial("_Result", this);
+            return Page();
         }   
     }
 
-    public async Task<IActionResult> OnDeleteBoard(Guid id)
+    public async Task<IActionResult> OnPostDeleteBoard(Guid id)
     {
         try 
         {
@@ -111,18 +83,13 @@ public class Index : PageModel
 
             await GetBoards();
 
-            if (HttpContext.Request.IsHtmx())
-            {
-                return Partial("_Result", this);
-            }
-    
-            return Page();
+            return RedirectToPage("Index");
         }
         catch (Exception e)
         {
             Error.HasError = true;
             Error.ErrorMessage = e.Message;
-            return Partial("_Result", this);
+            return Page();
         }
     }
 }

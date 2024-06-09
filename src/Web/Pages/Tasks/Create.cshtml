@@ -1,0 +1,11 @@
+@page "/tasks/{boardId:Guid}/task/new"
+
+@using Tasker.Web.Pages.Tasks.Components.SaveTask;
+@model Tasker.Web.Pages.Tasks.Create
+
+@{
+  ViewData["Title"] = "Cadastrar nova tarefa";
+}
+
+@(await Component.InvokeAsync("SaveTask", new { boardId = Model.BoardId, id = (Guid?)null }))
+

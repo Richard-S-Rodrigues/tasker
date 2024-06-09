@@ -1,0 +1,152 @@
+@model Tasker.Web.Pages.Tasks.Components.SaveTask.ViewModel;
+
+<div class="flex justify-center">
+  <div
+    class="card w-full shadow-xl p-4 m-12"
+  >
+    <div class="w-full">
+      <div class="w-full items-center text-center mb-4">
+        <h2 class="text-4xl">Tarefa</h2>
+      </div>
+      <form
+        hx-post="@Url.Page("Index", "SaveTask")"
+        hx-target="body"
+        hx-push-url="true"
+        hx-trigger="submit"
+      >
+        <input asp-for="CurrentTask.BoardId" hidden />
+
+        <div class="flex flex-col gap-8">
+          <section class="flex flex-col gap-8">
+            <div class="flex flex-col gap-8">
+              <div class="flex flex-col gap-2">
+                <label asp-for="CurrentTask.Title">Título:</label>
+                <input 
+                  class="input input-bordered" 
+                  asp-for="CurrentTask.Title"
+                  required
+                />
+              </div>
+              <div class="flex gap-8">
+                <div class="flex flex-col gap-2">
+                  <label asp-for="CurrentTask.StartDate">Data de Início</label>
+                  <input 
+                    type="date"
+                    asp-for="CurrentTask.StartDate"
+                  />
+                </div>
+                <div class="flex flex-col gap-2">
+                  <label asp-for="CurrentTask.EndDate">Data de Fim</label>
+                  <input 
+                    type="date" 
+                    asp-for="CurrentTask.EndDate" 
+                  />
+                </div>
+                <div class="flex flex-col gap-2">
+                  <label asp-for="CurrentTask.EstimatedTime">Tempo estimado:</label>
+                  <input 
+                    type="time"
+                    asp-for="CurrentTask.EstimatedTime" 
+                  />
+                </div>
+                <div class="flex flex-col gap-2">
+                  <label>Tempo rastreado:</label>
+                </div>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <div class="flex flex-col gap-2">
+                <span class="has-text-grey">Status:</span>
+                <span>
+                  <div>
+                    <select
+                      class="select select-bordered select-sm" 
+                      asp-items="@Model.TaskStatusOptions" 
+                      asp-for="CurrentTask.Status">
+                    </select>
+                  </div>
+                </span>
+              </div>
+              <div class="flex flex-col gap-2">
+                <span class="has-text-grey">Responsáveis:</span>
+                <span></span>
+              </div>
+              <div class="flex flex-col gap-2">
+                <span class="has-text-grey">Prioridade:</span>
+                <span>
+                  <div>
+                    <select
+                      class="select select-bordered select-sm" 
+                      asp-items="@Model.TaskPriorityOptions" 
+                      asp-for="CurrentTask.Priority">
+                    </select>
+                  </div>
+                </span>
+              </div>
+            </div>
+            <div class="flex flex-col gap-2">
+              <label asp-for="CurrentTask.Description">Descrição:</label>
+              <textarea
+                class="textarea textarea-bordered textarea-lg w-full" 
+                asp-for="CurrentTask.Description" 
+              ></textarea>
+            </div>
+            @if(Model.CurrentTask.Id != null)
+            {
+              <div>
+                <div class="flex justify-between items-center">
+                  <h3 class="text-lg">Checklists</h3>
+                  <button
+                    type="button" 
+                    class="button is-secondary is-small"
+                    hx-post="@Url.Page("Index", "AddChecklist")"
+                    hx-target="#save-checklist-result"
+                    hx-trigger="click"
+                  >
+                    +
+                  </button>
+                </div>
+                <div id="save-checklist-result"></div>
+                <ul>
+                  @foreach (var checklist in Model.CurrentTask.TaskChecklists)
+                  {
+                    <li>
+                      <div>
+                        <input type="checkbox" value="@checklist.IsDone" id="isDone" />
+                      </div>
+                      <div>
+                        <p>@checklist.Title</p>
+                      </div>
+                    </li>
+                  }
+                </ul>
+              </div>
+            }
+          </section>
+          
+          <footer class="card-actions justify-end gap-4 text-left">
+            <a 
+              class="btn"
+              href="/tasks?boardId=@Model.CurrentTask.BoardId"
+            >
+              Voltar
+            </a>
+            <button 
+              type="submit" 
+              class="btn btn-primary"
+              disabled
+              _="on change from closest <form/> or load
+                if (<[required]:invalid/>).length > 0
+                  add @@disabled 
+                  then exit
+                end
+                remove @@disabled"
+            >
+              Salvar
+            </button>
+          </footer>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

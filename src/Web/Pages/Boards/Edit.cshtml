@@ -1,0 +1,11 @@
+@page "/boards/board/edit/{id:Guid}"
+
+@using Tasker.Web.Pages.Boards.Components.SaveBoard;
+@model Tasker.Web.Pages.Boards.Edit
+
+@{
+  ViewData["Title"] = "Espaço";
+}
+
+@(await Component.InvokeAsync("SaveBoard", Model.Id))
+

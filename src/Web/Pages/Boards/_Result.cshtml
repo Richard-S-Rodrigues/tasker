@@ -11,42 +11,45 @@
       @foreach (var board in Model.BoardList)
       {
         <li 
-          class="my-2 p-2 border is-flex is-align-items-center is-justify-content-space-between"
+          class="my-2 p-4 border flex items-center justify-between"
         >
           <span>@board.Name</span>
-          <div>
+          <div class="flex gap-8">
             <a
-              class="button"
+              class="btn flex items-center btn-ghost tooltip tooltip-bottom"
+              data-tip="Visualizar"
               href="/tasks?boardId=@board.Id!.Value"
             >
-              <span class="icon is-small">
+              <span class="icon">
                 <i class="fas fa-eye"></i>
               </span>
             </a>
-            <button 
-              class="button"
-              type="button"
-              hx-get="@Url.Page("Index", "SaveBoardModal", new { id = board.Id })"
-              hx-target="#target-modal"
-              hx-trigger="click"
-              hx-push-url="false"
+            <a 
+              class="btn flex items-center btn-ghost tooltip tooltip-bottom"
+              data-tip="Editar espaço"
+              hx-get
+              hx-page="Edit"
+              hx-route-id="@board.Id"
+              hx-target="body"
+              hx-push-url="true"
             >
-              <span class="icon is-small">
+              <span class="icon">
                 <i class="fas fa-edit"></i>
               </span>
-            </button>
-            <button 
-              class="button"
-              type="button"
-              hx-get="@Url.Page("Index", "DeleteBoardModal", new { id = board.Id })"
-              hx-target="#target-modal"
-              hx-trigger="click"
-              hx-push-url="false"
+            </a>
+            <a 
+              class="btn flex items-center btn-ghost tooltip tooltip-bottom"
+              data-tip="Excluir espaço"
+              hx-get
+              hx-page="Delete"
+              hx-route-id="@board.Id"
+              hx-target="body"
+              hx-push-url="true"
             >
-              <span class="icon is-small">
+              <span class="icon">
                 <i class="fas fa-trash"></i>
               </span>
-            </button>
+            </a>
           </div>
         </li>
       }

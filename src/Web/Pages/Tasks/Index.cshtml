@@ -5,21 +5,19 @@
   ViewData["Title"] = "Tarefas";
 }
 
-<div class="mt-4">
-  <div class="is-flex is-justify-content-space-between is-align-items-center">
-    <h2 class="is-size-1">@Model.Board.Name</h2>
-    <button 
-      class="button is-primary"
-      hx-get="@Url.Page("Index", "SaveTaskModal", new { boardId = Model.Board.Id!.Value })"
-      hx-target="#target-modal"
-      hx-trigger="click"
-      hx-push-url="false"
+<div class="container mx-auto mt-5">
+  <div class="flex justify-between items-center">
+    <h2 class="text-6xl">@Model.Board.Name</h2>
+    <a 
+      class="btn btn-primary"
+      hx-get="@Url.Page("Create", new { boardId = Model.Board.Id!.Value })"
+      hx-target="body"
+      hx-push-url="true"
     >
       Criar nova tarefa
-    </button>
+    </a>
   </div>
   <div id="target-result">
     <partial name="_Result" />
   </div>
-  <div id="target-modal"></div>
 </div>

@@ -1,0 +1,10 @@
+@page "/boards/board/new"
+
+@using Tasker.Web.Pages.Boards.Components.SaveBoard;
+
+@{
+  ViewData["Title"] = "Cadastrar novo espaço";
+}
+
+@(await Component.InvokeAsync("SaveBoard", null))
+

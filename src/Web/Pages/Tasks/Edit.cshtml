@@ -1,0 +1,11 @@
+@page "/tasks/{boardId:Guid}/task/edit/{id:Guid}"
+
+@using Tasker.Web.Pages.Tasks.Components.SaveTask;
+@model Tasker.Web.Pages.Tasks.Edit
+
+@{
+  ViewData["Title"] = "Tarefa";
+}
+
+@(await Component.InvokeAsync("SaveTask", new { boardId = Model.BoardId, id = Model.Id }))
+

@@ -4,34 +4,33 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="mt-4">
-    <div class="is-flex">
+<div class="m-12">
+    <div class="flex">
         <div class="mr-2">
             <input 
-                class="input"
+                class="input input-bordered"
                 type="text"
                 name="searchQuery"
                 hx-get="@Url.Page("Index", "SearchBoards")"
                 hx-trigger="keyup changed delay:500ms"
                 hx-target="#target-result"
                 placeholder="Pesquise..." 
-            /> 
+            />
         </div>
         <div>
-            <button 
-                class="button is-primary" 
-                hx-get="@Url.Page("Index", "SaveBoardModal")"
-                hx-target="#target-modal"
-                hx-trigger="click"
-                hx-push-url="false"
+            <a 
+                class="btn btn-primary" 
+                hx-get
+                hx-page="Create"
+                hx-target="body"
+                hx-push-url="true"
             >
                 Criar novo espaço
-            </button>
+            </a>
         </div>
     </div>    
     
     <div id="target-result" class="mt-4">
         <partial name="_Result" />
-    </div>
-    <div id="target-modal"></div>    
+    </div> 
 </div>
