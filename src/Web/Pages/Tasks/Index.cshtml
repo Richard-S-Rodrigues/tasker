@@ -8,14 +8,24 @@
 <div class="container mx-auto mt-5">
   <div class="flex justify-between items-center">
     <h2 class="text-6xl">@Model.Board.Name</h2>
-    <a 
-      class="btn btn-primary"
-      hx-get="@Url.Page("Create", new { boardId = Model.Board.Id!.Value })"
-      hx-target="body"
-      hx-push-url="true"
-    >
-      Criar nova tarefa
-    </a>
+    <div class="flex gap-4">
+      <a 
+        class="btn btn-primary"
+        hx-get="@Url.Page("Create", new { boardId = Model.Board.Id!.Value })"
+        hx-target="body"
+        hx-push-url="true"
+      >
+        Criar nova tarefa
+      </a>
+      <a 
+        class="btn btn"
+        hx-get="/boards"
+        hx-target="body"
+        hx-push-url="true"
+      >
+        Voltar
+      </a>
+    </div>
   </div>
   <div id="target-result">
     <partial name="_Result" />
