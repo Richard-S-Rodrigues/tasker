@@ -21,6 +21,7 @@
         hx-push-url="true"
         hx-trigger="submit"
       >
+        <input asp-for="CurrentTask.Id" hidden />
         <input asp-for="CurrentTask.BoardId" hidden />
         <div class="flex flex-col gap-8">
           <section class="flex flex-col gap-8">
@@ -53,14 +54,14 @@
                 <div class="flex flex-col gap-2">
                   <label>Tempo estimado:</label>
                   <div class="dropdown dropdown-end">
-                    <div tabindex="0" role="button" class="btn m-1">Click para visualizar</div>
+                    <div tabindex="0" role="button" class="btn m-1">Clique para visualizar</div>
                     <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
                       <li>
                         <label asp-for="CurrentTask.EstimatedTime.Hours">Horas:</label>
                         <input 
                           type="number"
                           class="input"
-                          min="1"
+                          min="0"
                           asp-for="CurrentTask.EstimatedTime.Hours"
                         />
                       </li>
@@ -69,7 +70,7 @@
                         <input 
                           type="number"
                           class="input"
-                          min="1"
+                          min="0"
                           asp-for="CurrentTask.EstimatedTime.Minutes"
                         />
                       </li>
@@ -79,14 +80,14 @@
                 <div class="flex flex-col gap-2">
                   <label>Tempo rastreado:</label>
                   <div class="dropdown dropdown-end">
-                    <div tabindex="0" role="button" class="btn m-1">Click para visualizar</div>
+                    <div tabindex="0" role="button" class="btn m-1">Clique para visualizar</div>
                     <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
                       <li>
                         <label asp-for="CurrentTask.Time.Hours">Horas:</label>
                         <input 
                           type="number"
                           class="input"
-                          min="1"
+                          min="0"
                           asp-for="CurrentTask.Time.Hours"
                         />
                       </li>
@@ -95,7 +96,7 @@
                         <input 
                           type="number"
                           class="input"
-                          min="1"
+                          min="0"
                           asp-for="CurrentTask.Time.Minutes"
                         />
                       </li>
@@ -145,27 +146,42 @@
             {
               <div>
                 <div class="flex justify-between items-center">
-                  <h3 class="text-lg">Checklists</h3>
-                  <button
-                    type="button" 
-                    class="button is-secondary is-small"
-                    hx-post="@Url.Page("Index", "AddChecklist")"
-                    hx-target="#save-checklist-result"
-                    hx-trigger="click"
+                  <h3 class="text-2xl">Checklists</h3>
+                  <a 
+                    class="btn is-secondary"
+                    hx-get="@Url.Page("CreateTaskChecklist", new { boardId = Model.BoardId, taskId = Model.Id })"
+                    hx-target="body"
+                    hx-push-url="true"
                   >
-                    +
-                  </button>
+                    <span class="icon">
+                      <i class="fas fa-plus"></i>
+                    </span>
+                  </a>
                 </div>
-                <div id="save-checklist-result"></div>
                 <ul>
                   @foreach (var checklist in Model.CurrentTask.TaskChecklists)
                   {
-                    <li>
+                    <li class="flex items-center justify-between">
                       <div>
-                        <input type="checkbox" value="@checklist.IsDone" id="isDone" />
+                        <div>
+                          <input type="checkbox" value="@checklist.IsDone" id="isDone" />
+                        </div>
+                        <div>
+                          <p>@checklist.Title</p>
+                        </div>
                       </div>
                       <div>
-                        <p>@checklist.Title</p>
+                        <a 
+                          class="btn flex items-center btn-ghost tooltip tooltip-bottom"
+                          data-tip="Editar checklist"
+                          hx-get="@Url.Page("EditTaskChecklist", new { boardId = Model.BoardId, taskId = Model.Id, id = checklist.Id })"
+                          hx-target="body"
+                          hx-push-url="true"
+                        >
+                          <span class="icon">
+                            <i class="fas fa-edit"></i>
+                          </span>
+                        </a>
                       </div>
                     </li>
                   }
@@ -174,7 +190,7 @@
             }
           </section>
           
-          <footer class="card-actions justify-end gap-4 text-left">
+          <footer class="mt-5 card-actions justify-end gap-4 text-left">
             <a 
               class="btn"
               href="/tasks?boardId=@Model.BoardId"

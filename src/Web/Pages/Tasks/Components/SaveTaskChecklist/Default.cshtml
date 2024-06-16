@@ -1,0 +1,67 @@
+@model Tasker.Web.Pages.Tasks.BaseTaskChecklistForm
+
+@{
+  var currentPage = (string)ViewBag.CurrentPage;
+}
+
+<div class="flex justify-center">
+  <div
+    class="card w-full shadow-xl p-4 m-12"
+  >
+    <div class="w-full">
+      <div class="w-full items-center text-center mb-4">
+        <h2 class="text-4xl">Checklist</h2>
+      </div>
+      <form
+        hx-post
+        hx-page="@currentPage"
+        hx-target="body"
+        hx-push-url="true"
+        hx-trigger="submit"
+      >
+        <input asp-for="CurrentTaskChecklist.Id" hidden />
+        <div class="flex flex-col gap-8">
+          <section class="flex flex-col gap-8">
+            <div class="flex flex-col gap-8">
+                <label asp-for="CurrentTaskChecklist.Title">Título:</label>
+                <input 
+                  class="input input-bordered" 
+                  asp-for="CurrentTaskChecklist.Title"
+                  required
+                />
+            </div>
+            <div class="flex flex-col gap-8">
+              <label asp-for="CurrentTaskChecklist.Description">Descrição:</label>
+              <textarea
+                class="textarea textarea-bordered textarea-lg w-full" 
+                asp-for="CurrentTaskChecklist.Description" 
+              ></textarea>
+            </div>
+          </section>
+        </div>
+        <footer class="mt-5 card-actions justify-end gap-4 text-left">
+          <a 
+            class="btn"
+            hx-get="@Url.Page("Edit", new { boardId = Model.BoardId, id = Model.TaskId })"
+            hx-target="body"
+            hx-push-url="true"
+          >
+            Voltar
+          </a>
+          <button 
+            type="submit" 
+            class="btn btn-primary"
+            disabled
+            _="on change from closest <form/> or load
+              if (<[required]:invalid/>).length > 0
+                add @@disabled 
+                then exit
+              end
+              remove @@disabled"
+          >
+            Salvar
+          </button>
+        </footer>
+      </form>
+  </div>
+</div>

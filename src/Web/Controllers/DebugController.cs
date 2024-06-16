@@ -38,6 +38,7 @@ public class DebugController : ControllerBase
         createTaskDTO.Title,
         createTaskDTO.Description,
         createTaskDTO.TimeDetails,
+        createTaskDTO.Status,
         createTaskDTO.Priority,
         createTaskDTO.Responsibles);
       
@@ -57,5 +58,6 @@ public record CreateTaskDTO(
   string Title,
   string? Description,
   TimeDetails TimeDetails,
+  Status Status,
   Priority Priority,
   List<Responsible> Responsibles);

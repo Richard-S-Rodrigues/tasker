@@ -1,0 +1,9 @@
+@page "/tasks/{boardId:Guid}/task/{taskId:Guid}/edit/task-checklist/new"
+
+@model Tasker.Web.Pages.Tasks.CreateTaskChecklist
+
+@{
+  ViewData["Title"] = "Cadastrar checklist";
+}
+
+@(await Component.InvokeAsync("SaveTaskChecklist", new { boardId = Model.BoardId, taskId = Model.TaskId, model = Model, id = (Guid?)null }))

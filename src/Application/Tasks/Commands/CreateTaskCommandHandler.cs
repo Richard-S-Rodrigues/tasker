@@ -22,7 +22,7 @@ public class CreateTaskCommandHandler : IRequestHandler<CreateTaskCommand>
       request.title,
       request.description,
       request.timeDetails,
-      Status.InRefinement,
+      request.status,
       request.priority,
       request.responsibles,
       new List<AttachmentFile>(),

@@ -1,0 +1,25 @@
+@model List<Tasker.Web.Pages.Tasks.ViewModels.TaskViewModel>
+
+<ul style="display: none;">
+  @foreach (var task in Model)
+  {
+    <li 
+      class="my-4 p-2 border flex items-center justify-between"
+    >
+      <div>@task.Title</div>
+      <div>
+        <a 
+          class="btn flex items-center btn-ghost tooltip tooltip-bottom"
+          data-tip="Editar tarefa"
+          hx-get="@Url.Page("Edit", new { boardId = task.BoardId, id = task.Id })"
+          hx-target="body"
+          hx-push-url="true"
+        >
+          <span class="icon">
+            <i class="fas fa-edit"></i>
+          </span>
+        </a>
+      </div>
+    </li>
+  }
+</ul>

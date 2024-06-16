@@ -269,6 +269,11 @@ internal class TaskConfiguration : IEntityTypeConfiguration<Domain.TaskAggregate
       b.Property(p => p.Title)
         .HasColumnName("title")
         .IsRequired(true);
+      
+      b.Property(p => p.Description)
+        .HasColumnName("description")
+        .IsRequired(false)
+        .HasDefaultValue(null);
 
       b.Property(p => p.IsDone)
         .HasColumnName("is_done")

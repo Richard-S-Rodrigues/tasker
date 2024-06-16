@@ -27,6 +27,7 @@ public class TaskViewModel
     return new()
     {
       Id = task.Id.Value,
+      BoardId = task.BoardId.Value,
       Title = task.Title,
       Description = task.Description,
       StartDate = task.TimeDetails.StartDate,

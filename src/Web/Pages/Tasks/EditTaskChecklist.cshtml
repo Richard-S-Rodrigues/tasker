@@ -1,0 +1,9 @@
+@page "/tasks/{boardId:Guid}/task/{taskId:Guid}/edit/task-checklist/{id:Guid}/edit"
+
+@model Tasker.Web.Pages.Tasks.EditTaskChecklist
+
+@{
+  ViewData["Title"] = "Editar checklist";
+}
+
+@(await Component.InvokeAsync("SaveTaskChecklist", new { boardId = Model.BoardId, taskId = Model.TaskId, model = Model, id = Model.Id }))

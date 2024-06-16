@@ -52,6 +52,7 @@ public class BaseTaskForm : PageModel
             taskEntity.Title,
             taskEntity.Description,
             taskEntity.TimeDetails,
+            taskEntity.Status,
             taskEntity.Priority,
             taskEntity.Responsibles);
           await _sender.Send(createCommand);
