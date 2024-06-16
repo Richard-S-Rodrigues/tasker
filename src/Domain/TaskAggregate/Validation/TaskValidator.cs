@@ -13,7 +13,7 @@ public class TaskValidator : AbstractValidator<Task>
     RuleFor(task => task.TimeDetails.EndDate).NotEmpty().WithMessage("Campo 'Data de fim' é obrigatório.");
     RuleFor(task => task.TimeDetails.EstimatedTime)
       .NotEmpty()
-      .When(task => task.TimeDetails.Time != null)
+      .When(task => task.TimeDetails.Time > 0)
       .WithMessage("Tempo estimado não especificado.");
   }
 }

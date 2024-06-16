@@ -1,4 +1,10 @@
-@model Tasker.Web.Pages.Tasks.Components.SaveTask.ViewModel;
+@model Tasker.Web.Pages.Tasks.BaseTaskForm
+
+@{
+  var currentPage = (string)ViewBag.CurrentPage;
+  var taskStatusOptions = (List<SelectListItem>)ViewBag.TaskStatusOptions;
+  var taskPriorityOptions = (List<SelectListItem>)ViewBag.TaskPriorityOptions;
+}
 
 <div class="flex justify-center">
   <div
@@ -9,13 +15,13 @@
         <h2 class="text-4xl">Tarefa</h2>
       </div>
       <form
-        hx-post="@Url.Page("Index", "SaveTask")"
+        hx-post
+        hx-page="@currentPage"
         hx-target="body"
         hx-push-url="true"
         hx-trigger="submit"
       >
         <input asp-for="CurrentTask.BoardId" hidden />
-
         <div class="flex flex-col gap-8">
           <section class="flex flex-col gap-8">
             <div class="flex flex-col gap-8">
@@ -31,26 +37,70 @@
                 <div class="flex flex-col gap-2">
                   <label asp-for="CurrentTask.StartDate">Data de Início</label>
                   <input 
-                    type="date"
-                    asp-for="CurrentTask.StartDate"
-                  />
+                      type="date"
+                      class="input input-bordered"
+                      asp-for="CurrentTask.StartDate"
+                    > 
                 </div>
                 <div class="flex flex-col gap-2">
                   <label asp-for="CurrentTask.EndDate">Data de Fim</label>
                   <input 
-                    type="date" 
+                    type="date"
+                    class="input input-bordered" 
                     asp-for="CurrentTask.EndDate" 
                   />
                 </div>
                 <div class="flex flex-col gap-2">
-                  <label asp-for="CurrentTask.EstimatedTime">Tempo estimado:</label>
-                  <input 
-                    type="time"
-                    asp-for="CurrentTask.EstimatedTime" 
-                  />
+                  <label>Tempo estimado:</label>
+                  <div class="dropdown dropdown-end">
+                    <div tabindex="0" role="button" class="btn m-1">Click para visualizar</div>
+                    <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                      <li>
+                        <label asp-for="CurrentTask.EstimatedTime.Hours">Horas:</label>
+                        <input 
+                          type="number"
+                          class="input"
+                          min="1"
+                          asp-for="CurrentTask.EstimatedTime.Hours"
+                        />
+                      </li>
+                      <li>
+                        <label asp-for="CurrentTask.EstimatedTime.Minutes">Minutos:</label>
+                        <input 
+                          type="number"
+                          class="input"
+                          min="1"
+                          asp-for="CurrentTask.EstimatedTime.Minutes"
+                        />
+                      </li>
+                    </ul>
+                  </div>
                 </div>
                 <div class="flex flex-col gap-2">
                   <label>Tempo rastreado:</label>
+                  <div class="dropdown dropdown-end">
+                    <div tabindex="0" role="button" class="btn m-1">Click para visualizar</div>
+                    <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                      <li>
+                        <label asp-for="CurrentTask.Time.Hours">Horas:</label>
+                        <input 
+                          type="number"
+                          class="input"
+                          min="1"
+                          asp-for="CurrentTask.Time.Hours"
+                        />
+                      </li>
+                      <li>
+                        <label asp-for="CurrentTask.Time.Minutes">Minutos:</label>
+                        <input 
+                          type="number"
+                          class="input"
+                          min="1"
+                          asp-for="CurrentTask.Time.Minutes"
+                        />
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
@@ -61,7 +111,7 @@
                   <div>
                     <select
                       class="select select-bordered select-sm" 
-                      asp-items="@Model.TaskStatusOptions" 
+                      asp-items="@taskStatusOptions" 
                       asp-for="CurrentTask.Status">
                     </select>
                   </div>
@@ -77,7 +127,7 @@
                   <div>
                     <select
                       class="select select-bordered select-sm" 
-                      asp-items="@Model.TaskPriorityOptions" 
+                      asp-items="@taskPriorityOptions" 
                       asp-for="CurrentTask.Priority">
                     </select>
                   </div>
@@ -91,7 +141,7 @@
                 asp-for="CurrentTask.Description" 
               ></textarea>
             </div>
-            @if(Model.CurrentTask.Id != null)
+            @if(Model.Id != null)
             {
               <div>
                 <div class="flex justify-between items-center">
@@ -127,7 +177,7 @@
           <footer class="card-actions justify-end gap-4 text-left">
             <a 
               class="btn"
-              href="/tasks?boardId=@Model.CurrentTask.BoardId"
+              href="/tasks?boardId=@Model.BoardId"
             >
               Voltar
             </a>

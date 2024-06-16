@@ -11,10 +11,10 @@ public class TaskViewModel
   public Guid BoardId { get; set; }
   public string Title { get; set; } = "";
   public string? Description { get; set; }
-  public DateTime StartDate { get; private set; } = DateTime.Now;
-  public DateTime EndDate { get; private set; } = DateTime.Now.AddDays(1);
-  public TimeOnly? Time { get; private set; }
-  public TimeOnly? EstimatedTime { get; private set; }
+  public DateTime StartDate { get; set; } = DateTime.Now;
+  public DateTime EndDate { get; set; } = DateTime.Now.AddDays(1);
+  public TimeViewModel Time { get; set; } = new();
+  public TimeViewModel EstimatedTime { get; set; } = new();
   public Status Status { get; set; }
   public Priority Priority { get; set; }
   public List<Responsible> Responsibles { get; set; } = new();
@@ -31,8 +31,8 @@ public class TaskViewModel
       Description = task.Description,
       StartDate = task.TimeDetails.StartDate,
       EndDate = task.TimeDetails.EndDate,
-      EstimatedTime = task.TimeDetails.EstimatedTime,
-      Time = task.TimeDetails.Time,
+      EstimatedTime = GetHoursAndMinutesFromTotalMinutes(task.TimeDetails.EstimatedTime),
+      Time = GetHoursAndMinutesFromTotalMinutes(task.TimeDetails.Time),
       Status = task.Status,
       Priority = task.Priority,
       Responsibles = task.Responsibles,
@@ -50,7 +50,12 @@ public class TaskViewModel
         new BoardId(taskViewModel.BoardId),
         taskViewModel.Title,
         taskViewModel.Description,
-        new TimeDetails(taskViewModel.StartDate, taskViewModel.EndDate, taskViewModel.Time, taskViewModel.EstimatedTime),
+        new TimeDetails(
+          taskViewModel.StartDate, 
+          taskViewModel.EndDate, 
+          GetTotalMinutesFromHoursAndMinutes(taskViewModel.Time.Hours ?? 0, taskViewModel.Time.Minutes ?? 0), 
+          GetTotalMinutesFromHoursAndMinutes(taskViewModel.EstimatedTime.Hours ?? 0, taskViewModel.EstimatedTime.Minutes ?? 0) 
+        ),
         taskViewModel.Status,
         taskViewModel.Priority,
         taskViewModel.Responsibles,
@@ -64,7 +69,12 @@ public class TaskViewModel
       new BoardId(taskViewModel.BoardId),
       taskViewModel.Title,
       taskViewModel.Description,
-      new TimeDetails(taskViewModel.StartDate, taskViewModel.EndDate, taskViewModel.Time, taskViewModel.EstimatedTime),
+      new TimeDetails(
+        taskViewModel.StartDate, 
+        taskViewModel.EndDate, 
+        GetTotalMinutesFromHoursAndMinutes(taskViewModel.Time.Hours ?? 0, taskViewModel.Time.Minutes ?? 0), 
+        GetTotalMinutesFromHoursAndMinutes(taskViewModel.EstimatedTime.Hours ?? 0, taskViewModel.EstimatedTime.Minutes ?? 0)
+      ),
       taskViewModel.Status,
       taskViewModel.Priority,
       taskViewModel.Responsibles,
@@ -72,4 +82,24 @@ public class TaskViewModel
       taskViewModel.Comments,
       TaskChecklistViewModel.ToEnumerableEntity(taskViewModel.TaskChecklists).ToList());
   }
+
+  private static TimeViewModel GetHoursAndMinutesFromTotalMinutes(long totalMinutes)
+  {
+    return new TimeViewModel 
+    {
+      Hours = totalMinutes / 60,
+      Minutes = totalMinutes % 60
+    };
+  }
+
+  private static long GetTotalMinutesFromHoursAndMinutes(long hours, long minutes)
+  {
+    return (hours * 60) + minutes;
+  }
+}
+
+public class TimeViewModel 
+{
+  public long? Hours { get; set; }
+  public long? Minutes { get; set; }
 }

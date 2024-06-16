@@ -95,24 +95,11 @@ internal class TaskConfiguration : IEntityTypeConfiguration<Domain.TaskAggregate
         .IsRequired(true);
 
       b.Property(p => p.Time)
-        .HasColumnName("time")
-        .HasColumnType("time")
-        .HasConversion(
-            v => v.HasValue ? v.Value.ToTimeSpan() : default,
-            v => v != default ? TimeOnly.FromTimeSpan(v) : null
-        )
-        .IsRequired(false)
-        .HasDefaultValue(null);
+        .HasColumnName("time");
 
       b.Property(p => p.EstimatedTime)
-        .HasColumnName("estimated_time")
-        .HasColumnType("time")
-        .HasConversion(
-            v => v.HasValue ? v.Value.ToTimeSpan() : default,
-            v => v != default ? TimeOnly.FromTimeSpan(v) : null
-        )
-        .IsRequired(false)
-        .HasDefaultValue(null);
+        .HasColumnName("estimated_time");
+        
     });
 
     builder.Metadata
@@ -136,25 +123,12 @@ internal class TaskConfiguration : IEntityTypeConfiguration<Domain.TaskAggregate
         .ValueGeneratedNever();
 
       b.Property(p => p.Time)
-        .HasColumnName("time")
-        .HasColumnType("time")
-        .HasConversion(
-            v => v.HasValue ? v.Value.ToTimeSpan() : default,
-            v => v != default ? TimeOnly.FromTimeSpan(v) : null
-        )
-        .IsRequired(false)
-        .HasDefaultValue(null);
+        .HasColumnName("time");
 
       b.Property(p => p.EstimatedTime)
-        .HasColumnName("estimated_time")
-        .HasColumnType("time")
-        .HasConversion(
-            v => v.HasValue ? v.Value.ToTimeSpan() : default,
-            v => v != default ? TimeOnly.FromTimeSpan(v) : null
-        )
-        .IsRequired(false)
-        .HasDefaultValue(null);
-    });
+        .HasColumnName("estimated_time");
+
+      });
 
     builder.Metadata
       .FindNavigation(nameof(Domain.TaskAggregate.Task.Responsibles))!

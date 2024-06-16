@@ -2,20 +2,18 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Tasker.Infrastructure.Context;
 
 #nullable disable
 
-namespace Infrastructure.Database.Migrations
+namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240519172716_UpdateTaskTableAddTaskChecklist")]
-    partial class UpdateTaskTableAddTaskChecklist
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -390,16 +388,16 @@ namespace Infrastructure.Database.Migrations
                                 .HasColumnType("timestamp without time zone")
                                 .HasColumnName("end_date");
 
-                            b1.Property<TimeSpan?>("EstimatedTime")
-                                .HasColumnType("time")
+                            b1.Property<long>("EstimatedTime")
+                                .HasColumnType("bigint")
                                 .HasColumnName("estimated_time");
 
                             b1.Property<DateTime>("StartDate")
                                 .HasColumnType("timestamp without time zone")
                                 .HasColumnName("start_date");
 
-                            b1.Property<TimeSpan?>("Time")
-                                .HasColumnType("time")
+                            b1.Property<long>("Time")
+                                .HasColumnType("bigint")
                                 .HasColumnName("time");
 
                             b1.HasKey("TaskId");
@@ -416,12 +414,12 @@ namespace Infrastructure.Database.Migrations
                                 .HasColumnType("uuid")
                                 .HasColumnName("user_id");
 
-                            b1.Property<TimeSpan?>("EstimatedTime")
-                                .HasColumnType("time")
+                            b1.Property<TimeOnly?>("EstimatedTime")
+                                .HasColumnType("time without time zone")
                                 .HasColumnName("estimated_time");
 
-                            b1.Property<TimeSpan?>("Time")
-                                .HasColumnType("time")
+                            b1.Property<TimeOnly?>("Time")
+                                .HasColumnType("time without time zone")
                                 .HasColumnName("time");
 
                             b1.Property<Guid>("task_id")

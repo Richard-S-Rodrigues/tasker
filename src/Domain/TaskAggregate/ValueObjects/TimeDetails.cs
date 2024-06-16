@@ -7,8 +7,8 @@ public sealed class TimeDetails : ValueObject
   public TimeDetails(
     DateTime startDate, 
     DateTime endDate,
-    TimeOnly? time, 
-    TimeOnly? estimatedTime)
+    long time, 
+    long estimatedTime)
   {
     StartDate = startDate;
     EndDate = endDate;
@@ -18,15 +18,15 @@ public sealed class TimeDetails : ValueObject
 
   public DateTime StartDate { get; private set; }
   public DateTime EndDate { get; private set; }
-  public TimeOnly? Time { get; private set; }
-  public TimeOnly? EstimatedTime { get; private set; }
+  public long Time { get; private set; }
+  public long EstimatedTime { get; private set; }
 
   public override IEnumerable<object> GetEqualityComponents()
   {
     yield return StartDate;
     yield return EndDate;
-    yield return Time!;
-    yield return EstimatedTime!;      
+    yield return Time;
+    yield return EstimatedTime;      
   }
 
   public TimeDetails() {}

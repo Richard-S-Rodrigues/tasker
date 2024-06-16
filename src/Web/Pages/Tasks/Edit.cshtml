@@ -7,5 +7,5 @@
   ViewData["Title"] = "Tarefa";
 }
 
-@(await Component.InvokeAsync("SaveTask", new { boardId = Model.BoardId, id = Model.Id }))
+@(await Component.InvokeAsync("SaveTask", new { boardId = Model.BoardId, model = Model, id = Model.Id }))
 

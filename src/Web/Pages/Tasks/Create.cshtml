@@ -7,5 +7,5 @@
   ViewData["Title"] = "Cadastrar nova tarefa";
 }
 
-@(await Component.InvokeAsync("SaveTask", new { boardId = Model.BoardId, id = (Guid?)null }))
+@(await Component.InvokeAsync("SaveTask", new { boardId = Model.BoardId, model = Model, id = (Guid?)null }))
 

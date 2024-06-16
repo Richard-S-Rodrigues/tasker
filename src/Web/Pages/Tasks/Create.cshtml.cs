@@ -1,12 +1,8 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using MediatR;
 
 namespace Tasker.Web.Pages.Tasks;
 
-public class Create : PageModel
+public class Create : BaseTaskForm
 {
-  public Create() {}
-
-  [BindProperty(SupportsGet = true)]
-  public Guid BoardId { get; set; }
+  public Create(ISender sender) : base(sender) {}
 }

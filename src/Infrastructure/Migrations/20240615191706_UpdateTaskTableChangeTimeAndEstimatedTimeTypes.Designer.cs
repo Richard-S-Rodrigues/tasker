@@ -9,11 +9,11 @@ using Tasker.Infrastructure.Context;
 
 #nullable disable
 
-namespace Infrastructure.Database.Migrations
+namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240519164700_UpdateBoardTableAddMembers")]
-    partial class UpdateBoardTableAddMembers
+    [Migration("20240615191706_UpdateTaskTableChangeTimeAndEstimatedTimeTypes")]
+    partial class UpdateTaskTableChangeTimeAndEstimatedTimeTypes
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -118,60 +118,6 @@ namespace Infrastructure.Database.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("task", (string)null);
-                });
-
-            modelBuilder.Entity("Tasker.Domain.TaskChecklistAggregate.TaskChecklist", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("created_at");
-
-                    b.Property<long?>("CreatedBy")
-                        .HasColumnType("bigint")
-                        .HasColumnName("created_by");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("deleted_at");
-
-                    b.Property<long?>("DeletedBy")
-                        .HasColumnType("bigint")
-                        .HasColumnName("deleted_by");
-
-                    b.Property<bool>("IsDone")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false)
-                        .HasColumnName("is_done");
-
-                    b.Property<Guid>("TaskId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("task_id");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("title");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("updated_at");
-
-                    b.Property<long?>("UpdatedBy")
-                        .HasColumnType("bigint")
-                        .HasColumnName("updated_by");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("user_id");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("task_checklist", (string)null);
                 });
 
             modelBuilder.Entity("Tasker.Domain.UserAggregate.User", b =>
@@ -376,6 +322,65 @@ namespace Infrastructure.Database.Migrations
                                 .HasForeignKey("TaskId");
                         });
 
+                    b.OwnsMany("Tasker.Domain.TaskAggregate.TaskChecklist", "TaskChecklists", b1 =>
+                        {
+                            b1.Property<Guid>("Id")
+                                .HasColumnType("uuid")
+                                .HasColumnName("id");
+
+                            b1.Property<DateTime>("CreatedAt")
+                                .HasColumnType("timestamp without time zone")
+                                .HasColumnName("created_at");
+
+                            b1.Property<long?>("CreatedBy")
+                                .HasColumnType("bigint")
+                                .HasColumnName("created_by");
+
+                            b1.Property<DateTime?>("DeletedAt")
+                                .HasColumnType("timestamp without time zone")
+                                .HasColumnName("deleted_at");
+
+                            b1.Property<long?>("DeletedBy")
+                                .HasColumnType("bigint")
+                                .HasColumnName("deleted_by");
+
+                            b1.Property<bool>("IsDone")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("boolean")
+                                .HasDefaultValue(false)
+                                .HasColumnName("is_done");
+
+                            b1.Property<Guid>("TaskId")
+                                .HasColumnType("uuid")
+                                .HasColumnName("task_id");
+
+                            b1.Property<string>("Title")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("title");
+
+                            b1.Property<DateTime?>("UpdatedAt")
+                                .HasColumnType("timestamp without time zone")
+                                .HasColumnName("updated_at");
+
+                            b1.Property<long?>("UpdatedBy")
+                                .HasColumnType("bigint")
+                                .HasColumnName("updated_by");
+
+                            b1.Property<Guid>("UserId")
+                                .HasColumnType("uuid")
+                                .HasColumnName("user_id");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("TaskId");
+
+                            b1.ToTable("task_checklist", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("TaskId");
+                        });
+
                     b.OwnsOne("Tasker.Domain.TaskAggregate.ValueObjects.TimeDetails", "TimeDetails", b1 =>
                         {
                             b1.Property<Guid>("TaskId")
@@ -385,16 +390,16 @@ namespace Infrastructure.Database.Migrations
                                 .HasColumnType("timestamp without time zone")
                                 .HasColumnName("end_date");
 
-                            b1.Property<TimeSpan?>("EstimatedTime")
-                                .HasColumnType("time")
+                            b1.Property<long>("EstimatedTime")
+                                .HasColumnType("bigint")
                                 .HasColumnName("estimated_time");
 
                             b1.Property<DateTime>("StartDate")
                                 .HasColumnType("timestamp without time zone")
                                 .HasColumnName("start_date");
 
-                            b1.Property<TimeSpan?>("Time")
-                                .HasColumnType("time")
+                            b1.Property<long>("Time")
+                                .HasColumnType("bigint")
                                 .HasColumnName("time");
 
                             b1.HasKey("TaskId");
@@ -411,12 +416,12 @@ namespace Infrastructure.Database.Migrations
                                 .HasColumnType("uuid")
                                 .HasColumnName("user_id");
 
-                            b1.Property<TimeSpan?>("EstimatedTime")
-                                .HasColumnType("time")
+                            b1.Property<TimeOnly?>("EstimatedTime")
+                                .HasColumnType("time without time zone")
                                 .HasColumnName("estimated_time");
 
-                            b1.Property<TimeSpan?>("Time")
-                                .HasColumnType("time")
+                            b1.Property<TimeOnly?>("Time")
+                                .HasColumnType("time without time zone")
                                 .HasColumnName("time");
 
                             b1.Property<Guid>("task_id")
@@ -437,6 +442,8 @@ namespace Infrastructure.Database.Migrations
                     b.Navigation("Comments");
 
                     b.Navigation("Responsibles");
+
+                    b.Navigation("TaskChecklists");
 
                     b.Navigation("TimeDetails")
                         .IsRequired();

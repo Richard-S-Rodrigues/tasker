@@ -1,15 +1,8 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using MediatR;
 
 namespace Tasker.Web.Pages.Tasks;
 
-public class Edit : PageModel
+public class Edit : BaseTaskForm
 {
-  public Edit() {}
-
-  [BindProperty(SupportsGet = true)]
-  public Guid Id { get; set; }
-  
-  [BindProperty(SupportsGet = true)]
-  public Guid BoardId { get; set; }
+  public Edit(ISender sender) : base(sender) {}
 }
