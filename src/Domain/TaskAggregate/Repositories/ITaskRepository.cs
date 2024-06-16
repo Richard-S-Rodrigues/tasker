@@ -6,5 +6,8 @@ namespace Tasker.Domain.TaskAggregate.Repositories;
 
 public interface ITaskRepository : IRepository<Task, TaskId>
 {
-  Task<List<Task>> GetAllByBoardId(BoardId boardId);
+  System.Threading.Tasks.Task<List<Task>> GetAllByBoardId(BoardId boardId);
+  System.Threading.Tasks.Task AddChecklist(TaskChecklist taskChecklist);
+  System.Threading.Tasks.Task UpdateChecklist(TaskChecklist taskChecklist);
+  System.Threading.Tasks.Task<TaskChecklist> GetTaskChecklistById(TaskId taskId, TaskChecklistId taskChecklistId);
 }

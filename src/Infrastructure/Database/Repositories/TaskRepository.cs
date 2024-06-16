@@ -3,6 +3,7 @@ using Tasker.Domain.TaskAggregate.Repositories;
 using Tasker.Domain.TaskAggregate.ValueObjects;
 using Tasker.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
+using Tasker.Domain.TaskAggregate;
 
 namespace Tasker.Infrastructure.Database.Repositories;
 
@@ -15,13 +16,13 @@ public class TaskRepository : ITaskRepository
     _applicationDbContext = applicationDbContext;
   }
 
-  public async Task Add(Domain.TaskAggregate.Task entity)
+  public async System.Threading.Tasks.Task Add(Domain.TaskAggregate.Task entity)
   {
     _applicationDbContext.Tasks.Add(entity);
     await _applicationDbContext.SaveChangesAsync();
   }
 
-  public async Task Delete(TaskId id)
+  public async System.Threading.Tasks.Task Delete(TaskId id)
   {
     var task = await _applicationDbContext.Tasks.FindAsync(id);
 
@@ -48,5 +49,37 @@ public class TaskRepository : ITaskRepository
   public async Task<List<Domain.TaskAggregate.Task>> GetAllByBoardId(BoardId boardId)
   {
     return await _applicationDbContext.Tasks.Where(t => t.BoardId == boardId && t.DeletedAt == null).ToListAsync();
+  }
+
+  public async System.Threading.Tasks.Task AddChecklist(Domain.TaskAggregate.TaskChecklist taskChecklist)
+  {
+    var task = _applicationDbContext.Tasks.Find(taskChecklist.TaskId);
+    if (task is not null)
+    {
+      task.TaskChecklists.Add(taskChecklist);
+    }
+    await _applicationDbContext.SaveChangesAsync();
+  }
+
+  public async System.Threading.Tasks.Task UpdateChecklist(Domain.TaskAggregate.TaskChecklist taskChecklist)
+  {
+    var task = _applicationDbContext.Tasks.Find(taskChecklist.TaskId);
+    if (task is not null)
+    {
+      var checklist = task.TaskChecklists.FirstOrDefault(tc => tc.Id.Value == taskChecklist.Id.Value);
+      if (checklist is not null)
+      {
+        checklist.Update(taskChecklist.Title, taskChecklist.Description, taskChecklist.IsDone);
+      }
+    }
+    await _applicationDbContext.SaveChangesAsync();
+  }
+
+  public async Task<Domain.TaskAggregate.TaskChecklist> GetTaskChecklistById(TaskId taskId, TaskChecklistId taskChecklistId)
+  {
+    var task = await _applicationDbContext.Tasks.FindAsync(taskId);
+    if (task is null) return null;
+    
+    return task.TaskChecklists.FirstOrDefault(tc => tc.Id == taskChecklistId);
   }
 }

@@ -6,4 +6,4 @@
   ViewData["Title"] = "Editar checklist";
 }
 
-@(await Component.InvokeAsync("SaveTaskChecklist", new { boardId = Model.BoardId, taskId = Model.TaskId, model = Model, id = Model.Id }))
+@(await Component.InvokeAsync("SaveTaskChecklist", new { taskId = Model.TaskId, model = Model, id = Model.Id }))

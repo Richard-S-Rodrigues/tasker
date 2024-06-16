@@ -161,10 +161,19 @@
                 <ul>
                   @foreach (var checklist in Model.CurrentTask.TaskChecklists)
                   {
-                    <li class="flex items-center justify-between">
-                      <div>
+                    <li class="mt-5 flex items-center justify-between">
+                      <div class="flex gap-2">
                         <div>
-                          <input type="checkbox" value="@checklist.IsDone" id="isDone" />
+                          <input 
+                            type="checkbox" 
+                            class="checkbox"
+                            value="@checklist.IsDone" 
+                            checked="@checklist.IsDone"
+                            hx-post="@Url.Page(currentPage, "ToggleChecklistStatus", new { checklistId = checklist.Id!.Value })"
+                            hx-push-url="false"
+                            hx-trigger="change"
+                            hx-swap="none" 
+                          />
                         </div>
                         <div>
                           <p>@checklist.Title</p>
@@ -184,6 +193,7 @@
                         </a>
                       </div>
                     </li>
+                    <hr class="border-gray-600" />
                   }
                 </ul>
               </div>

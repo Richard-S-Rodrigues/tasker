@@ -2,6 +2,8 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Tasker.Domain.TaskAggregate.Commands;
+using Tasker.Domain.TaskAggregate.Queries;
+using Tasker.Domain.TaskAggregate.ValueObjects;
 using Tasker.Web.Pages.Tasks.ViewModels;
 
 namespace Tasker.Web.Pages.Tasks;
@@ -67,4 +69,19 @@ public class BaseTaskForm : PageModel
     }
   }
 
+  public async Task OnPostToggleChecklistStatus(Guid checklistId)
+  {
+    var checklist = await _sender.Send(new GetTaskChecklistQuery(new TaskId(Id!.Value), new TaskChecklistId(checklistId)));
+
+    if (checklist is not null)
+    {
+      var updateChecklistCommand = new UpdateTaskChecklistCommand(
+          checklist.Id, 
+          checklist.Title,
+          checklist.Description,
+          !checklist.IsDone,
+          new TaskId(Id!.Value));
+        await _sender.Send(updateChecklistCommand);
+    }
+  }
 }

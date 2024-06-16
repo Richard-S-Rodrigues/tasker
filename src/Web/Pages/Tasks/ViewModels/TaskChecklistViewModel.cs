@@ -1,4 +1,5 @@
 
+using Tasker.Domain.TaskAggregate;
 using Tasker.Domain.TaskAggregate.ValueObjects;
 using Tasker.Domain.UserAggregate.ValueObjects;
 
@@ -33,6 +34,17 @@ public class TaskChecklistViewModel
 
   public static Domain.TaskAggregate.TaskChecklist ToEntity(TaskChecklistViewModel taskChecklistViewModel)
   {
+    if (!taskChecklistViewModel.Id.HasValue)
+    {
+      return TaskChecklist.Create(
+        taskChecklistViewModel.Title,
+        taskChecklistViewModel.Description,
+        taskChecklistViewModel.IsDone,
+        new TaskId(taskChecklistViewModel.TaskId),
+        new UserId(taskChecklistViewModel.UserId)  
+      );
+    }
+    
     return new(
       new TaskChecklistId(taskChecklistViewModel.Id!.Value),
       taskChecklistViewModel.Title,

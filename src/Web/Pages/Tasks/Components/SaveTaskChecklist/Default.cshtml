@@ -37,6 +37,13 @@
                 asp-for="CurrentTaskChecklist.Description" 
               ></textarea>
             </div>
+            @if (Model.CurrentTaskChecklist.Id.HasValue)
+            {
+              <div class="flex gap-2">
+                <input class="checkbox" asp-for="CurrentTaskChecklist.IsDone" checked="@Model.CurrentTaskChecklist.IsDone" />
+                <label asp-for="CurrentTaskChecklist.IsDone">Finalizar</label>
+              </div>
+            }
           </section>
         </div>
         <footer class="mt-5 card-actions justify-end gap-4 text-left">
@@ -59,7 +66,7 @@
               end
               remove @@disabled"
           >
-            Salvar
+            Salvar alterações
           </button>
         </footer>
       </form>

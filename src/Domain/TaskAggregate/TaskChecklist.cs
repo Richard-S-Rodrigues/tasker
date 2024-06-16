@@ -42,6 +42,16 @@ public sealed class TaskChecklist : Entity<TaskChecklistId>
       userId);
   }
 
+  public void Update(
+    string title,
+    string? description,
+    bool isDone)
+  {
+    Title = title;
+    Description = description;
+    IsDone = isDone;
+  }
+
   #pragma warning disable
   public TaskChecklist() {}
   #pragma warning restore

@@ -6,4 +6,4 @@
   ViewData["Title"] = "Cadastrar checklist";
 }
 
-@(await Component.InvokeAsync("SaveTaskChecklist", new { boardId = Model.BoardId, taskId = Model.TaskId, model = Model, id = (Guid?)null }))
+@(await Component.InvokeAsync("SaveTaskChecklist", new { taskId = Model.TaskId, model = Model, id = (Guid?)null }))
