@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
 using Tasker.Domain.BoardAggregate.ValueObjects;
 using Tasker.Domain.TaskAggregate;
 using Tasker.Domain.TaskAggregate.Enums;
@@ -19,7 +18,7 @@ public class TaskViewModel
   public Status Status { get; set; }
   public Priority Priority { get; set; }
   public List<Responsible> Responsibles { get; set; } = new();
-  public List<AttachmentFile> AttachmentFiles { get; set; } = new();
+  public List<AttachmentFileViewModel> AttachmentFiles { get; set; } = new();
   public List<Comment> Comments { get; set; } = new();
   public List<TaskChecklistViewModel> TaskChecklists { get; set; } = new();
 
@@ -38,7 +37,7 @@ public class TaskViewModel
       Status = task.Status,
       Priority = task.Priority,
       Responsibles = task.Responsibles,
-      AttachmentFiles = task.AttachmentFiles,
+      AttachmentFiles = AttachmentFileViewModel.ToEnumerableViewModel(task.AttachmentFiles).ToList(),
       Comments = task.Comments,
       TaskChecklists = TaskChecklistViewModel.ToEnumerableViewModel(task.TaskChecklists).ToList()
     };
@@ -61,7 +60,7 @@ public class TaskViewModel
         taskViewModel.Status,
         taskViewModel.Priority,
         taskViewModel.Responsibles,
-        taskViewModel.AttachmentFiles,
+        AttachmentFileViewModel.ToEnumerableEntity(taskViewModel.AttachmentFiles).ToList(),
         taskViewModel.Comments,
         TaskChecklistViewModel.ToEnumerableEntity(taskViewModel.TaskChecklists).ToList());  
     }
@@ -80,7 +79,7 @@ public class TaskViewModel
       taskViewModel.Status,
       taskViewModel.Priority,
       taskViewModel.Responsibles,
-      taskViewModel.AttachmentFiles,
+      AttachmentFileViewModel.ToEnumerableEntity(taskViewModel.AttachmentFiles).ToList(),
       taskViewModel.Comments,
       TaskChecklistViewModel.ToEnumerableEntity(taskViewModel.TaskChecklists).ToList());
   }

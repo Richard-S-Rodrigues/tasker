@@ -1,0 +1,25 @@
+@model List<Tasker.Web.Pages.Tasks.ViewModels.AttachmentFileViewModel>
+
+<ul class="flex col-4">
+  @foreach (var attachmentFile in Model)
+  {
+    <li class="card shadow-2xl p-4 w-40 h-40">
+      <div>
+        <img src="data:image/png;base64, @attachmentFile.Base64" alt="@attachmentFile.Name" />
+      </div>
+      <div>
+        <a 
+          class="btn flex items-center btn-ghost tooltip tooltip-bottom"
+          data-tip="Excluir anexo"
+          hx-post="@Url.Page("Edit", "DeleteAttachmentFile", new { id = attachmentFile.Id!.Value })"
+          hx-target="#attachment-file-list"
+          hx-push-url="false"
+        >
+          <span class="icon">
+            <i class="fas fa-trash"></i>
+          </span>
+        </a>
+      </div>
+    </li>
+  }
+</ul>

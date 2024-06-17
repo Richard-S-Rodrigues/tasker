@@ -82,4 +82,31 @@ public class TaskRepository : ITaskRepository
     
     return task.TaskChecklists.FirstOrDefault(tc => tc.Id == taskChecklistId);
   }
+
+  public async System.Threading.Tasks.Task AddAttachmentFile(AttachmentFile attachmentFile)
+  {
+    var task = await _applicationDbContext.Tasks.FindAsync(attachmentFile.TaskId);
+    if (task is not null)
+    {
+      task.AttachmentFiles.Add(attachmentFile);
+    }
+    await _applicationDbContext.SaveChangesAsync();
+  }
+  public async System.Threading.Tasks.Task DeleteAttachmentFile(AttachmentFile attachmentFile)
+  {
+    var task = await _applicationDbContext.Tasks.FindAsync(attachmentFile.TaskId);
+    if (task is not null)
+    {
+      task.AttachmentFiles.Remove(attachmentFile);
+    }
+    await _applicationDbContext.SaveChangesAsync();
+  }
+
+  public async Task<List<AttachmentFile>> GetAttachmentFilesByTaskId(TaskId taskId)
+  {
+    var task = await _applicationDbContext.Tasks.FindAsync(taskId);
+    if (task is null) return null;
+
+    return task.AttachmentFiles.ToList();
+  }
 }

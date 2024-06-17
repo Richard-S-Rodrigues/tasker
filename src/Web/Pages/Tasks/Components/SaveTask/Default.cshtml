@@ -197,10 +197,50 @@
                   }
                 </ul>
               </div>
+              <div>
+                <div class="flex justify-between items-center">
+                  <h3 class="text-2xl">Anexos</h3>
+                  <details class="dropdown">
+                    <summary class="btn m-1">Selecione um arquivo</summary>
+                    <ul class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                      <li>
+                        <input 
+                          type="file" 
+                          class="file-input file-input-bordered w-full"
+                          asp-for="SelectedFile"
+                          hx-post="@Url.Page(currentPage, "UploadSelectedFile")"
+                          hx-encoding='multipart/form-data'
+                          hx-trigger="change"
+                          hx-push-url="false"
+                          hx-target="#attachment-file-list"
+                        />
+                      </li>
+                    </ul>
+                  </details>
+                </div>
+                <div id="attachment-file-list">
+                  <partial name="_AttachmentFilesList" model="@Model.CurrentTask.AttachmentFiles" />
+                </div>
+              </div>
             }
           </section>
           
           <footer class="mt-5 card-actions justify-end gap-4 text-left">
+            @if (Model.Id.HasValue)
+            {
+              <a 
+                class="btn btn-outline btn-error mr-2"
+                hx-post="@Url.Page("Edit", "Delete")"
+                hx-confirm="Tem certeza que deseja excluir a tarefa?"
+                hx-target="body"
+                hx-push-url="true"
+              >
+                <span class="icon mr-2">
+                  <i class="fas fa-trash"></i>
+                </span>
+                Excluir Tarefa
+              </a>
+            }
             <a 
               class="btn"
               href="/tasks?boardId=@Model.BoardId"

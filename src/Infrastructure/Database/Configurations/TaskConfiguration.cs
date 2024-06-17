@@ -153,7 +153,19 @@ internal class TaskConfiguration : IEntityTypeConfiguration<Domain.TaskAggregate
       b.Property(p => p.TaskId)
         .HasColumnName("task_id")
         .HasConversion(taskId => taskId.Value, value => new TaskId(value));
-      
+
+      b.Property(c => c.Name)
+        .HasColumnName("name")
+        .IsRequired(true);
+
+      b.Property(c => c.ContentType)
+        .HasColumnName("content_type")
+        .IsRequired(true);
+
+      b.Property(c => c.Base64)
+        .HasColumnName("base64")
+        .IsRequired(true);
+
       b.Property(p => p.CreatedAt)
         .HasColumnName("created_at")
         .HasColumnType("timestamp without time zone");

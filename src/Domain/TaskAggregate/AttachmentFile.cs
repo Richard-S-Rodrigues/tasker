@@ -5,21 +5,27 @@ namespace Tasker.Domain.TaskAggregate;
 
 public sealed class AttachmentFile : Entity<AttachmentFileId>
 {
-  private AttachmentFile(
+  public AttachmentFile(
     AttachmentFileId id,
     TaskId taskId,
-    byte[] data
+    string name,
+    string contentType,
+    string base64
   ) : base(id)
   {
     TaskId = taskId;
-    Data = data;
+    Name = name;
+    ContentType = contentType;
+    Base64 = base64;
   }
   public TaskId TaskId { get; private set; }
-  public byte[] Data { get; private set; }
+  public string Name { get; private set; }
+  public string ContentType { get; private set; }
+  public string Base64 { get; private set; }
 
-  public static AttachmentFile Create(TaskId taskId, byte[] data)
+  public static AttachmentFile Create(TaskId taskId, string name, string contentType, string base64)
   {
-    return new AttachmentFile(new AttachmentFileId(Guid.NewGuid()), taskId, data);
+    return new AttachmentFile(new AttachmentFileId(Guid.NewGuid()), taskId, name, contentType, base64);
   }
 
   #pragma warning disable

@@ -26,6 +26,9 @@ public class BaseTaskForm : PageModel
   [BindProperty]
   public TaskViewModel CurrentTask { get; set; } = new();
 
+  [BindProperty]
+  public IFormFile SelectedFile { get; set; } = null!;
+
   public async Task<IActionResult> OnPostAsync()
   {
     try 
@@ -69,6 +72,17 @@ public class BaseTaskForm : PageModel
     }
   }
 
+  public async Task<IActionResult> OnPostDelete()
+  {
+    if (Id.HasValue)
+    {
+      await _sender.Send(new DeleteTaskCommand(new TaskId(Id.Value)));
+    }
+    
+    Response.Headers.Add("HX-Redirect", Url.Page("./Index", new { boardId = CurrentTask.BoardId }));
+    return new EmptyResult();
+  }
+
   public async Task OnPostToggleChecklistStatus(Guid checklistId)
   {
     var checklist = await _sender.Send(new GetTaskChecklistQuery(new TaskId(Id!.Value), new TaskChecklistId(checklistId)));
@@ -83,5 +97,40 @@ public class BaseTaskForm : PageModel
           new TaskId(Id!.Value));
         await _sender.Send(updateChecklistCommand);
     }
+  }
+  
+  public async Task<IActionResult> OnPostUploadSelectedFile()
+  {
+    if (SelectedFile != null)
+    {
+      string name = SelectedFile.FileName;
+      string contentType = SelectedFile.ContentType;
+      
+      using (var memoryStream = new MemoryStream())
+      {
+        await SelectedFile.CopyToAsync(memoryStream);
+        var fileBytes = memoryStream.ToArray();
+        string base64 = Convert.ToBase64String(fileBytes);
+
+        var command = new AddAttachmentFileCommand(new TaskId(Id!.Value), name, contentType, base64);
+        await _sender.Send(command);
+      }
+    }
+
+    var attachmentFiles = await _sender.Send(new GetAttachmentFilesByTaskIdQuery(new TaskId(Id!.Value)));
+    return Partial("_AttachmentFilesList", AttachmentFileViewModel.ToEnumerableViewModel(attachmentFiles).ToList());
+  }
+
+  public async Task<IActionResult> OnPostDeleteAttachmentFile(Guid id)
+  {
+    var attachmentFile = CurrentTask.AttachmentFiles.FirstOrDefault(af => af.Id!.Value == id);
+
+    if (attachmentFile is not null)
+    {
+      await _sender.Send(new DeleteAttachmentFileCommand(AttachmentFileViewModel.ToEntity(attachmentFile)));
+      CurrentTask.AttachmentFiles.Remove(attachmentFile);
+    }
+
+    return Partial("_AttachmentFilesList", CurrentTask.AttachmentFiles.ToList());
   }
 }
