@@ -118,19 +118,32 @@ public class BaseTaskForm : PageModel
     }
 
     var attachmentFiles = await _sender.Send(new GetAttachmentFilesByTaskIdQuery(new TaskId(Id!.Value)));
-    return Partial("_AttachmentFilesList", AttachmentFileViewModel.ToEnumerableViewModel(attachmentFiles).ToList());
+    return ViewComponent("AttachmentFilesList", AttachmentFileViewModel.ToEnumerableViewModel(attachmentFiles).ToList());
   }
 
-  public async Task<IActionResult> OnPostDeleteAttachmentFile(Guid id)
+  public async Task<IActionResult> OnPostDeleteAttachmentFile(Guid id, Guid taskId)
   {
-    var attachmentFile = CurrentTask.AttachmentFiles.FirstOrDefault(af => af.Id!.Value == id);
+    var attachmentFiles = await _sender.Send(new GetAttachmentFilesByTaskIdQuery(new TaskId(taskId)));
+    var attachmentFile = attachmentFiles.FirstOrDefault(af => af.Id!.Value == id);
 
     if (attachmentFile is not null)
     {
-      await _sender.Send(new DeleteAttachmentFileCommand(AttachmentFileViewModel.ToEntity(attachmentFile)));
-      CurrentTask.AttachmentFiles.Remove(attachmentFile);
+      await _sender.Send(new DeleteAttachmentFileCommand(attachmentFile));
+      attachmentFiles.Remove(attachmentFile);
     }
 
-    return Partial("_AttachmentFilesList", CurrentTask.AttachmentFiles.ToList());
+    return ViewComponent("AttachmentFilesList", AttachmentFileViewModel.ToEnumerableViewModel(attachmentFiles).ToList());
+  }
+
+  public async Task<IActionResult> OnGetDownloadAttachmentFile(Guid id, Guid taskId)
+  {
+    var attachmentFile = await _sender.Send(new GetAttachmentFileQuery(new TaskId(taskId), new AttachmentFileId(id)));
+    if (attachmentFile is null)
+    {
+      return new EmptyResult();
+    }
+    var attachmentFileByteData = Convert.FromBase64String(attachmentFile.Base64);
+    
+    return File(attachmentFileByteData, attachmentFile.ContentType, attachmentFile.Name);
   }
 }

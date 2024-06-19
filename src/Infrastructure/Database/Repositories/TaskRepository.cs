@@ -109,4 +109,12 @@ public class TaskRepository : ITaskRepository
 
     return task.AttachmentFiles.ToList();
   }
+
+  public async Task<AttachmentFile?> GetAttachmentFile(TaskId taskId, AttachmentFileId attachmentFileId)
+  {
+    var task = await _applicationDbContext.Tasks.FindAsync(taskId);
+    if (task is null) return null;
+
+    return task.AttachmentFiles.FirstOrDefault(af => af.Id == attachmentFileId);
+  }
 }

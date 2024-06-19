@@ -13,4 +13,5 @@ public interface ITaskRepository : IRepository<Task, TaskId>
   System.Threading.Tasks.Task AddAttachmentFile(AttachmentFile attachmentFile);
   System.Threading.Tasks.Task DeleteAttachmentFile(AttachmentFile attachmentFile);
   System.Threading.Tasks.Task<List<AttachmentFile>> GetAttachmentFilesByTaskId(TaskId taskId);
+  System.Threading.Tasks.Task<AttachmentFile?> GetAttachmentFile(TaskId taskId, AttachmentFileId attachmentFileId);
 }

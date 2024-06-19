@@ -1,25 +1,42 @@
 @model List<Tasker.Web.Pages.Tasks.ViewModels.AttachmentFileViewModel>
 
-<ul class="flex col-4">
-  @foreach (var attachmentFile in Model)
-  {
-    <li class="card shadow-2xl p-4 w-40 h-40">
-      <div>
-        <img src="data:image/png;base64, @attachmentFile.Base64" alt="@attachmentFile.Name" />
+<div class="container mt-4">
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    @foreach (var attachmentFile in Model)
+    {
+      <div class="bg-slate-900 rounded-lg shadow-md overflow-hidden">
+        @if (attachmentFile.ContentType.StartsWith("image"))
+        {
+          <img src="data:image/png;base64, @attachmentFile.Base64" alt="Anexo" class="w-full h-24 sm:h-32 object-cover">
+        }
+        else if (attachmentFile.ContentType.StartsWith("application/pdf"))
+        {
+          <embed type="application/pdf" src="data:application/pdf;base64,@attachmentFile.Base64" class="w-full h-24 sm:h-32 object-cover">
+        }
+        else 
+        {
+          <embed type="text/html" src="data:text/html;base64,@attachmentFile.Base64" class="w-full h-24 sm:h-32 object-cover">
+        }
+        <div class="p-2 py-4 flex gap-4">
+            <a 
+            class="btn flex items-center btn-ghost tooltip tooltip-right"
+            data-tip="Excluir anexo"
+            hx-post="@Url.Page("Edit", "DeleteAttachmentFile", new { id = attachmentFile.Id!.Value, taskId = attachmentFile.TaskId })"
+            hx-target="#attachment-file-list"
+            hx-push-url="false"
+          >
+            <span class="icon">
+              <i class="fas fa-trash"></i>
+            </span>
+          </a>
+          <a
+            href="@Url.Page("Edit", "DownloadAttachmentFile", new { id = attachmentFile.Id!.Value, taskId = attachmentFile.TaskId })" 
+            class="btn btn-accent"
+          >
+            Download
+          </a>
+        </div>
       </div>
-      <div>
-        <a 
-          class="btn flex items-center btn-ghost tooltip tooltip-bottom"
-          data-tip="Excluir anexo"
-          hx-post="@Url.Page("Edit", "DeleteAttachmentFile", new { id = attachmentFile.Id!.Value })"
-          hx-target="#attachment-file-list"
-          hx-push-url="false"
-        >
-          <span class="icon">
-            <i class="fas fa-trash"></i>
-          </span>
-        </a>
-      </div>
-    </li>
-  }
-</ul>
+    }
+  </div>
+</div>

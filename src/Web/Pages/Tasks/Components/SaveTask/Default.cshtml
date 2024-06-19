@@ -219,7 +219,7 @@
                   </details>
                 </div>
                 <div id="attachment-file-list">
-                  <partial name="_AttachmentFilesList" model="@Model.CurrentTask.AttachmentFiles" />
+                  @(await Component.InvokeAsync("AttachmentFilesList", new { model = Model.CurrentTask.AttachmentFiles }))
                 </div>
               </div>
             }
