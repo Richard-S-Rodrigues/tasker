@@ -1,4 +1,6 @@
+using FluentValidation;
 using Tasker.Domain.Shared;
+using Tasker.Domain.TaskAggregate.Validation;
 using Tasker.Domain.TaskAggregate.ValueObjects;
 
 namespace Tasker.Domain.TaskAggregate;
@@ -17,6 +19,9 @@ public sealed class AttachmentFile : Entity<AttachmentFileId>
     Name = name;
     ContentType = contentType;
     Base64 = base64;
+
+    var validator = new AttachmentFileValidator();
+    validator.ValidateAndThrow(this); 
   }
   public TaskId TaskId { get; private set; }
   public string Name { get; private set; }

@@ -1,3 +1,5 @@
+using FluentValidation;
+using Tasker.Domain.BoardAggregate.Validation;
 using Tasker.Domain.BoardAggregate.ValueObjects;
 using Tasker.Domain.Shared;
 
@@ -12,6 +14,9 @@ public sealed class Board : AggregateRoot<BoardId>
   {
     Name = name;
     Members = members;
+
+    var validator = new BoardValidator();
+    validator.ValidateAndThrow(this);
   }
 
   public string Name { get; private set; }

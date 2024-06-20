@@ -2,139 +2,132 @@
 @model Tasker.Web.Pages.Tasks.Index;
 
 <div class="my-6">
-  @if (!Model.TaskList.Any())
-  {
-    <div>Nenhuma tarefa encontrada.</div>
-  }
-  else 
-  {
-    <div>
-      <section class="my-6">
-        <div class="flex items-center">
-          <button 
-            class="btn btn-sm btn-ghost input input-bordered flex items-center" 
-            _="
-              on click 
-                toggle the *display of <i#in-refinement-tasks-hidden/>
-                toggle the *display of <i#in-refinement-tasks-shown/>
-                toggle the *display of the next <ul/>
-            "
-          >
-            <span class="icon">
-              <i class="fas fa-caret-right" id="in-refinement-tasks-hidden"></i>
-              <i class="fas fa-caret-down" id="in-refinement-tasks-shown" style="display: none;"></i>
-            </span>
-            <h3 class="ml-2">Em refinamento</h3>
-          </button>
-          <span class="text-gray-500 ml-4">@(Model.TaskList.Where(t => t.Status == Status.InRefinement).Count())</span>
-        </div>
-        @(await Component.InvokeAsync("TaskList", new { model = Model.TaskList.Where(t => t.Status == Status.InRefinement).ToList() }))
-      </section>
-      <section class="my-6">
-        <div class="flex items-center">
-          <button 
-            class="btn btn-sm btn-ghost input input-bordered flex items-center" 
-            _="
-              on click 
-                toggle the *display of <i#ready-tasks-hidden/>
-                toggle the *display of <i#ready-tasks-shown/>
-                toggle the *display of the next <ul/>
-            "
-          >
-            <span class="icon">
-              <i class="fas fa-caret-right" id="ready-tasks-hidden"></i>
-              <i class="fas fa-caret-down" id="ready-tasks-shown" style="display: none;"></i>
-            </span>
-            <h3 class="ml-2">Pronto</h3>         
-          </button>
-          <span class="text-gray-500 ml-4">@(Model.TaskList.Where(t => t.Status == Status.Ready).Count())</span>
-        </div>
-        @(await Component.InvokeAsync("TaskList", new { model = Model.TaskList.Where(t => t.Status == Status.Ready).ToList() }))
-      </section>
-      <section class="my-6">
-        <div class="flex items-center">
-          <button 
-            class="btn btn-sm btn-ghost input input-bordered flex items-center" 
-            _="
-              on click 
-                toggle the *display of <i#on-progress-tasks-hidden/>
-                toggle the *display of <i#on-progress-tasks-shown/>
-                toggle the *display of next <ul/>
-            "
-          >
-            <span class="icon">
-              <i class="fas fa-caret-right" id="on-progress-tasks-hidden"></i>
-              <i class="fas fa-caret-down" id="on-progress-tasks-shown" style="display: none;"></i>
-            </span>
-            <h3 class="ml-2">Em progresso</h3>
-          </button>
-          <span class="text-gray-500 ml-4">@(Model.TaskList.Where(t => t.Status == Status.OnProgress).Count())</span>
-        </div>
-        @(await Component.InvokeAsync("TaskList", new { model = Model.TaskList.Where(t => t.Status == Status.OnProgress).ToList() }))
-      </section>
-      <section class="my-6">
-        <div class="flex items-center">
-          <button 
-            class="btn btn-sm btn-ghost input input-bordered flex items-center" 
-            _="
-              on click 
-                toggle the *display of <i#interrupted-tasks-hidden/>
-                toggle the *display of <i#interrupted-tasks-shown/>
-                toggle the *display of next <ul/>
-            "
-          >
-            <span class="icon">
-              <i class="fas fa-caret-right" id="interrupted-tasks-hidden"></i>
-              <i class="fas fa-caret-down" id="interrupted-tasks-shown" style="display: none;"></i>
-            </span>
-            <h3 class="ml-2">Interrompido</h3>          
-          </button>
-          <span class="text-gray-500 ml-4">@(Model.TaskList.Where(t => t.Status == Status.Interrupted).Count())</span>
-        </div>
-        @(await Component.InvokeAsync("TaskList", new { model = Model.TaskList.Where(t => t.Status == Status.Interrupted).ToList() }))
-      </section>
-      <section class="my-6">
-        <div class="flex items-center">
-          <button 
-            class="btn btn-sm btn-ghost input input-bordered flex items-center" 
-            _="
-              on click 
-                toggle the *display of <i#canceled-tasks-hidden/>
-                toggle the *display of <i#canceled-tasks-shown/>
-                toggle the *display of next <ul/>
-            "
-          >
-            <span class="icon">
-              <i class="fas fa-caret-right" id="canceled-tasks-hidden"></i>
-              <i class="fas fa-caret-down" id="canceled-tasks-shown" style="display: none;"></i>
-            </span>
-            <h3 class="ml-2">Cancelado</h3>
-          </button>
-          <span class="text-gray-500 ml-4">@(Model.TaskList.Where(t => t.Status == Status.Canceled).Count())</span>
-        </div>
-        @(await Component.InvokeAsync("TaskList", new { model = Model.TaskList.Where(t => t.Status == Status.Canceled).ToList() }))
-      </section>
-      <section class="my-6">
-        <div class="flex items-center">
-          <button 
-            class="btn btn-sm btn-ghost input input-bordered flex items-center" 
-            _="
-              on click 
-                toggle the *display of <i#done-tasks-hidden/>
-                toggle the *display of <i#done-tasks-shown/>
-                toggle the *display of next <ul/>
-            "
-          >
-            <span class="icon">
-              <i class="fas fa-caret-right" id="done-tasks-hidden"></i>
-              <i class="fas fa-caret-down" id="done-tasks-shown" style="display: none;"></i>
-            </span>
-            <h3 class="ml-2">Concluído</h3>
-          </button>
-          <span class="text-gray-500 ml-4">@(Model.TaskList.Where(t => t.Status == Status.Done).Count())</span>
-        </div>
-        @(await Component.InvokeAsync("TaskList", new { model = Model.TaskList.Where(t => t.Status == Status.Done).ToList() }))
-      </section>
-    </div>
-  }
+  <div>
+    <section class="my-6">
+      <div class="flex items-center">
+        <button 
+          class="btn btn-sm btn-ghost input input-bordered flex items-center" 
+          _="
+            on click 
+              toggle the *display of <i#in-refinement-tasks-hidden/>
+              toggle the *display of <i#in-refinement-tasks-shown/>
+              toggle the *display of the next <ul/>
+          "
+        >
+          <span class="icon">
+            <i class="fas fa-caret-right" id="in-refinement-tasks-hidden"></i>
+            <i class="fas fa-caret-down" id="in-refinement-tasks-shown" style="display: none;"></i>
+          </span>
+          <h3 class="ml-2">Em refinamento</h3>
+        </button>
+        <span class="text-gray-500 ml-4">@(Model.TaskList.Where(t => t.Status == Status.InRefinement).Count())</span>
+      </div>
+      @(await Component.InvokeAsync("TaskList", new { model = Model.TaskList.Where(t => t.Status == Status.InRefinement).ToList() }))
+    </section>
+    <section class="my-6">
+      <div class="flex items-center">
+        <button 
+          class="btn btn-sm btn-ghost input input-bordered flex items-center" 
+          _="
+            on click 
+              toggle the *display of <i#ready-tasks-hidden/>
+              toggle the *display of <i#ready-tasks-shown/>
+              toggle the *display of the next <ul/>
+          "
+        >
+          <span class="icon">
+            <i class="fas fa-caret-right" id="ready-tasks-hidden"></i>
+            <i class="fas fa-caret-down" id="ready-tasks-shown" style="display: none;"></i>
+          </span>
+          <h3 class="ml-2">Pronto</h3>         
+        </button>
+        <span class="text-gray-500 ml-4">@(Model.TaskList.Where(t => t.Status == Status.Ready).Count())</span>
+      </div>
+      @(await Component.InvokeAsync("TaskList", new { model = Model.TaskList.Where(t => t.Status == Status.Ready).ToList() }))
+    </section>
+    <section class="my-6">
+      <div class="flex items-center">
+        <button 
+          class="btn btn-sm btn-ghost input input-bordered flex items-center" 
+          _="
+            on click 
+              toggle the *display of <i#on-progress-tasks-hidden/>
+              toggle the *display of <i#on-progress-tasks-shown/>
+              toggle the *display of next <ul/>
+          "
+        >
+          <span class="icon">
+            <i class="fas fa-caret-right" id="on-progress-tasks-hidden"></i>
+            <i class="fas fa-caret-down" id="on-progress-tasks-shown" style="display: none;"></i>
+          </span>
+          <h3 class="ml-2">Em progresso</h3>
+        </button>
+        <span class="text-gray-500 ml-4">@(Model.TaskList.Where(t => t.Status == Status.OnProgress).Count())</span>
+      </div>
+      @(await Component.InvokeAsync("TaskList", new { model = Model.TaskList.Where(t => t.Status == Status.OnProgress).ToList() }))
+    </section>
+    <section class="my-6">
+      <div class="flex items-center">
+        <button 
+          class="btn btn-sm btn-ghost input input-bordered flex items-center" 
+          _="
+            on click 
+              toggle the *display of <i#interrupted-tasks-hidden/>
+              toggle the *display of <i#interrupted-tasks-shown/>
+              toggle the *display of next <ul/>
+          "
+        >
+          <span class="icon">
+            <i class="fas fa-caret-right" id="interrupted-tasks-hidden"></i>
+            <i class="fas fa-caret-down" id="interrupted-tasks-shown" style="display: none;"></i>
+          </span>
+          <h3 class="ml-2">Interrompido</h3>          
+        </button>
+        <span class="text-gray-500 ml-4">@(Model.TaskList.Where(t => t.Status == Status.Interrupted).Count())</span>
+      </div>
+      @(await Component.InvokeAsync("TaskList", new { model = Model.TaskList.Where(t => t.Status == Status.Interrupted).ToList() }))
+    </section>
+    <section class="my-6">
+      <div class="flex items-center">
+        <button 
+          class="btn btn-sm btn-ghost input input-bordered flex items-center" 
+          _="
+            on click 
+              toggle the *display of <i#canceled-tasks-hidden/>
+              toggle the *display of <i#canceled-tasks-shown/>
+              toggle the *display of next <ul/>
+          "
+        >
+          <span class="icon">
+            <i class="fas fa-caret-right" id="canceled-tasks-hidden"></i>
+            <i class="fas fa-caret-down" id="canceled-tasks-shown" style="display: none;"></i>
+          </span>
+          <h3 class="ml-2">Cancelado</h3>
+        </button>
+        <span class="text-gray-500 ml-4">@(Model.TaskList.Where(t => t.Status == Status.Canceled).Count())</span>
+      </div>
+      @(await Component.InvokeAsync("TaskList", new { model = Model.TaskList.Where(t => t.Status == Status.Canceled).ToList() }))
+    </section>
+    <section class="my-6">
+      <div class="flex items-center">
+        <button 
+          class="btn btn-sm btn-ghost input input-bordered flex items-center" 
+          _="
+            on click 
+              toggle the *display of <i#done-tasks-hidden/>
+              toggle the *display of <i#done-tasks-shown/>
+              toggle the *display of next <ul/>
+          "
+        >
+          <span class="icon">
+            <i class="fas fa-caret-right" id="done-tasks-hidden"></i>
+            <i class="fas fa-caret-down" id="done-tasks-shown" style="display: none;"></i>
+          </span>
+          <h3 class="ml-2">Concluído</h3>
+        </button>
+        <span class="text-gray-500 ml-4">@(Model.TaskList.Where(t => t.Status == Status.Done).Count())</span>
+      </div>
+      @(await Component.InvokeAsync("TaskList", new { model = Model.TaskList.Where(t => t.Status == Status.Done).ToList() }))
+    </section>
+  </div>
 </div>
