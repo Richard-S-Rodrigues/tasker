@@ -8,9 +8,11 @@ using Tasker.Domain.TaskAggregate.Queries;
 using Tasker.Web.Pages.Tasks.ViewModels;
 using Tasker.Web.Pages.Boards.ViewModels;
 using Tasker.Domain.BoardAggregate.Queries;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Tasker.Web.Pages.Tasks;
 
+[Authorize]
 [IgnoreAntiforgeryToken]
 public class Index : PageModel
 {

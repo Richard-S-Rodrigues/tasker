@@ -7,9 +7,11 @@ using Tasker.Web.Pages.Shared.ViewModels;
 using Tasker.Web.Pages.Boards.ViewModels;
 using Tasker.Domain.BoardAggregate.ValueObjects;
 using Tasker.Domain.BoardAggregate;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Tasker.Web.Pages.Boards;
 
+[Authorize]
 [IgnoreAntiforgeryToken]
 public class Index : PageModel
 {

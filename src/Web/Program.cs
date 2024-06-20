@@ -49,11 +49,13 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapRazorPages();
-
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapRazorPages();
+});
 app.MapControllers();
 
 app.Run();
