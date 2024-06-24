@@ -1,6 +1,6 @@
+using Tasker.Domain.BoardAggregate.ValueObjects;
 using Tasker.Domain.Shared;
 using Tasker.Domain.TaskAggregate.ValueObjects;
-using Tasker.Domain.UserAggregate.ValueObjects;
 
 namespace Tasker.Domain.TaskAggregate;
 
@@ -9,20 +9,20 @@ public sealed class Comment : Entity<CommentId>
   private Comment(
     CommentId id,
     string text, 
-    UserId userId,
+    MemberId memberId,
     TaskId taskId) : base(id)
   {
     Text = text;
-    UserId = userId;
+    MemberId = memberId;
     TaskId = taskId;
   }
   public string Text { get; private set; }
-  public UserId UserId { get; private set; }
+  public MemberId MemberId { get; private set; }
   public TaskId TaskId { get; private set; }
 
-  public static Comment Create(string text, UserId userId, TaskId taskId)
+  public static Comment Create(string text, MemberId memberId, TaskId taskId)
   {
-    return new Comment(new CommentId(Guid.NewGuid()), text, userId, taskId);
+    return new Comment(new CommentId(Guid.NewGuid()), text, memberId, taskId);
   }
   
   #pragma warning disable

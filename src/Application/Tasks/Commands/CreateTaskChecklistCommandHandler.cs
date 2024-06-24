@@ -1,8 +1,8 @@
 using MediatR;
+using Tasker.Domain.BoardAggregate.ValueObjects;
 using Tasker.Domain.TaskAggregate;
 using Tasker.Domain.TaskAggregate.Commands;
 using Tasker.Domain.TaskAggregate.Repositories;
-using Tasker.Domain.UserAggregate.ValueObjects;
 
 namespace Tasker.Application.Tasks.Commands;
 
@@ -22,7 +22,7 @@ public class CreateTaskChecklistCommandHandler : IRequestHandler<CreateTaskCheck
       request.description,
       request.isDone,
       request.taskId,
-      new UserId(Guid.NewGuid())
+      new MemberId(Guid.NewGuid())
     );
 
     await _taskRepository.AddChecklist(taskChecklist);

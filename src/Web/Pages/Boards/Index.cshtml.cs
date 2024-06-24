@@ -8,6 +8,7 @@ using Tasker.Web.Pages.Boards.ViewModels;
 using Tasker.Domain.BoardAggregate.ValueObjects;
 using Tasker.Domain.BoardAggregate;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace Tasker.Web.Pages.Boards;
 
@@ -16,9 +17,14 @@ namespace Tasker.Web.Pages.Boards;
 public class Index : PageModel
 {
     private readonly ISender _sender;
-    public Index(ISender sender)
+    private IHttpContextAccessor _httpContextAccessor;
+    private readonly UserManager<IdentityUser> _userManager;
+
+    public Index(ISender sender, IHttpContextAccessor httpContextAccessor, UserManager<IdentityUser> userManager)
     {   
         _sender = sender;
+        _httpContextAccessor = httpContextAccessor;
+        _userManager = userManager;
     }
 
     public ErrorViewModel Error { get; private set; } = new();
@@ -52,6 +58,8 @@ public class Index : PageModel
     {
         try 
         {
+            var user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+
             if (id.HasValue)
             {
                 var updateCommand = new UpdateBoardCommand(new BoardId(id.Value), name, new List<Member>());
@@ -59,7 +67,7 @@ public class Index : PageModel
             }
             else 
             {
-                var createCommand = new CreateBoardCommand(name);
+                var createCommand = new CreateBoardCommand(name, Guid.Parse(user.Id), user.UserName);
                 await _sender.Send(createCommand);
             }
 

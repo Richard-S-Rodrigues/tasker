@@ -2,7 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Tasker.Domain.BoardAggregate.ValueObjects;
 using Tasker.Domain.TaskAggregate.ValueObjects;
-using Tasker.Domain.UserAggregate.ValueObjects;
 
 namespace Tasker.Infrastructure.Database.Configurations;
 
@@ -114,11 +113,11 @@ internal class TaskConfiguration : IEntityTypeConfiguration<Domain.TaskAggregate
       
       b.WithOwner().HasForeignKey("task_id");
       
-      b.HasKey(p => p.UserId);
+      b.HasKey(p => p.MemberId);
       
-      b.Property(p => p.UserId).HasConversion(
-        userId => userId.Value,
-        value => new UserId(value))
+      b.Property(p => p.MemberId).HasConversion(
+        memberId => memberId.Value,
+        value => new MemberId(value))
         .HasColumnName("user_id")
         .ValueGeneratedNever();
 
@@ -219,9 +218,9 @@ internal class TaskConfiguration : IEntityTypeConfiguration<Domain.TaskAggregate
         .HasColumnName("text")
         .IsRequired(true);
 
-      b.Property(p => p.UserId)
+      b.Property(p => p.MemberId)
         .HasColumnName("user_id")
-        .HasConversion(userId => userId.Value, value => new UserId(value))
+        .HasConversion(memberId => memberId.Value, value => new MemberId(value))
         .IsRequired(true);
 
       b.Property(p => p.TaskId)
@@ -292,9 +291,9 @@ internal class TaskConfiguration : IEntityTypeConfiguration<Domain.TaskAggregate
         .HasColumnType("boolean")
         .HasDefaultValue(false);
 
-      b.Property(p => p.UserId)
+      b.Property(p => p.MemberId)
         .HasColumnName("user_id")
-        .HasConversion(userId => userId.Value, value => new UserId(value))
+        .HasConversion(memberId => memberId.Value, value => new MemberId(value))
         .IsRequired(true);
 
       b.Property(p => p.TaskId)

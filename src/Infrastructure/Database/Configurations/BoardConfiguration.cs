@@ -2,7 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Tasker.Domain.BoardAggregate;
 using Tasker.Domain.BoardAggregate.ValueObjects;
-using Tasker.Domain.UserAggregate.ValueObjects;
 
 namespace Tasker.Infrastructure.Database.Configurations;
 
@@ -74,16 +73,14 @@ internal class BoardConfiguration : IEntityTypeConfiguration<Board>
           memberId => memberId.Value,
           value => new MemberId(value)
       );
-    
+
+      b.Property(p => p.Name)
+        .HasColumnName("name");
+
       b.Property(p => p.IsAdmin)
         .HasColumnName("is_admin")
         .HasColumnType("boolean")
         .HasDefaultValue(false);
-
-      b.Property(p => p.UserId)
-        .HasColumnName("user_id")
-        .HasConversion(userId => userId.Value, value => new UserId(value))
-        .IsRequired(true);
 
       b.Property(p => p.BoardId)
         .HasColumnName("board_id")

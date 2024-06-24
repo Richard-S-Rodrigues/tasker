@@ -14,6 +14,8 @@ public class CreateBoardCommandTests
     // Arrange
     var repository = Substitute.For<IBoardRepository>();  
     var command = new CreateBoardCommand(
+      "",
+      Guid.NewGuid(), 
       ""
     );
     var commandHandler = new CreateBoardCommandHandler(repository);

@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Tasker.Domain.BoardAggregate;
-using Tasker.Domain.UserAggregate;
 
 namespace Tasker.Infrastructure.Context;
 
@@ -31,6 +30,5 @@ public class ApplicationDbContext : DbContext
   }
 
   public DbSet<Board> Boards { get; set; } = null!;
-  public DbSet<User> Users { get; set; } = null!;
   public DbSet<Domain.TaskAggregate.Task> Tasks { get; set; } = null!;
 }

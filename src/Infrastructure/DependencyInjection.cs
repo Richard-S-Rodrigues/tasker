@@ -4,7 +4,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Tasker.Domain.BoardAggregate.Repositories;
 using Tasker.Domain.TaskAggregate.Repositories;
-using Tasker.Domain.UserAggregate.Repositories;
 using Tasker.Infrastructure.Context;
 using Tasker.Infrastructure.Database.Repositories;
 
@@ -54,7 +53,6 @@ public static class DependencyInjection
     });
     
     services.AddScoped<IBoardRepository, BoardRepository>();
-    services.AddScoped<IUserRepository, UserRepository>();
     services.AddScoped<ITaskRepository, TaskRepository>();
   
     return services;

@@ -1,26 +1,26 @@
+using Tasker.Domain.BoardAggregate.ValueObjects;
 using Tasker.Domain.Shared;
-using Tasker.Domain.UserAggregate.ValueObjects;
 
 namespace Tasker.Domain.TaskAggregate.ValueObjects;
 
 public sealed class Responsible : ValueObject
 {
   public Responsible(
-    UserId userId,
+    MemberId memberId,
     TimeOnly estimatedTime,
     TimeOnly time)
   {
-    UserId = userId;
+    MemberId = memberId;
     EstimatedTime = estimatedTime;
     Time = time;
   }
-  public UserId UserId { get; private set; }
+  public MemberId MemberId { get; private set; }
   public TimeOnly? EstimatedTime { get; private set; }
   public TimeOnly? Time { get; private set; }
 
   public override IEnumerable<object> GetEqualityComponents()
   {
-    yield return UserId;
+    yield return MemberId;
     yield return EstimatedTime!;
     yield return Time!;
   }

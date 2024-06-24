@@ -47,4 +47,22 @@ public class BoardRepository : IBoardRepository
     await _applicationDbContext.SaveChangesAsync();
     return entity;
   }
+
+  public async Task<Board> AddMemberToBoard(BoardId boardId, Member member)
+  {
+    var board = await _applicationDbContext.Boards.FirstOrDefaultAsync(b => b.Id == boardId);
+    if (board is null) return null;
+    board.AddMember(member);
+
+    await _applicationDbContext.SaveChangesAsync();
+    return board;
+  }
+
+  public async Task<List<Member>> GetAllMembersByBoardId(BoardId boardId)
+  {
+    var board = await _applicationDbContext.Boards.FirstOrDefaultAsync(b => b.Id == boardId);
+    if (board is null) return new List<Member>();
+    
+    return board.Members;
+  }
 }

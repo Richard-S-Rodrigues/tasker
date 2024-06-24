@@ -1,7 +1,7 @@
 
+using Tasker.Domain.BoardAggregate.ValueObjects;
 using Tasker.Domain.TaskAggregate;
 using Tasker.Domain.TaskAggregate.ValueObjects;
-using Tasker.Domain.UserAggregate.ValueObjects;
 
 namespace Tasker.Web.Pages.Tasks.ViewModels;
 
@@ -12,7 +12,7 @@ public class TaskChecklistViewModel
   public string? Description { get; set; }
   public bool IsDone { get; set; }
   public Guid TaskId { get; set; }
-  public Guid UserId { get; set; }
+  public Guid MemberId { get; set; }
 
   public static TaskChecklistViewModel ToViewModel(Domain.TaskAggregate.TaskChecklist taskChecklist)
   {
@@ -23,7 +23,7 @@ public class TaskChecklistViewModel
       Description = taskChecklist.Description,
       IsDone = taskChecklist.IsDone,
       TaskId = taskChecklist.TaskId.Value,
-      UserId = taskChecklist.UserId.Value
+      MemberId = taskChecklist.MemberId.Value
     };
   }
 
@@ -41,7 +41,7 @@ public class TaskChecklistViewModel
         taskChecklistViewModel.Description,
         taskChecklistViewModel.IsDone,
         new TaskId(taskChecklistViewModel.TaskId),
-        new UserId(taskChecklistViewModel.UserId)  
+        new MemberId(taskChecklistViewModel.MemberId)  
       );
     }
     
@@ -51,7 +51,7 @@ public class TaskChecklistViewModel
       taskChecklistViewModel.Description,
       taskChecklistViewModel.IsDone,
       new TaskId(taskChecklistViewModel.TaskId),
-      new UserId(taskChecklistViewModel.UserId)
+      new MemberId(taskChecklistViewModel.MemberId)
     );
   }
 

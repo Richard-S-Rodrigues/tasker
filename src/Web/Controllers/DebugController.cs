@@ -22,7 +22,7 @@ public class DebugController : ControllerBase
   [HttpPost]
   public async Task<IActionResult> CreateBoard(string name)
   {
-    var command = new CreateBoardCommand(name);
+    var command = new CreateBoardCommand(name, Guid.NewGuid(), "");
     
     await _sender.Send(command);
     return Ok();

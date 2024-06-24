@@ -1,6 +1,6 @@
+using Tasker.Domain.BoardAggregate.ValueObjects;
 using Tasker.Domain.Shared;
 using Tasker.Domain.TaskAggregate.ValueObjects;
-using Tasker.Domain.UserAggregate.ValueObjects;
 
 namespace Tasker.Domain.TaskAggregate;
 
@@ -12,26 +12,26 @@ public sealed class TaskChecklist : Entity<TaskChecklistId>
     string? description,
     bool isDone,
     TaskId taskId,
-    UserId userId) : base(id)
+    MemberId memberId) : base(id)
   {
     Title = title;
     Description = description;
     IsDone = isDone;
     TaskId = taskId;
-    UserId = userId;
+    MemberId = memberId;
   }
   public string Title { get; private set; }
   public string? Description { get; private set; }
   public bool IsDone { get; private set; }
   public TaskId TaskId { get; private set; }
-  public UserId UserId { get; private set; }
+  public MemberId MemberId { get; private set; }
 
   public static TaskChecklist Create(
     string title,
     string? description,
     bool isDone,
     TaskId taskId,
-    UserId userId)
+    MemberId memberId)
   {
     return new TaskChecklist(
       new TaskChecklistId(Guid.NewGuid()), 
@@ -39,7 +39,7 @@ public sealed class TaskChecklist : Entity<TaskChecklistId>
       description,
       isDone,
       taskId,
-      userId);
+      memberId);
   }
 
   public void Update(
