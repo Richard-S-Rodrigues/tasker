@@ -11,5 +11,4 @@ public record CreateTaskCommand(
     string? description,
     TimeDetails timeDetails,
     Status status, 
-    Priority priority,
-    List<Responsible> responsibles) : IRequest;
+    Priority priority) : IRequest;

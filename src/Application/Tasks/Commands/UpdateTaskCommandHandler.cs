@@ -23,7 +23,6 @@ public class UpdateTaskCommandHandler : IRequestHandler<UpdateTaskCommand>
       request.TimeDetails,
       request.Status,
       request.Priority,
-      request.Responsibles,
       request.AttachmentFiles,
       request.Comments,
       request.TaskChecklists

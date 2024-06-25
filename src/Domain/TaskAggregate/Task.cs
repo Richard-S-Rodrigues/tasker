@@ -17,7 +17,6 @@ public sealed class Task : AggregateRoot<TaskId>
     TimeDetails timeDetails,
     Status status,
     Priority priority,
-    List<Responsible> responsibles,
     List<AttachmentFile> attachmentFiles,
     List<Comment> comments,
     List<TaskChecklist> taskChecklists
@@ -29,7 +28,6 @@ public sealed class Task : AggregateRoot<TaskId>
     TimeDetails = timeDetails;
     Status = status;
     Priority = priority;
-    Responsibles = responsibles;
     AttachmentFiles = attachmentFiles;
     Comments = comments;
     TaskChecklists = taskChecklists;
@@ -43,7 +41,6 @@ public sealed class Task : AggregateRoot<TaskId>
   public TimeDetails TimeDetails { get; private set; }
   public Status Status { get; private set; }
   public Priority Priority { get; private set; }
-  public List<Responsible> Responsibles { get; private set; }
   public List<AttachmentFile> AttachmentFiles { get; private set; }
   public List<Comment> Comments { get; private set; }
   public List<TaskChecklist> TaskChecklists { get; private set; }
@@ -55,7 +52,6 @@ public sealed class Task : AggregateRoot<TaskId>
     TimeDetails timeDetails,
     Status status,
     Priority priority,
-    List<Responsible> responsibles,
     List<AttachmentFile> attachmentFiles,
     List<Comment> comments,
     List<TaskChecklist> taskChecklists)
@@ -67,8 +63,7 @@ public sealed class Task : AggregateRoot<TaskId>
       description, 
       timeDetails, 
       status, 
-      priority, 
-      responsibles, 
+      priority,  
       attachmentFiles, 
       comments,
       taskChecklists); 

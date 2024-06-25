@@ -39,8 +39,7 @@ public class DebugController : ControllerBase
         createTaskDTO.Description,
         createTaskDTO.TimeDetails,
         createTaskDTO.Status,
-        createTaskDTO.Priority,
-        createTaskDTO.Responsibles);
+        createTaskDTO.Priority);
       
       await _sender.Send(command);
       return Ok();
@@ -59,5 +58,4 @@ public record CreateTaskDTO(
   string? Description,
   TimeDetails TimeDetails,
   Status Status,
-  Priority Priority,
-  List<Responsible> Responsibles);
+  Priority Priority);

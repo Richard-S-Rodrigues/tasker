@@ -46,7 +46,7 @@ public class SaveTaskViewComponent : ViewComponent
     }
 
     model.CurrentTask.BoardId = boardId;
-
+    
     return View("/Pages/Tasks/Components/SaveTask/Default.cshtml", model); 
   }
 }

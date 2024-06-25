@@ -1,6 +1,8 @@
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Tasker.Domain.BoardAggregate.ValueObjects;
 using Tasker.Domain.TaskAggregate.Commands;
 using Tasker.Domain.TaskAggregate.Queries;
 using Tasker.Domain.TaskAggregate.ValueObjects;
@@ -12,9 +14,14 @@ namespace Tasker.Web.Pages.Tasks;
 public class BaseTaskForm : PageModel
 {
   private readonly ISender _sender;
-  public BaseTaskForm(ISender sender)
+  private IHttpContextAccessor _httpContextAccessor;
+  private readonly UserManager<IdentityUser> _userManager;
+
+  public BaseTaskForm(ISender sender, IHttpContextAccessor httpContextAccessor, UserManager<IdentityUser> userManager)
   {   
     _sender = sender;
+    _httpContextAccessor = httpContextAccessor;
+    _userManager = userManager;
   }
 
   [BindProperty(SupportsGet = true)]
@@ -28,6 +35,8 @@ public class BaseTaskForm : PageModel
 
   [BindProperty]
   public IFormFile SelectedFile { get; set; } = null!;
+  [BindProperty]
+  public string? CurrentCommentMessage { get; set; } = null!;
 
   public async Task<IActionResult> OnPostAsync()
   {
@@ -44,7 +53,6 @@ public class BaseTaskForm : PageModel
             taskEntity.TimeDetails,
             taskEntity.Status,
             taskEntity.Priority,
-            taskEntity.Responsibles,
             taskEntity.AttachmentFiles,
             taskEntity.Comments,
             taskEntity.TaskChecklists);
@@ -58,8 +66,7 @@ public class BaseTaskForm : PageModel
             taskEntity.Description,
             taskEntity.TimeDetails,
             taskEntity.Status,
-            taskEntity.Priority,
-            taskEntity.Responsibles);
+            taskEntity.Priority);
           await _sender.Send(createCommand);
       }
 
@@ -145,5 +152,22 @@ public class BaseTaskForm : PageModel
     var attachmentFileByteData = Convert.FromBase64String(attachmentFile.Base64);
     
     return File(attachmentFileByteData, attachmentFile.ContentType, attachmentFile.Name);
+  }
+
+  public async Task<IActionResult> OnPostAddComment()
+  {
+    var user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext!.User);
+    if (CurrentCommentMessage != null)
+    {
+      await _sender.Send(new AddCommentCommand(CurrentCommentMessage, new MemberId(Guid.Parse(user.Id)), new TaskId(Id!.Value)));
+    }
+    
+    return ViewComponent("CommentList", new { taskId = Id!.Value });
+  }
+
+  public async Task<IActionResult> OnPostRemoveComment(Guid commentId)
+  {
+    await _sender.Send(new DeleteCommentCommand(new TaskId(Id!.Value), new CommentId(commentId)));
+    return ViewComponent("CommentList", new { taskId = Id!.Value });
   }
 }

@@ -6,7 +6,7 @@ namespace Tasker.Domain.TaskAggregate;
 
 public sealed class Comment : Entity<CommentId>
 {
-  private Comment(
+  public Comment(
     CommentId id,
     string text, 
     MemberId memberId,

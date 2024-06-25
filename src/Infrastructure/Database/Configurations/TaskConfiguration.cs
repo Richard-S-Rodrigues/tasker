@@ -43,7 +43,6 @@ internal class TaskConfiguration : IEntityTypeConfiguration<Domain.TaskAggregate
       .IsRequired(true);
 
     ConfigureTimeDetails(builder);
-    ConfigureResponsiblesTable(builder);
     ConfigureAttachmentFilesTable(builder);
     ConfigureCommentsTable(builder);
     ConfigureTaskChecklistsTable(builder);
@@ -104,34 +103,6 @@ internal class TaskConfiguration : IEntityTypeConfiguration<Domain.TaskAggregate
     builder.Metadata
       .FindNavigation(nameof(Domain.TaskAggregate.Task.TimeDetails))!
       .SetPropertyAccessMode(PropertyAccessMode.Field);  
-  }
-
-  private static void ConfigureResponsiblesTable(EntityTypeBuilder<Domain.TaskAggregate.Task> builder)
-  {
-    builder.OwnsMany(t => t.Responsibles, b => {
-      b.ToTable("task_responsibles");
-      
-      b.WithOwner().HasForeignKey("task_id");
-      
-      b.HasKey(p => p.MemberId);
-      
-      b.Property(p => p.MemberId).HasConversion(
-        memberId => memberId.Value,
-        value => new MemberId(value))
-        .HasColumnName("user_id")
-        .ValueGeneratedNever();
-
-      b.Property(p => p.Time)
-        .HasColumnName("time");
-
-      b.Property(p => p.EstimatedTime)
-        .HasColumnName("estimated_time");
-
-      });
-
-    builder.Metadata
-      .FindNavigation(nameof(Domain.TaskAggregate.Task.Responsibles))!
-      .SetPropertyAccessMode(PropertyAccessMode.Field);
   }
 
   private static void ConfigureAttachmentFilesTable(EntityTypeBuilder<Domain.TaskAggregate.Task> builder)

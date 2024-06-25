@@ -23,8 +23,7 @@ public class CreateTaskCommandTests
       "aaa",
       new TimeDetails(DateTime.Now, DateTime.Now.AddDays(1), 1, 1),
       Status.InRefinement,
-      Priority.Low,
-      new List<Responsible>());
+      Priority.Low);
     var commandHandler = new CreateTaskCommandHandler(repository);
 
     // Act & Assert
@@ -45,8 +44,7 @@ public class CreateTaskCommandTests
       "aaa",
       new TimeDetails(DateTime.Now, DateTime.Now.AddDays(1), 1, 0),
       Status.InRefinement,
-      Priority.Low,
-      new List<Responsible>());
+      Priority.Low);
     var commandHandler = new CreateTaskCommandHandler(repository);
 
     // Act & Assert
@@ -67,8 +65,7 @@ public class CreateTaskCommandTests
       "aaa",
       new TimeDetails(DateTime.Now.AddHours(1), DateTime.Now, 1, 1),
       Status.InRefinement,
-      Priority.Low,
-      new List<Responsible>());
+      Priority.Low);
     var commandHandler = new CreateTaskCommandHandler(repository);
 
     // Act & Assert

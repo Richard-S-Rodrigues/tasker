@@ -13,7 +13,6 @@ public record UpdateTaskCommand(
   TimeDetails TimeDetails,
   Status Status,
   Priority Priority,
-  List<Responsible> Responsibles,
   List<AttachmentFile> AttachmentFiles,
   List<Comment> Comments,
   List<TaskChecklist> TaskChecklists) : IRequest;

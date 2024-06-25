@@ -117,4 +117,32 @@ public class TaskRepository : ITaskRepository
 
     return task.AttachmentFiles.FirstOrDefault(af => af.Id == attachmentFileId);
   }
+
+  public async System.Threading.Tasks.Task AddComment(Comment comment)
+  {
+    var task = _applicationDbContext.Tasks.Find(comment.TaskId);
+    if (task is not null)
+    {
+      task.Comments.Add(comment);
+    }
+    await _applicationDbContext.SaveChangesAsync();
+  }
+
+  public async System.Threading.Tasks.Task DeleteComment(Comment comment)
+  {
+    var task = await _applicationDbContext.Tasks.FindAsync(comment.TaskId);
+    if (task is not null)
+    {
+      task.Comments.Remove(comment);
+    }
+    await _applicationDbContext.SaveChangesAsync();
+  }
+  
+  public async Task<Comment?> GetComment(TaskId taskId, CommentId commentId)
+  {
+    var task = await _applicationDbContext.Tasks.FindAsync(taskId);
+    if (task is null) return null;
+
+    return task.Comments.FirstOrDefault(af => af.Id == commentId);
+  }
 }

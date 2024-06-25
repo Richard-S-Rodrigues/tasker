@@ -219,6 +219,40 @@
                   @(await Component.InvokeAsync("AttachmentFilesList", new { model = Model.CurrentTask.AttachmentFiles }))
                 </div>
               </div>
+              <div>
+                <button
+                  type="button" 
+                  class="btn btn-sm btn-ghost input input-bordered flex items-center" 
+                  _="
+                    on click 
+                      toggle the *display of #comments-section
+                      toggle the *display of #comments-section-show
+                      toggle the *display of #comments-section-hide
+                  "
+                >
+                  <span class="icon">
+                    <i class="fas fa-caret-right" id="comments-section-show"></i>
+                    <i class="fas fa-caret-down" id="comments-section-hide" style="display: none;"></i>
+                  </span>
+                  <h3 class="ml-2">Comentários</h3>
+                </button>
+                <div id="comments-section" style="display: none;">
+                  <div id="comments-result">
+                    @(await Component.InvokeAsync("CommentList", new { taskId = Model.Id }))
+                  </div>
+                  <div class="my-2">
+                    <input class="input input-bordered" asp-for="CurrentCommentMessage" />
+                    <a
+                      hx-post="@Url.Page(currentPage, "AddComment")"
+                      hx-push-url="false"
+                      hx-target="#comments-result" 
+                      class="btn btn-primary ml-2"
+                    >
+                      Enviar
+                    </a>
+                  </div>
+                </div>
+              </div>
             }
           </section>
           

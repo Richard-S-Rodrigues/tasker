@@ -17,7 +17,6 @@ public class TaskViewModel
   public TimeViewModel EstimatedTime { get; set; } = new();
   public Status Status { get; set; }
   public Priority Priority { get; set; }
-  public List<Responsible> Responsibles { get; set; } = new();
   public List<AttachmentFileViewModel> AttachmentFiles { get; set; } = new();
   public List<Comment> Comments { get; set; } = new();
   public List<TaskChecklistViewModel> TaskChecklists { get; set; } = new();
@@ -36,7 +35,6 @@ public class TaskViewModel
       Time = GetHoursAndMinutesFromTotalMinutes(task.TimeDetails.Time),
       Status = task.Status,
       Priority = task.Priority,
-      Responsibles = task.Responsibles,
       AttachmentFiles = AttachmentFileViewModel.ToEnumerableViewModel(task.AttachmentFiles).ToList(),
       Comments = task.Comments,
       TaskChecklists = TaskChecklistViewModel.ToEnumerableViewModel(task.TaskChecklists).ToList()
@@ -59,7 +57,6 @@ public class TaskViewModel
         ),
         taskViewModel.Status,
         taskViewModel.Priority,
-        taskViewModel.Responsibles,
         AttachmentFileViewModel.ToEnumerableEntity(taskViewModel.AttachmentFiles).ToList(),
         taskViewModel.Comments,
         TaskChecklistViewModel.ToEnumerableEntity(taskViewModel.TaskChecklists).ToList());  
@@ -78,7 +75,6 @@ public class TaskViewModel
       ),
       taskViewModel.Status,
       taskViewModel.Priority,
-      taskViewModel.Responsibles,
       AttachmentFileViewModel.ToEnumerableEntity(taskViewModel.AttachmentFiles).ToList(),
       taskViewModel.Comments,
       TaskChecklistViewModel.ToEnumerableEntity(taskViewModel.TaskChecklists).ToList());

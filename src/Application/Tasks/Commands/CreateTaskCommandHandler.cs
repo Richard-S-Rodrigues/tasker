@@ -1,7 +1,6 @@
 using MediatR;
 using Tasker.Domain.TaskAggregate;
 using Tasker.Domain.TaskAggregate.Commands;
-using Tasker.Domain.TaskAggregate.Enums;
 using Tasker.Domain.TaskAggregate.Repositories;
 
 namespace Tasker.Application.Tasks.Commands;
@@ -24,7 +23,6 @@ public class CreateTaskCommandHandler : IRequestHandler<CreateTaskCommand>
       request.timeDetails,
       request.status,
       request.priority,
-      request.responsibles,
       new List<AttachmentFile>(),
       new List<Comment>(),
       new List<TaskChecklist>()
